@@ -1,0 +1,575 @@
+Derived Variables
+
+#			V1	V2	Formula	FID		Var	Description	Location	Type	Name	Short	NewName
+1		mean	ST72TA	ST13TA	(A+B)/2	ST13TMT		ST13TA	Cortical Thickness Average of LeftBankssts	Left	Cortical Thickness Average 	Bankssts	Cortical Thickness Average of _Bankssts	Cortical Thickness Average of _Bankssts_Left
+2		mean	ST73TA	ST14TA	(A+B)/2	ST14TMT		ST14TA	Cortical Thickness Average of LeftCaudalAnteriorCingulate	Left	Cortical Thickness Average 	CaudalAnteriorCingulate	Cortical Thickness Average of _CaudalAnteriorCingulate	Cortical Thickness Average of _CaudalAnteriorCingulate_Left
+3		mean	ST74TA	ST15TA	(A+B)/2	ST15TMT		ST15TA	Cortical Thickness Average of LeftCaudalMiddleFrontal	Left	Cortical Thickness Average 	CaudalMiddleFrontal	Cortical Thickness Average of _CaudalMiddleFrontal	Cortical Thickness Average of _CaudalMiddleFrontal_Left
+4		mean	ST82TA	ST23TA	(A+B)/2	ST23TMT		ST23TA	Cortical Thickness Average of LeftCuneus	Left	Cortical Thickness Average 	Cuneus	Cortical Thickness Average of _Cuneus	Cortical Thickness Average of _Cuneus_Left
+5		mean	ST83TA	ST24TA	(A+B)/2	ST24TMT		ST24TA	Cortical Thickness Average of LeftEntorhinal	Left	Cortical Thickness Average 	Entorhinal	Cortical Thickness Average of _Entorhinal	Cortical Thickness Average of _Entorhinal_Left
+6		mean	ST84TA	ST25TA	(A+B)/2	ST25TMT		ST25TA	Cortical Thickness Average of LeftFrontalPole	Left	Cortical Thickness Average 	FrontalPole	Cortical Thickness Average of _FrontalPole	Cortical Thickness Average of _FrontalPole_Left
+7		mean	ST85TA	ST26TA	(A+B)/2	ST26TMT		ST26TA	Cortical Thickness Average of LeftFusiform	Left	Cortical Thickness Average 	Fusiform	Cortical Thickness Average of _Fusiform	Cortical Thickness Average of _Fusiform_Left
+8		mean	ST90TA	ST31TA	(A+B)/2	ST31TMT		ST31TA	Cortical Thickness Average of LeftInferiorParietal	Left	Cortical Thickness Average 	InferiorParietal	Cortical Thickness Average of _InferiorParietal	Cortical Thickness Average of _InferiorParietal_Left
+9		mean	ST91TA	ST32TA	(A+B)/2	ST32TMT		ST32TA	Cortical Thickness Average of LeftInferiorTemporal	Left	Cortical Thickness Average 	InferiorTemporal	Cortical Thickness Average of _InferiorTemporal	Cortical Thickness Average of _InferiorTemporal_Left
+10		mean	ST130TA	ST129TA	(A+B)/2	ST129MT		ST129TA	Cortical Thickness Average of LeftInsula	Left	Cortical Thickness Average 	Insula	Cortical Thickness Average of _Insula	Cortical Thickness Average of _Insula_Left
+11		mean	ST93TA	ST34TA	(A+B)/2	ST34TMT		ST34TA	Cortical Thickness Average of LeftIsthmusCingulate	Left	Cortical Thickness Average 	IsthmusCingulate	Cortical Thickness Average of _IsthmusCingulate	Cortical Thickness Average of _IsthmusCingulate_Left
+12		mean	ST94TA	ST35TA	(A+B)/2	ST35TMT		ST35TA	Cortical Thickness Average of LeftLateralOccipital	Left	Cortical Thickness Average 	LateralOccipital	Cortical Thickness Average of _LateralOccipital	Cortical Thickness Average of _LateralOccipital_Left
+13		mean	ST95TA	ST36TA	(A+B)/2	ST36TMT		ST36TA	Cortical Thickness Average of LeftLateralOrbitofrontal	Left	Cortical Thickness Average 	LateralOrbitofrontal	Cortical Thickness Average of _LateralOrbitofrontal	Cortical Thickness Average of _LateralOrbitofrontal_Left
+14		mean	ST97TA	ST38TA	(A+B)/2	ST38TMT		ST38TA	Cortical Thickness Average of LeftLingual	Left	Cortical Thickness Average 	Lingual	Cortical Thickness Average of _Lingual	Cortical Thickness Average of _Lingual_Left
+15		mean	ST98TA	ST39TA	(A+B)/2	ST39TMT		ST39TA	Cortical Thickness Average of LeftMedialOrbitofrontal	Left	Cortical Thickness Average 	MedialOrbitofrontal	Cortical Thickness Average of _MedialOrbitofrontal	Cortical Thickness Average of _MedialOrbitofrontal_Left
+16		mean	ST99TA	ST40TA	(A+B)/2	ST40TMT		ST40TA	Cortical Thickness Average of LeftMiddleTemporal	Left	Cortical Thickness Average 	MiddleTemporal	Cortical Thickness Average of _MiddleTemporal	Cortical Thickness Average of _MiddleTemporal_Left
+17		mean	ST102TA	ST43TA	(A+B)/2	ST43TMT		ST43TA	Cortical Thickness Average of LeftParacentral	Left	Cortical Thickness Average 	Paracentral	Cortical Thickness Average of _Paracentral	Cortical Thickness Average of _Paracentral_Left
+18		mean	ST103TA	ST44TA	(A+B)/2	ST44TMT		ST44TA	Cortical Thickness Average of LeftParahippocampal	Left	Cortical Thickness Average 	Parahippocampal	Cortical Thickness Average of _Parahippocampal	Cortical Thickness Average of _Parahippocampal_Left
+19		mean	ST104TA	ST45TA	(A+B)/2	ST45TMT		ST45TA	Cortical Thickness Average of LeftParsOpercularis	Left	Cortical Thickness Average 	ParsOpercularis	Cortical Thickness Average of _ParsOpercularis	Cortical Thickness Average of _ParsOpercularis_Left
+20		mean	ST105TA	ST46TA	(A+B)/2	ST46TMT		ST46TA	Cortical Thickness Average of LeftParsOrbitalis	Left	Cortical Thickness Average 	ParsOrbitalis	Cortical Thickness Average of _ParsOrbitalis	Cortical Thickness Average of _ParsOrbitalis_Left
+21		mean	ST106TA	ST47TA	(A+B)/2	ST47TMT		ST47TA	Cortical Thickness Average of LeftParsTriangularis	Left	Cortical Thickness Average 	ParsTriangularis	Cortical Thickness Average of _ParsTriangularis	Cortical Thickness Average of _ParsTriangularis_Left
+22		mean	ST107TA	ST48TA	(A+B)/2	ST48TMT		ST48TA	Cortical Thickness Average of LeftPericalcarine	Left	Cortical Thickness Average 	Pericalcarine	Cortical Thickness Average of _Pericalcarine	Cortical Thickness Average of _Pericalcarine_Left
+23		mean	ST108TA	ST49TA	(A+B)/2	ST49TMT		ST49TA	Cortical Thickness Average of LeftPostcentral	Left	Cortical Thickness Average 	Postcentral	Cortical Thickness Average of _Postcentral	Cortical Thickness Average of _Postcentral_Left
+24		mean	ST109TA	ST50TA	(A+B)/2	ST50TMT		ST50TA	Cortical Thickness Average of LeftPosteriorCingulate	Left	Cortical Thickness Average 	PosteriorCingulate	Cortical Thickness Average of _PosteriorCingulate	Cortical Thickness Average of _PosteriorCingulate_Left
+25		mean	ST110TA	ST51TA	(A+B)/2	ST51TMT		ST51TA	Cortical Thickness Average of LeftPrecentral	Left	Cortical Thickness Average 	Precentral	Cortical Thickness Average of _Precentral	Cortical Thickness Average of _Precentral_Left
+26		mean	ST111TA	ST52TA	(A+B)/2	ST52TMT		ST52TA	Cortical Thickness Average of LeftPrecuneus	Left	Cortical Thickness Average 	Precuneus	Cortical Thickness Average of _Precuneus	Cortical Thickness Average of _Precuneus_Left
+27		mean	ST113TA	ST54TA	(A+B)/2	ST54TMT		ST54TA	Cortical Thickness Average of LeftRostralAnteriorCingulate	Left	Cortical Thickness Average 	RostralAnteriorCingulate	Cortical Thickness Average of _RostralAnteriorCingulate	Cortical Thickness Average of _RostralAnteriorCingulate_Left
+28		mean	ST114TA	ST55TA	(A+B)/2	ST55TMT		ST55TA	Cortical Thickness Average of LeftRostralMiddleFrontal	Left	Cortical Thickness Average 	RostralMiddleFrontal	Cortical Thickness Average of _RostralMiddleFrontal	Cortical Thickness Average of _RostralMiddleFrontal_Left
+29		mean	ST115TA	ST56TA	(A+B)/2	ST56TMT		ST56TA	Cortical Thickness Average of LeftSuperiorFrontal	Left	Cortical Thickness Average 	SuperiorFrontal	Cortical Thickness Average of _SuperiorFrontal	Cortical Thickness Average of _SuperiorFrontal_Left
+30		mean	ST116TA	ST57TA	(A+B)/2	ST57TMT		ST57TA	Cortical Thickness Average of LeftSuperiorParietal	Left	Cortical Thickness Average 	SuperiorParietal	Cortical Thickness Average of _SuperiorParietal	Cortical Thickness Average of _SuperiorParietal_Left
+31		mean	ST117TA	ST58TA	(A+B)/2	ST58TMT		ST58TA	Cortical Thickness Average of LeftSuperiorTemporal	Left	Cortical Thickness Average 	SuperiorTemporal	Cortical Thickness Average of _SuperiorTemporal	Cortical Thickness Average of _SuperiorTemporal_Left
+32		mean	ST118TA	ST59TA	(A+B)/2	ST59TMT		ST59TA	Cortical Thickness Average of LeftSupramarginal	Left	Cortical Thickness Average 	Supramarginal	Cortical Thickness Average of _Supramarginal	Cortical Thickness Average of _Supramarginal_Left
+33		mean	ST119TA	ST60TA	(A+B)/2	ST60TMT		ST60TA	Cortical Thickness Average of LeftTemporalPole	Left	Cortical Thickness Average 	TemporalPole	Cortical Thickness Average of _TemporalPole	Cortical Thickness Average of _TemporalPole_Left
+34		mean	ST121TA	ST62TA	(A+B)/2	ST62TMT		ST62TA	Cortical Thickness Average of LeftTransverseTemporal	Left	Cortical Thickness Average 	TransverseTemporal	Cortical Thickness Average of _TransverseTemporal	Cortical Thickness Average of _TransverseTemporal_Left
+35		mean	ST72TS	ST13TS	(A+B)/2	ST13TMSDT		ST13TS	Cortical Thickness Standard Deviation of LeftBankssts	Left	Cortical Thickness Standard Deviation 	Bankssts	Cortical Thickness Standard Deviation of _Bankssts	Cortical Thickness Standard Deviation of _Bankssts_Left
+36		mean	ST73TS	ST14TS	(A+B)/2	ST14TMSDT		ST14TS	Cortical Thickness Standard Deviation of LeftCaudalAnteriorCingulate	Left	Cortical Thickness Standard Deviation 	CaudalAnteriorCingulate	Cortical Thickness Standard Deviation of _CaudalAnteriorCingulate	Cortical Thickness Standard Deviation of _CaudalAnteriorCingulate_Left
+37		mean	ST74TS	ST15TS	(A+B)/2	ST15TMSDT		ST15TS	Cortical Thickness Standard Deviation of LeftCaudalMiddleFrontal	Left	Cortical Thickness Standard Deviation 	CaudalMiddleFrontal	Cortical Thickness Standard Deviation of _CaudalMiddleFrontal	Cortical Thickness Standard Deviation of _CaudalMiddleFrontal_Left
+38		mean	ST82TS	ST23TS	(A+B)/2	ST23TMSDT		ST23TS	Cortical Thickness Standard Deviation of LeftCuneus	Left	Cortical Thickness Standard Deviation 	Cuneus	Cortical Thickness Standard Deviation of _Cuneus	Cortical Thickness Standard Deviation of _Cuneus_Left
+39		mean	ST83TS	ST24TS	(A+B)/2	ST24TMSDT		ST24TS	Cortical Thickness Standard Deviation of LeftEntorhinal	Left	Cortical Thickness Standard Deviation 	Entorhinal	Cortical Thickness Standard Deviation of _Entorhinal	Cortical Thickness Standard Deviation of _Entorhinal_Left
+40		mean	ST84TS	ST25TS	(A+B)/2	ST25TMSDT		ST25TS	Cortical Thickness Standard Deviation of LeftFrontalPole	Left	Cortical Thickness Standard Deviation 	FrontalPole	Cortical Thickness Standard Deviation of _FrontalPole	Cortical Thickness Standard Deviation of _FrontalPole_Left
+41		mean	ST85TS	ST26TS	(A+B)/2	ST26TMSDT		ST26TS	Cortical Thickness Standard Deviation of LeftFusiform	Left	Cortical Thickness Standard Deviation 	Fusiform	Cortical Thickness Standard Deviation of _Fusiform	Cortical Thickness Standard Deviation of _Fusiform_Left
+42		mean	ST90TS	ST31TS	(A+B)/2	ST31TMSDT		ST31TS	Cortical Thickness Standard Deviation of LeftInferiorParietal	Left	Cortical Thickness Standard Deviation 	InferiorParietal	Cortical Thickness Standard Deviation of _InferiorParietal	Cortical Thickness Standard Deviation of _InferiorParietal_Left
+43		mean	ST91TS	ST32TS	(A+B)/2	ST32TMSDT		ST32TS	Cortical Thickness Standard Deviation of LeftInferiorTemporal	Left	Cortical Thickness Standard Deviation 	InferiorTemporal	Cortical Thickness Standard Deviation of _InferiorTemporal	Cortical Thickness Standard Deviation of _InferiorTemporal_Left
+44		mean	ST130TS	ST129TS	(A+B)/2	ST129MSDT		ST129TS	Cortical Thickness Standard Deviation of LeftInsula	Left	Cortical Thickness Standard Deviation 	Insula	Cortical Thickness Standard Deviation of _Insula	Cortical Thickness Standard Deviation of _Insula_Left
+45		mean	ST93TS	ST34TS	(A+B)/2	ST34TMSDT		ST34TS	Cortical Thickness Standard Deviation of LeftIsthmusCingulate	Left	Cortical Thickness Standard Deviation 	IsthmusCingulate	Cortical Thickness Standard Deviation of _IsthmusCingulate	Cortical Thickness Standard Deviation of _IsthmusCingulate_Left
+46		mean	ST94TS	ST35TS	(A+B)/2	ST35TMSDT		ST35TS	Cortical Thickness Standard Deviation of LeftLateralOccipital	Left	Cortical Thickness Standard Deviation 	LateralOccipital	Cortical Thickness Standard Deviation of _LateralOccipital	Cortical Thickness Standard Deviation of _LateralOccipital_Left
+47		mean	ST95TS	ST36TS	(A+B)/2	ST36TMSDT		ST36TS	Cortical Thickness Standard Deviation of LeftLateralOrbitofrontal	Left	Cortical Thickness Standard Deviation 	LateralOrbitofrontal	Cortical Thickness Standard Deviation of _LateralOrbitofrontal	Cortical Thickness Standard Deviation of _LateralOrbitofrontal_Left
+48		mean	ST97TS	ST38TS	(A+B)/2	ST38TMSDT		ST38TS	Cortical Thickness Standard Deviation of LeftLingual	Left	Cortical Thickness Standard Deviation 	Lingual	Cortical Thickness Standard Deviation of _Lingual	Cortical Thickness Standard Deviation of _Lingual_Left
+49		mean	ST98TS	ST39TS	(A+B)/2	ST39TMSDT		ST39TS	Cortical Thickness Standard Deviation of LeftMedialOrbitofrontal	Left	Cortical Thickness Standard Deviation 	MedialOrbitofrontal	Cortical Thickness Standard Deviation of _MedialOrbitofrontal	Cortical Thickness Standard Deviation of _MedialOrbitofrontal_Left
+50		mean	ST99TS	ST40TS	(A+B)/2	ST40TMSDT		ST40TS	Cortical Thickness Standard Deviation of LeftMiddleTemporal	Left	Cortical Thickness Standard Deviation 	MiddleTemporal	Cortical Thickness Standard Deviation of _MiddleTemporal	Cortical Thickness Standard Deviation of _MiddleTemporal_Left
+51		mean	ST102TS	ST43TS	(A+B)/2	ST43TMSDT		ST43TS	Cortical Thickness Standard Deviation of LeftParacentral	Left	Cortical Thickness Standard Deviation 	Paracentral	Cortical Thickness Standard Deviation of _Paracentral	Cortical Thickness Standard Deviation of _Paracentral_Left
+52		mean	ST103TS	ST44TS	(A+B)/2	ST44TMSDT		ST44TS	Cortical Thickness Standard Deviation of LeftParahippocampal	Left	Cortical Thickness Standard Deviation 	Parahippocampal	Cortical Thickness Standard Deviation of _Parahippocampal	Cortical Thickness Standard Deviation of _Parahippocampal_Left
+53		mean	ST104TS	ST45TS	(A+B)/2	ST45TMSDT		ST45TS	Cortical Thickness Standard Deviation of LeftParsOpercularis	Left	Cortical Thickness Standard Deviation 	ParsOpercularis	Cortical Thickness Standard Deviation of _ParsOpercularis	Cortical Thickness Standard Deviation of _ParsOpercularis_Left
+54		mean	ST105TS	ST46TS	(A+B)/2	ST46TMSDT		ST46TS	Cortical Thickness Standard Deviation of LeftParsOrbitalis	Left	Cortical Thickness Standard Deviation 	ParsOrbitalis	Cortical Thickness Standard Deviation of _ParsOrbitalis	Cortical Thickness Standard Deviation of _ParsOrbitalis_Left
+55		mean	ST106TS	ST47TS	(A+B)/2	ST47TMSDT		ST47TS	Cortical Thickness Standard Deviation of LeftParsTriangularis	Left	Cortical Thickness Standard Deviation 	ParsTriangularis	Cortical Thickness Standard Deviation of _ParsTriangularis	Cortical Thickness Standard Deviation of _ParsTriangularis_Left
+56		mean	ST107TS	ST48TS	(A+B)/2	ST48TMSDT		ST48TS	Cortical Thickness Standard Deviation of LeftPericalcarine	Left	Cortical Thickness Standard Deviation 	Pericalcarine	Cortical Thickness Standard Deviation of _Pericalcarine	Cortical Thickness Standard Deviation of _Pericalcarine_Left
+57		mean	ST108TS	ST49TS	(A+B)/2	ST49TMSDT		ST49TS	Cortical Thickness Standard Deviation of LeftPostcentral	Left	Cortical Thickness Standard Deviation 	Postcentral	Cortical Thickness Standard Deviation of _Postcentral	Cortical Thickness Standard Deviation of _Postcentral_Left
+58		mean	ST109TS	ST50TS	(A+B)/2	ST50TMSDT		ST50TS	Cortical Thickness Standard Deviation of LeftPosteriorCingulate	Left	Cortical Thickness Standard Deviation 	PosteriorCingulate	Cortical Thickness Standard Deviation of _PosteriorCingulate	Cortical Thickness Standard Deviation of _PosteriorCingulate_Left
+59		mean	ST110TS	ST51TS	(A+B)/2	ST51TMSDT		ST51TS	Cortical Thickness Standard Deviation of LeftPrecentral	Left	Cortical Thickness Standard Deviation 	Precentral	Cortical Thickness Standard Deviation of _Precentral	Cortical Thickness Standard Deviation of _Precentral_Left
+60		mean	ST111TS	ST52TS	(A+B)/2	ST52TMSDT		ST52TS	Cortical Thickness Standard Deviation of LeftPrecuneus	Left	Cortical Thickness Standard Deviation 	Precuneus	Cortical Thickness Standard Deviation of _Precuneus	Cortical Thickness Standard Deviation of _Precuneus_Left
+61		mean	ST113TS	ST54TS	(A+B)/2	ST54TMSDT		ST54TS	Cortical Thickness Standard Deviation of LeftRostralAnteriorCingulate	Left	Cortical Thickness Standard Deviation 	RostralAnteriorCingulate	Cortical Thickness Standard Deviation of _RostralAnteriorCingulate	Cortical Thickness Standard Deviation of _RostralAnteriorCingulate_Left
+62		mean	ST114TS	ST55TS	(A+B)/2	ST55TMSDT		ST55TS	Cortical Thickness Standard Deviation of LeftRostralMiddleFrontal	Left	Cortical Thickness Standard Deviation 	RostralMiddleFrontal	Cortical Thickness Standard Deviation of _RostralMiddleFrontal	Cortical Thickness Standard Deviation of _RostralMiddleFrontal_Left
+63		mean	ST115TS	ST56TS	(A+B)/2	ST56TMSDT		ST56TS	Cortical Thickness Standard Deviation of LeftSuperiorFrontal	Left	Cortical Thickness Standard Deviation 	SuperiorFrontal	Cortical Thickness Standard Deviation of _SuperiorFrontal	Cortical Thickness Standard Deviation of _SuperiorFrontal_Left
+64		mean	ST116TS	ST57TS	(A+B)/2	ST57TMSDT		ST57TS	Cortical Thickness Standard Deviation of LeftSuperiorParietal	Left	Cortical Thickness Standard Deviation 	SuperiorParietal	Cortical Thickness Standard Deviation of _SuperiorParietal	Cortical Thickness Standard Deviation of _SuperiorParietal_Left
+65		mean	ST117TS	ST58TS	(A+B)/2	ST58TMSDT		ST58TS	Cortical Thickness Standard Deviation of LeftSuperiorTemporal	Left	Cortical Thickness Standard Deviation 	SuperiorTemporal	Cortical Thickness Standard Deviation of _SuperiorTemporal	Cortical Thickness Standard Deviation of _SuperiorTemporal_Left
+66		mean	ST118TS	ST59TS	(A+B)/2	ST59TMSDT		ST59TS	Cortical Thickness Standard Deviation of LeftSupramarginal	Left	Cortical Thickness Standard Deviation 	Supramarginal	Cortical Thickness Standard Deviation of _Supramarginal	Cortical Thickness Standard Deviation of _Supramarginal_Left
+67		mean	ST119TS	ST60TS	(A+B)/2	ST60TMSDT		ST60TS	Cortical Thickness Standard Deviation of LeftTemporalPole	Left	Cortical Thickness Standard Deviation 	TemporalPole	Cortical Thickness Standard Deviation of _TemporalPole	Cortical Thickness Standard Deviation of _TemporalPole_Left
+68		mean	ST121TS	ST62TS	(A+B)/2	ST62TMSDT		ST62TS	Cortical Thickness Standard Deviation of LeftTransverseTemporal	Left	Cortical Thickness Standard Deviation 	TransverseTemporal	Cortical Thickness Standard Deviation of _TransverseTemporal	Cortical Thickness Standard Deviation of _TransverseTemporal_Left
+69		mean	ST72SA	ST13SA	(A^(1/2)+B^(1/2))/2	ST13SMSA		ST13SA	Surface Area of LeftBankssts	Left	Surface Area 	Bankssts	Surface Area of _Bankssts	Surface Area of _Bankssts_Left
+70		mean	ST73SA	ST14SA	(A^(1/2)+B^(1/2))/2	ST14SMSA		ST14SA	Surface Area of LeftCaudalAnteriorCingulate	Left	Surface Area 	CaudalAnteriorCingulate	Surface Area of _CaudalAnteriorCingulate	Surface Area of _CaudalAnteriorCingulate_Left
+71		mean	ST74SA	ST15SA	(A^(1/2)+B^(1/2))/2	ST15SMSA		ST15SA	Surface Area of LeftCaudalMiddleFrontal	Left	Surface Area 	CaudalMiddleFrontal	Surface Area of _CaudalMiddleFrontal	Surface Area of _CaudalMiddleFrontal_Left
+72		mean	ST82SA	ST23SA	(A^(1/2)+B^(1/2))/2	ST23SMSA		ST23SA	Surface Area of LeftCuneus	Left	Surface Area 	Cuneus	Surface Area of _Cuneus	Surface Area of _Cuneus_Left
+73		mean	ST83SA	ST24SA	(A^(1/2)+B^(1/2))/2	ST24SMSA		ST24SA	Surface Area of LeftEntorhinal	Left	Surface Area 	Entorhinal	Surface Area of _Entorhinal	Surface Area of _Entorhinal_Left
+74		mean	ST84SA	ST25SA	(A^(1/2)+B^(1/2))/2	ST25SMSA		ST25SA	Surface Area of LeftFrontalPole	Left	Surface Area 	FrontalPole	Surface Area of _FrontalPole	Surface Area of _FrontalPole_Left
+75		mean	ST85SA	ST26SA	(A^(1/2)+B^(1/2))/2	ST26SMSA		ST26SA	Surface Area of LeftFusiform	Left	Surface Area 	Fusiform	Surface Area of _Fusiform	Surface Area of _Fusiform_Left
+76		mean	ST90SA	ST31SA	(A^(1/2)+B^(1/2))/2	ST31SMSA		ST31SA	Surface Area of LeftInferiorParietal	Left	Surface Area 	InferiorParietal	Surface Area of _InferiorParietal	Surface Area of _InferiorParietal_Left
+77		mean	ST91SA	ST32SA	(A^(1/2)+B^(1/2))/2	ST32SMSA		ST32SA	Surface Area of LeftInferiorTemporal	Left	Surface Area 	InferiorTemporal	Surface Area of _InferiorTemporal	Surface Area of _InferiorTemporal_Left
+78		mean	ST130SA	ST129SA	(A^(1/2)+B^(1/2))/2	ST129MSA		ST129SA	Surface Area of LeftInsula	Left	Surface Area 	Insula	Surface Area of _Insula	Surface Area of _Insula_Left
+79		mean	ST93SA	ST34SA	(A^(1/2)+B^(1/2))/2	ST34SMSA		ST34SA	Surface Area of LeftIsthmusCingulate	Left	Surface Area 	IsthmusCingulate	Surface Area of _IsthmusCingulate	Surface Area of _IsthmusCingulate_Left
+80		mean	ST94SA	ST35SA	(A^(1/2)+B^(1/2))/2	ST35SMSA		ST35SA	Surface Area of LeftLateralOccipital	Left	Surface Area 	LateralOccipital	Surface Area of _LateralOccipital	Surface Area of _LateralOccipital_Left
+81		mean	ST95SA	ST36SA	(A^(1/2)+B^(1/2))/2	ST36SMSA		ST36SA	Surface Area of LeftLateralOrbitofrontal	Left	Surface Area 	LateralOrbitofrontal	Surface Area of _LateralOrbitofrontal	Surface Area of _LateralOrbitofrontal_Left
+82		mean	ST97SA	ST38SA	(A^(1/2)+B^(1/2))/2	ST38SMSA		ST38SA	Surface Area of LeftLingual	Left	Surface Area 	Lingual	Surface Area of _Lingual	Surface Area of _Lingual_Left
+83		mean	ST98SA	ST39SA	(A^(1/2)+B^(1/2))/2	ST39SMSA		ST39SA	Surface Area of LeftMedialOrbitofrontal	Left	Surface Area 	MedialOrbitofrontal	Surface Area of _MedialOrbitofrontal	Surface Area of _MedialOrbitofrontal_Left
+84		mean	ST99SA	ST40SA	(A^(1/2)+B^(1/2))/2	ST40SMSA		ST40SA	Surface Area of LeftMiddleTemporal	Left	Surface Area 	MiddleTemporal	Surface Area of _MiddleTemporal	Surface Area of _MiddleTemporal_Left
+85		mean	ST102SA	ST43SA	(A^(1/2)+B^(1/2))/2	ST43SMSA		ST43SA	Surface Area of LeftParacentral	Left	Surface Area 	Paracentral	Surface Area of _Paracentral	Surface Area of _Paracentral_Left
+86		mean	ST103SA	ST44SA	(A^(1/2)+B^(1/2))/2	ST44SMSA		ST44SA	Surface Area of LeftParahippocampal	Left	Surface Area 	Parahippocampal	Surface Area of _Parahippocampal	Surface Area of _Parahippocampal_Left
+87		mean	ST104SA	ST45SA	(A^(1/2)+B^(1/2))/2	ST45SMSA		ST45SA	Surface Area of LeftParsOpercularis	Left	Surface Area 	ParsOpercularis	Surface Area of _ParsOpercularis	Surface Area of _ParsOpercularis_Left
+88		mean	ST105SA	ST46SA	(A^(1/2)+B^(1/2))/2	ST46SMSA		ST46SA	Surface Area of LeftParsOrbitalis	Left	Surface Area 	ParsOrbitalis	Surface Area of _ParsOrbitalis	Surface Area of _ParsOrbitalis_Left
+89		mean	ST106SA	ST47SA	(A^(1/2)+B^(1/2))/2	ST47SMSA		ST47SA	Surface Area of LeftParsTriangularis	Left	Surface Area 	ParsTriangularis	Surface Area of _ParsTriangularis	Surface Area of _ParsTriangularis_Left
+90		mean	ST107SA	ST48SA	(A^(1/2)+B^(1/2))/2	ST48SMSA		ST48SA	Surface Area of LeftPericalcarine	Left	Surface Area 	Pericalcarine	Surface Area of _Pericalcarine	Surface Area of _Pericalcarine_Left
+91		mean	ST108SA	ST49SA	(A^(1/2)+B^(1/2))/2	ST49SMSA		ST49SA	Surface Area of LeftPostcentral	Left	Surface Area 	Postcentral	Surface Area of _Postcentral	Surface Area of _Postcentral_Left
+92		mean	ST109SA	ST50SA	(A^(1/2)+B^(1/2))/2	ST50SMSA		ST50SA	Surface Area of LeftPosteriorCingulate	Left	Surface Area 	PosteriorCingulate	Surface Area of _PosteriorCingulate	Surface Area of _PosteriorCingulate_Left
+93		mean	ST110SA	ST51SA	(A^(1/2)+B^(1/2))/2	ST51SMSA		ST51SA	Surface Area of LeftPrecentral	Left	Surface Area 	Precentral	Surface Area of _Precentral	Surface Area of _Precentral_Left
+94		mean	ST111SA	ST52SA	(A^(1/2)+B^(1/2))/2	ST52SMSA		ST52SA	Surface Area of LeftPrecuneus	Left	Surface Area 	Precuneus	Surface Area of _Precuneus	Surface Area of _Precuneus_Left
+95		mean	ST113SA	ST54SA	(A^(1/2)+B^(1/2))/2	ST54SMSA		ST54SA	Surface Area of LeftRostralAnteriorCingulate	Left	Surface Area 	RostralAnteriorCingulate	Surface Area of _RostralAnteriorCingulate	Surface Area of _RostralAnteriorCingulate_Left
+96		mean	ST114SA	ST55SA	(A^(1/2)+B^(1/2))/2	ST55SMSA		ST55SA	Surface Area of LeftRostralMiddleFrontal	Left	Surface Area 	RostralMiddleFrontal	Surface Area of _RostralMiddleFrontal	Surface Area of _RostralMiddleFrontal_Left
+97		mean	ST115SA	ST56SA	(A^(1/2)+B^(1/2))/2	ST56SMSA		ST56SA	Surface Area of LeftSuperiorFrontal	Left	Surface Area 	SuperiorFrontal	Surface Area of _SuperiorFrontal	Surface Area of _SuperiorFrontal_Left
+98		mean	ST116SA	ST57SA	(A^(1/2)+B^(1/2))/2	ST57SMSA		ST57SA	Surface Area of LeftSuperiorParietal	Left	Surface Area 	SuperiorParietal	Surface Area of _SuperiorParietal	Surface Area of _SuperiorParietal_Left
+99		mean	ST117SA	ST58SA	(A^(1/2)+B^(1/2))/2	ST58SMSA		ST58SA	Surface Area of LeftSuperiorTemporal	Left	Surface Area 	SuperiorTemporal	Surface Area of _SuperiorTemporal	Surface Area of _SuperiorTemporal_Left
+100		mean	ST118SA	ST59SA	(A^(1/2)+B^(1/2))/2	ST59SMSA		ST59SA	Surface Area of LeftSupramarginal	Left	Surface Area 	Supramarginal	Surface Area of _Supramarginal	Surface Area of _Supramarginal_Left
+101		mean	ST119SA	ST60SA	(A^(1/2)+B^(1/2))/2	ST60SMSA		ST60SA	Surface Area of LeftTemporalPole	Left	Surface Area 	TemporalPole	Surface Area of _TemporalPole	Surface Area of _TemporalPole_Left
+102		mean	ST121SA	ST62SA	(A^(1/2)+B^(1/2))/2	ST62SMSA		ST62SA	Surface Area of LeftTransverseTemporal	Left	Surface Area 	TransverseTemporal	Surface Area of _TransverseTemporal	Surface Area of _TransverseTemporal_Left
+103		mean	ST72CV	ST13CV	(A^(1/3)+B^(1/3))/2	ST13CMVO		ST13CV	Volume (Cortical Parcellation) of LeftBankssts	Left	Volume (Cortical Parcellation) 	Bankssts	Volume (Cortical Parcellation) of _Bankssts	Volume (Cortical Parcellation) of _Bankssts_Left
+104		mean	ST73CV	ST14CV	(A^(1/3)+B^(1/3))/2	ST14CMVO		ST14CV	Volume (Cortical Parcellation) of LeftCaudalAnteriorCingulate	Left	Volume (Cortical Parcellation) 	CaudalAnteriorCingulate	Volume (Cortical Parcellation) of _CaudalAnteriorCingulate	Volume (Cortical Parcellation) of _CaudalAnteriorCingulate_Left
+105		mean	ST74CV	ST15CV	(A^(1/3)+B^(1/3))/2	ST15CMVO		ST15CV	Volume (Cortical Parcellation) of LeftCaudalMiddleFrontal	Left	Volume (Cortical Parcellation) 	CaudalMiddleFrontal	Volume (Cortical Parcellation) of _CaudalMiddleFrontal	Volume (Cortical Parcellation) of _CaudalMiddleFrontal_Left
+106		mean	ST82CV	ST23CV	(A^(1/3)+B^(1/3))/2	ST23CMVO		ST23CV	Volume (Cortical Parcellation) of LeftCuneus	Left	Volume (Cortical Parcellation) 	Cuneus	Volume (Cortical Parcellation) of _Cuneus	Volume (Cortical Parcellation) of _Cuneus_Left
+107		mean	ST83CV	ST24CV	(A^(1/3)+B^(1/3))/2	ST24CMVO		ST24CV	Volume (Cortical Parcellation) of LeftEntorhinal	Left	Volume (Cortical Parcellation) 	Entorhinal	Volume (Cortical Parcellation) of _Entorhinal	Volume (Cortical Parcellation) of _Entorhinal_Left
+108		mean	ST84CV	ST25CV	(A^(1/3)+B^(1/3))/2	ST25CMVO		ST25CV	Volume (Cortical Parcellation) of LeftFrontalPole	Left	Volume (Cortical Parcellation) 	FrontalPole	Volume (Cortical Parcellation) of _FrontalPole	Volume (Cortical Parcellation) of _FrontalPole_Left
+109		mean	ST85CV	ST26CV	(A^(1/3)+B^(1/3))/2	ST26CMVO		ST26CV	Volume (Cortical Parcellation) of LeftFusiform	Left	Volume (Cortical Parcellation) 	Fusiform	Volume (Cortical Parcellation) of _Fusiform	Volume (Cortical Parcellation) of _Fusiform_Left
+110		mean	ST90CV	ST31CV	(A^(1/3)+B^(1/3))/2	ST31CMVO		ST31CV	Volume (Cortical Parcellation) of LeftInferiorParietal	Left	Volume (Cortical Parcellation) 	InferiorParietal	Volume (Cortical Parcellation) of _InferiorParietal	Volume (Cortical Parcellation) of _InferiorParietal_Left
+111		mean	ST91CV	ST32CV	(A^(1/3)+B^(1/3))/2	ST32CMVO		ST32CV	Volume (Cortical Parcellation) of LeftInferiorTemporal	Left	Volume (Cortical Parcellation) 	InferiorTemporal	Volume (Cortical Parcellation) of _InferiorTemporal	Volume (Cortical Parcellation) of _InferiorTemporal_Left
+112		mean	ST130CV	ST129CV	(A^(1/3)+B^(1/3))/2	ST129MVO		ST129CV	Volume (Cortical Parcellation) of LeftInsula	Left	Volume (Cortical Parcellation) 	Insula	Volume (Cortical Parcellation) of _Insula	Volume (Cortical Parcellation) of _Insula_Left
+113		mean	ST93CV	ST34CV	(A^(1/3)+B^(1/3))/2	ST34CMVO		ST34CV	Volume (Cortical Parcellation) of LeftIsthmusCingulate	Left	Volume (Cortical Parcellation) 	IsthmusCingulate	Volume (Cortical Parcellation) of _IsthmusCingulate	Volume (Cortical Parcellation) of _IsthmusCingulate_Left
+114		mean	ST94CV	ST35CV	(A^(1/3)+B^(1/3))/2	ST35CMVO		ST35CV	Volume (Cortical Parcellation) of LeftLateralOccipital	Left	Volume (Cortical Parcellation) 	LateralOccipital	Volume (Cortical Parcellation) of _LateralOccipital	Volume (Cortical Parcellation) of _LateralOccipital_Left
+115		mean	ST95CV	ST36CV	(A^(1/3)+B^(1/3))/2	ST36CMVO		ST36CV	Volume (Cortical Parcellation) of LeftLateralOrbitofrontal	Left	Volume (Cortical Parcellation) 	LateralOrbitofrontal	Volume (Cortical Parcellation) of _LateralOrbitofrontal	Volume (Cortical Parcellation) of _LateralOrbitofrontal_Left
+116		mean	ST97CV	ST38CV	(A^(1/3)+B^(1/3))/2	ST38CMVO		ST38CV	Volume (Cortical Parcellation) of LeftLingual	Left	Volume (Cortical Parcellation) 	Lingual	Volume (Cortical Parcellation) of _Lingual	Volume (Cortical Parcellation) of _Lingual_Left
+117		mean	ST98CV	ST39CV	(A^(1/3)+B^(1/3))/2	ST39CMVO		ST39CV	Volume (Cortical Parcellation) of LeftMedialOrbitofrontal	Left	Volume (Cortical Parcellation) 	MedialOrbitofrontal	Volume (Cortical Parcellation) of _MedialOrbitofrontal	Volume (Cortical Parcellation) of _MedialOrbitofrontal_Left
+118		mean	ST99CV	ST40CV	(A^(1/3)+B^(1/3))/2	ST40CMVO		ST40CV	Volume (Cortical Parcellation) of LeftMiddleTemporal	Left	Volume (Cortical Parcellation) 	MiddleTemporal	Volume (Cortical Parcellation) of _MiddleTemporal	Volume (Cortical Parcellation) of _MiddleTemporal_Left
+119		mean	ST102CV	ST43CV	(A^(1/3)+B^(1/3))/2	ST43CMVO		ST43CV	Volume (Cortical Parcellation) of LeftParacentral	Left	Volume (Cortical Parcellation) 	Paracentral	Volume (Cortical Parcellation) of _Paracentral	Volume (Cortical Parcellation) of _Paracentral_Left
+120		mean	ST103CV	ST44CV	(A^(1/3)+B^(1/3))/2	ST44CMVO		ST44CV	Volume (Cortical Parcellation) of LeftParahippocampal	Left	Volume (Cortical Parcellation) 	Parahippocampal	Volume (Cortical Parcellation) of _Parahippocampal	Volume (Cortical Parcellation) of _Parahippocampal_Left
+121		mean	ST104CV	ST45CV	(A^(1/3)+B^(1/3))/2	ST45CMVO		ST45CV	Volume (Cortical Parcellation) of LeftParsOpercularis	Left	Volume (Cortical Parcellation) 	ParsOpercularis	Volume (Cortical Parcellation) of _ParsOpercularis	Volume (Cortical Parcellation) of _ParsOpercularis_Left
+122		mean	ST105CV	ST46CV	(A^(1/3)+B^(1/3))/2	ST46CMVO		ST46CV	Volume (Cortical Parcellation) of LeftParsOrbitalis	Left	Volume (Cortical Parcellation) 	ParsOrbitalis	Volume (Cortical Parcellation) of _ParsOrbitalis	Volume (Cortical Parcellation) of _ParsOrbitalis_Left
+123		mean	ST106CV	ST47CV	(A^(1/3)+B^(1/3))/2	ST47CMVO		ST47CV	Volume (Cortical Parcellation) of LeftParsTriangularis	Left	Volume (Cortical Parcellation) 	ParsTriangularis	Volume (Cortical Parcellation) of _ParsTriangularis	Volume (Cortical Parcellation) of _ParsTriangularis_Left
+124		mean	ST107CV	ST48CV	(A^(1/3)+B^(1/3))/2	ST48CMVO		ST48CV	Volume (Cortical Parcellation) of LeftPericalcarine	Left	Volume (Cortical Parcellation) 	Pericalcarine	Volume (Cortical Parcellation) of _Pericalcarine	Volume (Cortical Parcellation) of _Pericalcarine_Left
+125		mean	ST108CV	ST49CV	(A^(1/3)+B^(1/3))/2	ST49CMVO		ST49CV	Volume (Cortical Parcellation) of LeftPostcentral	Left	Volume (Cortical Parcellation) 	Postcentral	Volume (Cortical Parcellation) of _Postcentral	Volume (Cortical Parcellation) of _Postcentral_Left
+126		mean	ST109CV	ST50CV	(A^(1/3)+B^(1/3))/2	ST50CMVO		ST50CV	Volume (Cortical Parcellation) of LeftPosteriorCingulate	Left	Volume (Cortical Parcellation) 	PosteriorCingulate	Volume (Cortical Parcellation) of _PosteriorCingulate	Volume (Cortical Parcellation) of _PosteriorCingulate_Left
+127		mean	ST110CV	ST51CV	(A^(1/3)+B^(1/3))/2	ST51CMVO		ST51CV	Volume (Cortical Parcellation) of LeftPrecentral	Left	Volume (Cortical Parcellation) 	Precentral	Volume (Cortical Parcellation) of _Precentral	Volume (Cortical Parcellation) of _Precentral_Left
+128		mean	ST111CV	ST52CV	(A^(1/3)+B^(1/3))/2	ST52CMVO		ST52CV	Volume (Cortical Parcellation) of LeftPrecuneus	Left	Volume (Cortical Parcellation) 	Precuneus	Volume (Cortical Parcellation) of _Precuneus	Volume (Cortical Parcellation) of _Precuneus_Left
+129		mean	ST113CV	ST54CV	(A^(1/3)+B^(1/3))/2	ST54CMVO		ST54CV	Volume (Cortical Parcellation) of LeftRostralAnteriorCingulate	Left	Volume (Cortical Parcellation) 	RostralAnteriorCingulate	Volume (Cortical Parcellation) of _RostralAnteriorCingulate	Volume (Cortical Parcellation) of _RostralAnteriorCingulate_Left
+130		mean	ST114CV	ST55CV	(A^(1/3)+B^(1/3))/2	ST55CMVO		ST55CV	Volume (Cortical Parcellation) of LeftRostralMiddleFrontal	Left	Volume (Cortical Parcellation) 	RostralMiddleFrontal	Volume (Cortical Parcellation) of _RostralMiddleFrontal	Volume (Cortical Parcellation) of _RostralMiddleFrontal_Left
+131		mean	ST115CV	ST56CV	(A^(1/3)+B^(1/3))/2	ST56CMVO		ST56CV	Volume (Cortical Parcellation) of LeftSuperiorFrontal	Left	Volume (Cortical Parcellation) 	SuperiorFrontal	Volume (Cortical Parcellation) of _SuperiorFrontal	Volume (Cortical Parcellation) of _SuperiorFrontal_Left
+132		mean	ST116CV	ST57CV	(A^(1/3)+B^(1/3))/2	ST57CMVO		ST57CV	Volume (Cortical Parcellation) of LeftSuperiorParietal	Left	Volume (Cortical Parcellation) 	SuperiorParietal	Volume (Cortical Parcellation) of _SuperiorParietal	Volume (Cortical Parcellation) of _SuperiorParietal_Left
+133		mean	ST117CV	ST58CV	(A^(1/3)+B^(1/3))/2	ST58CMVO		ST58CV	Volume (Cortical Parcellation) of LeftSuperiorTemporal	Left	Volume (Cortical Parcellation) 	SuperiorTemporal	Volume (Cortical Parcellation) of _SuperiorTemporal	Volume (Cortical Parcellation) of _SuperiorTemporal_Left
+134		mean	ST118CV	ST59CV	(A^(1/3)+B^(1/3))/2	ST59CMVO		ST59CV	Volume (Cortical Parcellation) of LeftSupramarginal	Left	Volume (Cortical Parcellation) 	Supramarginal	Volume (Cortical Parcellation) of _Supramarginal	Volume (Cortical Parcellation) of _Supramarginal_Left
+135		mean	ST119CV	ST60CV	(A^(1/3)+B^(1/3))/2	ST60CMVO		ST60CV	Volume (Cortical Parcellation) of LeftTemporalPole	Left	Volume (Cortical Parcellation) 	TemporalPole	Volume (Cortical Parcellation) of _TemporalPole	Volume (Cortical Parcellation) of _TemporalPole_Left
+136		mean	ST121CV	ST62CV	(A^(1/3)+B^(1/3))/2	ST62CMVO		ST62CV	Volume (Cortical Parcellation) of LeftTransverseTemporal	Left	Volume (Cortical Parcellation) 	TransverseTemporal	Volume (Cortical Parcellation) of _TransverseTemporal	Volume (Cortical Parcellation) of _TransverseTemporal_Left
+137		mean	ST70SV	ST11SV	(A^(1/3)+B^(1/3))/2	ST11SMVO		ST11SV	Volume (WM Parcellation) of LeftAccumbensArea	Left	Volume (WM Parcellation) 	AccumbensArea	Volume (WM Parcellation) of _AccumbensArea	Volume (WM Parcellation) of _AccumbensArea_Left
+138		mean	ST71SV	ST12SV	(A^(1/3)+B^(1/3))/2	ST12SMVO		ST12SV	Volume (WM Parcellation) of LeftAmygdala	Left	Volume (WM Parcellation) 	Amygdala	Volume (WM Parcellation) of _Amygdala	Volume (WM Parcellation) of _Amygdala_Left
+139		mean	ST75SV	ST16SV	(A^(1/3)+B^(1/3))/2	ST16SMVO		ST16SV	Volume (WM Parcellation) of LeftCaudate	Left	Volume (WM Parcellation) 	Caudate	Volume (WM Parcellation) of _Caudate	Volume (WM Parcellation) of _Caudate_Left
+140		mean	ST76SV	ST17SV	(A^(1/3)+B^(1/3))/2	ST17SMVO		ST17SV	Volume (WM Parcellation) of LeftCerebellumCortex	Left	Volume (WM Parcellation) 	CerebellumCortex	Volume (WM Parcellation) of _CerebellumCortex	Volume (WM Parcellation) of _CerebellumCortex_Left
+141		mean	ST77SV	ST18SV	(A^(1/3)+B^(1/3))/2	ST18SMVO		ST18SV	Volume (WM Parcellation) of LeftCerebellumWM	Left	Volume (WM Parcellation) 	CerebellumWM	Volume (WM Parcellation) of _CerebellumWM	Volume (WM Parcellation) of _CerebellumWM_Left
+142		mean	ST80SV	ST21SV	(A^(1/3)+B^(1/3))/2	ST21SMVO		ST21SV	Volume (WM Parcellation) of LeftChoroidPlexus	Left	Volume (WM Parcellation) 	ChoroidPlexus	Volume (WM Parcellation) of _ChoroidPlexus	Volume (WM Parcellation) of _ChoroidPlexus_Left
+143		mean	ST88SV	ST29SV	(A^(1/3)+B^(1/3))/2	ST29SMVO		ST29SV	Volume (WM Parcellation) of LeftHippocampus	Left	Volume (WM Parcellation) 	Hippocampus	Volume (WM Parcellation) of _Hippocampus	Volume (WM Parcellation) of _Hippocampus_Left
+144		mean	ST89SV	ST30SV	(A^(1/3)+B^(1/3))/2	ST30SMVO		ST30SV	Volume (WM Parcellation) of LeftInferiorLateralVentricle	Left	Volume (WM Parcellation) 	InferiorLateralVentricle	Volume (WM Parcellation) of _InferiorLateralVentricle	Volume (WM Parcellation) of _InferiorLateralVentricle_Left
+145		mean	ST96SV	ST37SV	(A^(1/3)+B^(1/3))/2	ST37SMVO		ST37SV	Volume (WM Parcellation) of LeftLateralVentricle	Left	Volume (WM Parcellation) 	LateralVentricle	Volume (WM Parcellation) of _LateralVentricle	Volume (WM Parcellation) of _LateralVentricle_Left
+146		mean	ST101SV	ST42SV	(A^(1/3)+B^(1/3))/2	ST42SMVO		ST42SV	Volume (WM Parcellation) of LeftPallidum	Left	Volume (WM Parcellation) 	Pallidum	Volume (WM Parcellation) of _Pallidum	Volume (WM Parcellation) of _Pallidum_Left
+147		mean	ST112SV	ST53SV	(A^(1/3)+B^(1/3))/2	ST53SMVO		ST53SV	Volume (WM Parcellation) of LeftPutamen	Left	Volume (WM Parcellation) 	Putamen	Volume (WM Parcellation) of _Putamen	Volume (WM Parcellation) of _Putamen_Left
+148		mean	ST120SV	ST61SV	(A^(1/3)+B^(1/3))/2	ST61SMVO		ST61SV	Volume (WM Parcellation) of LeftThalamus	Left	Volume (WM Parcellation) 	Thalamus	Volume (WM Parcellation) of _Thalamus	Volume (WM Parcellation) of _Thalamus_Left
+149		mean	ST124SV	ST65SV	(A^(1/3)+B^(1/3))/2	ST65SMVO		ST65SV	Volume (WM Parcellation) of LeftVentralDC	Left	Volume (WM Parcellation) 	VentralDC	Volume (WM Parcellation) of _VentralDC	Volume (WM Parcellation) of _VentralDC_Left
+150		mean	ST125SV	ST66SV	(A^(1/3)+B^(1/3))/2	ST66SMVO		ST66SV	Volume (WM Parcellation) of LeftVessel	Left	Volume (WM Parcellation) 	Vessel	Volume (WM Parcellation) of _Vessel	Volume (WM Parcellation) of _Vessel_Left
+151		absdiff	ST72TA	ST13TA	|A-B|	ST13TDT		ST72TA	Cortical Thickness Average of RightBankssts	Right	Cortical Thickness Average 	Bankssts	Cortical Thickness Average of _Bankssts	Cortical Thickness Average of _Bankssts_Right
+152		absdiff	ST73TA	ST14TA	|A-B|	ST14TDT		ST73TA	Cortical Thickness Average of RightCaudalAnteriorCingulate	Right	Cortical Thickness Average 	CaudalAnteriorCingulate	Cortical Thickness Average of _CaudalAnteriorCingulate	Cortical Thickness Average of _CaudalAnteriorCingulate_Right
+153		absdiff	ST74TA	ST15TA	|A-B|	ST15TDT		ST74TA	Cortical Thickness Average of RightCaudalMiddleFrontal	Right	Cortical Thickness Average 	CaudalMiddleFrontal	Cortical Thickness Average of _CaudalMiddleFrontal	Cortical Thickness Average of _CaudalMiddleFrontal_Right
+154		absdiff	ST82TA	ST23TA	|A-B|	ST23TDT		ST82TA	Cortical Thickness Average of RightCuneus	Right	Cortical Thickness Average 	Cuneus	Cortical Thickness Average of _Cuneus	Cortical Thickness Average of _Cuneus_Right
+155		absdiff	ST83TA	ST24TA	|A-B|	ST24TDT		ST83TA	Cortical Thickness Average of RightEntorhinal	Right	Cortical Thickness Average 	Entorhinal	Cortical Thickness Average of _Entorhinal	Cortical Thickness Average of _Entorhinal_Right
+156		absdiff	ST84TA	ST25TA	|A-B|	ST25TDT		ST84TA	Cortical Thickness Average of RightFrontalPole	Right	Cortical Thickness Average 	FrontalPole	Cortical Thickness Average of _FrontalPole	Cortical Thickness Average of _FrontalPole_Right
+157		absdiff	ST85TA	ST26TA	|A-B|	ST26TDT		ST85TA	Cortical Thickness Average of RightFusiform	Right	Cortical Thickness Average 	Fusiform	Cortical Thickness Average of _Fusiform	Cortical Thickness Average of _Fusiform_Right
+158		absdiff	ST90TA	ST31TA	|A-B|	ST31TDT		ST90TA	Cortical Thickness Average of RightInferiorParietal	Right	Cortical Thickness Average 	InferiorParietal	Cortical Thickness Average of _InferiorParietal	Cortical Thickness Average of _InferiorParietal_Right
+159		absdiff	ST91TA	ST32TA	|A-B|	ST32TDT		ST91TA	Cortical Thickness Average of RightInferiorTemporal	Right	Cortical Thickness Average 	InferiorTemporal	Cortical Thickness Average of _InferiorTemporal	Cortical Thickness Average of _InferiorTemporal_Right
+160		absdiff	ST130TA	ST129TA	|A-B|	ST129DT		ST130TA	Cortical Thickness Average of RightInsula	Right	Cortical Thickness Average 	Insula	Cortical Thickness Average of _Insula	Cortical Thickness Average of _Insula_Right
+161		absdiff	ST93TA	ST34TA	|A-B|	ST34TDT		ST93TA	Cortical Thickness Average of RightIsthmusCingulate	Right	Cortical Thickness Average 	IsthmusCingulate	Cortical Thickness Average of _IsthmusCingulate	Cortical Thickness Average of _IsthmusCingulate_Right
+162		absdiff	ST94TA	ST35TA	|A-B|	ST35TDT		ST94TA	Cortical Thickness Average of RightLateralOccipital	Right	Cortical Thickness Average 	LateralOccipital	Cortical Thickness Average of _LateralOccipital	Cortical Thickness Average of _LateralOccipital_Right
+163		absdiff	ST95TA	ST36TA	|A-B|	ST36TDT		ST95TA	Cortical Thickness Average of RightLateralOrbitofrontal	Right	Cortical Thickness Average 	LateralOrbitofrontal	Cortical Thickness Average of _LateralOrbitofrontal	Cortical Thickness Average of _LateralOrbitofrontal_Right
+164		absdiff	ST97TA	ST38TA	|A-B|	ST38TDT		ST97TA	Cortical Thickness Average of RightLingual	Right	Cortical Thickness Average 	Lingual	Cortical Thickness Average of _Lingual	Cortical Thickness Average of _Lingual_Right
+165		absdiff	ST98TA	ST39TA	|A-B|	ST39TDT		ST98TA	Cortical Thickness Average of RightMedialOrbitofrontal	Right	Cortical Thickness Average 	MedialOrbitofrontal	Cortical Thickness Average of _MedialOrbitofrontal	Cortical Thickness Average of _MedialOrbitofrontal_Right
+166		absdiff	ST99TA	ST40TA	|A-B|	ST40TDT		ST99TA	Cortical Thickness Average of RightMiddleTemporal	Right	Cortical Thickness Average 	MiddleTemporal	Cortical Thickness Average of _MiddleTemporal	Cortical Thickness Average of _MiddleTemporal_Right
+167		absdiff	ST102TA	ST43TA	|A-B|	ST43TDT		ST102TA	Cortical Thickness Average of RightParacentral	Right	Cortical Thickness Average 	Paracentral	Cortical Thickness Average of _Paracentral	Cortical Thickness Average of _Paracentral_Right
+168		absdiff	ST103TA	ST44TA	|A-B|	ST44TDT		ST103TA	Cortical Thickness Average of RightParahippocampal	Right	Cortical Thickness Average 	Parahippocampal	Cortical Thickness Average of _Parahippocampal	Cortical Thickness Average of _Parahippocampal_Right
+169		absdiff	ST104TA	ST45TA	|A-B|	ST45TDT		ST104TA	Cortical Thickness Average of RightParsOpercularis	Right	Cortical Thickness Average 	ParsOpercularis	Cortical Thickness Average of _ParsOpercularis	Cortical Thickness Average of _ParsOpercularis_Right
+170		absdiff	ST105TA	ST46TA	|A-B|	ST46TDT		ST105TA	Cortical Thickness Average of RightParsOrbitalis	Right	Cortical Thickness Average 	ParsOrbitalis	Cortical Thickness Average of _ParsOrbitalis	Cortical Thickness Average of _ParsOrbitalis_Right
+171		absdiff	ST106TA	ST47TA	|A-B|	ST47TDT		ST106TA	Cortical Thickness Average of RightParsTriangularis	Right	Cortical Thickness Average 	ParsTriangularis	Cortical Thickness Average of _ParsTriangularis	Cortical Thickness Average of _ParsTriangularis_Right
+172		absdiff	ST107TA	ST48TA	|A-B|	ST48TDT		ST107TA	Cortical Thickness Average of RightPericalcarine	Right	Cortical Thickness Average 	Pericalcarine	Cortical Thickness Average of _Pericalcarine	Cortical Thickness Average of _Pericalcarine_Right
+173		absdiff	ST108TA	ST49TA	|A-B|	ST49TDT		ST108TA	Cortical Thickness Average of RightPostcentral	Right	Cortical Thickness Average 	Postcentral	Cortical Thickness Average of _Postcentral	Cortical Thickness Average of _Postcentral_Right
+174		absdiff	ST109TA	ST50TA	|A-B|	ST50TDT		ST109TA	Cortical Thickness Average of RightPosteriorCingulate	Right	Cortical Thickness Average 	PosteriorCingulate	Cortical Thickness Average of _PosteriorCingulate	Cortical Thickness Average of _PosteriorCingulate_Right
+175		absdiff	ST110TA	ST51TA	|A-B|	ST51TDT		ST110TA	Cortical Thickness Average of RightPrecentral	Right	Cortical Thickness Average 	Precentral	Cortical Thickness Average of _Precentral	Cortical Thickness Average of _Precentral_Right
+176		absdiff	ST111TA	ST52TA	|A-B|	ST52TDT		ST111TA	Cortical Thickness Average of RightPrecuneus	Right	Cortical Thickness Average 	Precuneus	Cortical Thickness Average of _Precuneus	Cortical Thickness Average of _Precuneus_Right
+177		absdiff	ST113TA	ST54TA	|A-B|	ST54TDT		ST113TA	Cortical Thickness Average of RightRostralAnteriorCingulate	Right	Cortical Thickness Average 	RostralAnteriorCingulate	Cortical Thickness Average of _RostralAnteriorCingulate	Cortical Thickness Average of _RostralAnteriorCingulate_Right
+178		absdiff	ST114TA	ST55TA	|A-B|	ST55TDT		ST114TA	Cortical Thickness Average of RightRostralMiddleFrontal	Right	Cortical Thickness Average 	RostralMiddleFrontal	Cortical Thickness Average of _RostralMiddleFrontal	Cortical Thickness Average of _RostralMiddleFrontal_Right
+179		absdiff	ST115TA	ST56TA	|A-B|	ST56TDT		ST115TA	Cortical Thickness Average of RightSuperiorFrontal	Right	Cortical Thickness Average 	SuperiorFrontal	Cortical Thickness Average of _SuperiorFrontal	Cortical Thickness Average of _SuperiorFrontal_Right
+180		absdiff	ST116TA	ST57TA	|A-B|	ST57TDT		ST116TA	Cortical Thickness Average of RightSuperiorParietal	Right	Cortical Thickness Average 	SuperiorParietal	Cortical Thickness Average of _SuperiorParietal	Cortical Thickness Average of _SuperiorParietal_Right
+181		absdiff	ST117TA	ST58TA	|A-B|	ST58TDT		ST117TA	Cortical Thickness Average of RightSuperiorTemporal	Right	Cortical Thickness Average 	SuperiorTemporal	Cortical Thickness Average of _SuperiorTemporal	Cortical Thickness Average of _SuperiorTemporal_Right
+182		absdiff	ST118TA	ST59TA	|A-B|	ST59TDT		ST118TA	Cortical Thickness Average of RightSupramarginal	Right	Cortical Thickness Average 	Supramarginal	Cortical Thickness Average of _Supramarginal	Cortical Thickness Average of _Supramarginal_Right
+183		absdiff	ST119TA	ST60TA	|A-B|	ST60TDT		ST119TA	Cortical Thickness Average of RightTemporalPole	Right	Cortical Thickness Average 	TemporalPole	Cortical Thickness Average of _TemporalPole	Cortical Thickness Average of _TemporalPole_Right
+184		absdiff	ST121TA	ST62TA	|A-B|	ST62TDT		ST121TA	Cortical Thickness Average of RightTransverseTemporal	Right	Cortical Thickness Average 	TransverseTemporal	Cortical Thickness Average of _TransverseTemporal	Cortical Thickness Average of _TransverseTemporal_Right
+185		absdiff	ST72TS	ST13TS	|A-B|	ST13TDSDT		ST72TS	Cortical Thickness Standard Deviation of RightBankssts	Right	Cortical Thickness Standard Deviation 	Bankssts	Cortical Thickness Standard Deviation of _Bankssts	Cortical Thickness Standard Deviation of _Bankssts_Right
+186		absdiff	ST73TS	ST14TS	|A-B|	ST14TDSDT		ST73TS	Cortical Thickness Standard Deviation of RightCaudalAnteriorCingulate	Right	Cortical Thickness Standard Deviation 	CaudalAnteriorCingulate	Cortical Thickness Standard Deviation of _CaudalAnteriorCingulate	Cortical Thickness Standard Deviation of _CaudalAnteriorCingulate_Right
+187		absdiff	ST74TS	ST15TS	|A-B|	ST15TDSDT		ST74TS	Cortical Thickness Standard Deviation of RightCaudalMiddleFrontal	Right	Cortical Thickness Standard Deviation 	CaudalMiddleFrontal	Cortical Thickness Standard Deviation of _CaudalMiddleFrontal	Cortical Thickness Standard Deviation of _CaudalMiddleFrontal_Right
+188		absdiff	ST82TS	ST23TS	|A-B|	ST23TDSDT		ST82TS	Cortical Thickness Standard Deviation of RightCuneus	Right	Cortical Thickness Standard Deviation 	Cuneus	Cortical Thickness Standard Deviation of _Cuneus	Cortical Thickness Standard Deviation of _Cuneus_Right
+189		absdiff	ST83TS	ST24TS	|A-B|	ST24TDSDT		ST83TS	Cortical Thickness Standard Deviation of RightEntorhinal	Right	Cortical Thickness Standard Deviation 	Entorhinal	Cortical Thickness Standard Deviation of _Entorhinal	Cortical Thickness Standard Deviation of _Entorhinal_Right
+190		absdiff	ST84TS	ST25TS	|A-B|	ST25TDSDT		ST84TS	Cortical Thickness Standard Deviation of RightFrontalPole	Right	Cortical Thickness Standard Deviation 	FrontalPole	Cortical Thickness Standard Deviation of _FrontalPole	Cortical Thickness Standard Deviation of _FrontalPole_Right
+191		absdiff	ST85TS	ST26TS	|A-B|	ST26TDSDT		ST85TS	Cortical Thickness Standard Deviation of RightFusiform	Right	Cortical Thickness Standard Deviation 	Fusiform	Cortical Thickness Standard Deviation of _Fusiform	Cortical Thickness Standard Deviation of _Fusiform_Right
+192		absdiff	ST90TS	ST31TS	|A-B|	ST31TDSDT		ST90TS	Cortical Thickness Standard Deviation of RightInferiorParietal	Right	Cortical Thickness Standard Deviation 	InferiorParietal	Cortical Thickness Standard Deviation of _InferiorParietal	Cortical Thickness Standard Deviation of _InferiorParietal_Right
+193		absdiff	ST91TS	ST32TS	|A-B|	ST32TDSDT		ST91TS	Cortical Thickness Standard Deviation of RightInferiorTemporal	Right	Cortical Thickness Standard Deviation 	InferiorTemporal	Cortical Thickness Standard Deviation of _InferiorTemporal	Cortical Thickness Standard Deviation of _InferiorTemporal_Right
+194		absdiff	ST130TS	ST129TS	|A-B|	ST129DSDT		ST130TS	Cortical Thickness Standard Deviation of RightInsula	Right	Cortical Thickness Standard Deviation 	Insula	Cortical Thickness Standard Deviation of _Insula	Cortical Thickness Standard Deviation of _Insula_Right
+195		absdiff	ST93TS	ST34TS	|A-B|	ST34TDSDT		ST93TS	Cortical Thickness Standard Deviation of RightIsthmusCingulate	Right	Cortical Thickness Standard Deviation 	IsthmusCingulate	Cortical Thickness Standard Deviation of _IsthmusCingulate	Cortical Thickness Standard Deviation of _IsthmusCingulate_Right
+196		absdiff	ST94TS	ST35TS	|A-B|	ST35TDSDT		ST94TS	Cortical Thickness Standard Deviation of RightLateralOccipital	Right	Cortical Thickness Standard Deviation 	LateralOccipital	Cortical Thickness Standard Deviation of _LateralOccipital	Cortical Thickness Standard Deviation of _LateralOccipital_Right
+197		absdiff	ST95TS	ST36TS	|A-B|	ST36TDSDT		ST95TS	Cortical Thickness Standard Deviation of RightLateralOrbitofrontal	Right	Cortical Thickness Standard Deviation 	LateralOrbitofrontal	Cortical Thickness Standard Deviation of _LateralOrbitofrontal	Cortical Thickness Standard Deviation of _LateralOrbitofrontal_Right
+198		absdiff	ST97TS	ST38TS	|A-B|	ST38TDSDT		ST97TS	Cortical Thickness Standard Deviation of RightLingual	Right	Cortical Thickness Standard Deviation 	Lingual	Cortical Thickness Standard Deviation of _Lingual	Cortical Thickness Standard Deviation of _Lingual_Right
+199		absdiff	ST98TS	ST39TS	|A-B|	ST39TDSDT		ST98TS	Cortical Thickness Standard Deviation of RightMedialOrbitofrontal	Right	Cortical Thickness Standard Deviation 	MedialOrbitofrontal	Cortical Thickness Standard Deviation of _MedialOrbitofrontal	Cortical Thickness Standard Deviation of _MedialOrbitofrontal_Right
+200		absdiff	ST99TS	ST40TS	|A-B|	ST40TDSDT		ST99TS	Cortical Thickness Standard Deviation of RightMiddleTemporal	Right	Cortical Thickness Standard Deviation 	MiddleTemporal	Cortical Thickness Standard Deviation of _MiddleTemporal	Cortical Thickness Standard Deviation of _MiddleTemporal_Right
+201		absdiff	ST102TS	ST43TS	|A-B|	ST43TDSDT		ST102TS	Cortical Thickness Standard Deviation of RightParacentral	Right	Cortical Thickness Standard Deviation 	Paracentral	Cortical Thickness Standard Deviation of _Paracentral	Cortical Thickness Standard Deviation of _Paracentral_Right
+202		absdiff	ST103TS	ST44TS	|A-B|	ST44TDSDT		ST103TS	Cortical Thickness Standard Deviation of RightParahippocampal	Right	Cortical Thickness Standard Deviation 	Parahippocampal	Cortical Thickness Standard Deviation of _Parahippocampal	Cortical Thickness Standard Deviation of _Parahippocampal_Right
+203		absdiff	ST104TS	ST45TS	|A-B|	ST45TDSDT		ST104TS	Cortical Thickness Standard Deviation of RightParsOpercularis	Right	Cortical Thickness Standard Deviation 	ParsOpercularis	Cortical Thickness Standard Deviation of _ParsOpercularis	Cortical Thickness Standard Deviation of _ParsOpercularis_Right
+204		absdiff	ST105TS	ST46TS	|A-B|	ST46TDSDT		ST105TS	Cortical Thickness Standard Deviation of RightParsOrbitalis	Right	Cortical Thickness Standard Deviation 	ParsOrbitalis	Cortical Thickness Standard Deviation of _ParsOrbitalis	Cortical Thickness Standard Deviation of _ParsOrbitalis_Right
+205		absdiff	ST106TS	ST47TS	|A-B|	ST47TDSDT		ST106TS	Cortical Thickness Standard Deviation of RightParsTriangularis	Right	Cortical Thickness Standard Deviation 	ParsTriangularis	Cortical Thickness Standard Deviation of _ParsTriangularis	Cortical Thickness Standard Deviation of _ParsTriangularis_Right
+206		absdiff	ST107TS	ST48TS	|A-B|	ST48TDSDT		ST107TS	Cortical Thickness Standard Deviation of RightPericalcarine	Right	Cortical Thickness Standard Deviation 	Pericalcarine	Cortical Thickness Standard Deviation of _Pericalcarine	Cortical Thickness Standard Deviation of _Pericalcarine_Right
+207		absdiff	ST108TS	ST49TS	|A-B|	ST49TDSDT		ST108TS	Cortical Thickness Standard Deviation of RightPostcentral	Right	Cortical Thickness Standard Deviation 	Postcentral	Cortical Thickness Standard Deviation of _Postcentral	Cortical Thickness Standard Deviation of _Postcentral_Right
+208		absdiff	ST109TS	ST50TS	|A-B|	ST50TDSDT		ST109TS	Cortical Thickness Standard Deviation of RightPosteriorCingulate	Right	Cortical Thickness Standard Deviation 	PosteriorCingulate	Cortical Thickness Standard Deviation of _PosteriorCingulate	Cortical Thickness Standard Deviation of _PosteriorCingulate_Right
+209		absdiff	ST110TS	ST51TS	|A-B|	ST51TDSDT		ST110TS	Cortical Thickness Standard Deviation of RightPrecentral	Right	Cortical Thickness Standard Deviation 	Precentral	Cortical Thickness Standard Deviation of _Precentral	Cortical Thickness Standard Deviation of _Precentral_Right
+210		absdiff	ST111TS	ST52TS	|A-B|	ST52TDSDT		ST111TS	Cortical Thickness Standard Deviation of RightPrecuneus	Right	Cortical Thickness Standard Deviation 	Precuneus	Cortical Thickness Standard Deviation of _Precuneus	Cortical Thickness Standard Deviation of _Precuneus_Right
+211		absdiff	ST113TS	ST54TS	|A-B|	ST54TDSDT		ST113TS	Cortical Thickness Standard Deviation of RightRostralAnteriorCingulate	Right	Cortical Thickness Standard Deviation 	RostralAnteriorCingulate	Cortical Thickness Standard Deviation of _RostralAnteriorCingulate	Cortical Thickness Standard Deviation of _RostralAnteriorCingulate_Right
+212		absdiff	ST114TS	ST55TS	|A-B|	ST55TDSDT		ST114TS	Cortical Thickness Standard Deviation of RightRostralMiddleFrontal	Right	Cortical Thickness Standard Deviation 	RostralMiddleFrontal	Cortical Thickness Standard Deviation of _RostralMiddleFrontal	Cortical Thickness Standard Deviation of _RostralMiddleFrontal_Right
+213		absdiff	ST115TS	ST56TS	|A-B|	ST56TDSDT		ST115TS	Cortical Thickness Standard Deviation of RightSuperiorFrontal	Right	Cortical Thickness Standard Deviation 	SuperiorFrontal	Cortical Thickness Standard Deviation of _SuperiorFrontal	Cortical Thickness Standard Deviation of _SuperiorFrontal_Right
+214		absdiff	ST116TS	ST57TS	|A-B|	ST57TDSDT		ST116TS	Cortical Thickness Standard Deviation of RightSuperiorParietal	Right	Cortical Thickness Standard Deviation 	SuperiorParietal	Cortical Thickness Standard Deviation of _SuperiorParietal	Cortical Thickness Standard Deviation of _SuperiorParietal_Right
+215		absdiff	ST117TS	ST58TS	|A-B|	ST58TDSDT		ST117TS	Cortical Thickness Standard Deviation of RightSuperiorTemporal	Right	Cortical Thickness Standard Deviation 	SuperiorTemporal	Cortical Thickness Standard Deviation of _SuperiorTemporal	Cortical Thickness Standard Deviation of _SuperiorTemporal_Right
+216		absdiff	ST118TS	ST59TS	|A-B|	ST59TDSDT		ST118TS	Cortical Thickness Standard Deviation of RightSupramarginal	Right	Cortical Thickness Standard Deviation 	Supramarginal	Cortical Thickness Standard Deviation of _Supramarginal	Cortical Thickness Standard Deviation of _Supramarginal_Right
+217		absdiff	ST119TS	ST60TS	|A-B|	ST60TDSDT		ST119TS	Cortical Thickness Standard Deviation of RightTemporalPole	Right	Cortical Thickness Standard Deviation 	TemporalPole	Cortical Thickness Standard Deviation of _TemporalPole	Cortical Thickness Standard Deviation of _TemporalPole_Right
+218		absdiff	ST121TS	ST62TS	|A-B|	ST62TDSDT		ST121TS	Cortical Thickness Standard Deviation of RightTransverseTemporal	Right	Cortical Thickness Standard Deviation 	TransverseTemporal	Cortical Thickness Standard Deviation of _TransverseTemporal	Cortical Thickness Standard Deviation of _TransverseTemporal_Right
+219		absdiff	ST72SA	ST13SA	|A^(1/2)-B^(1/2)|	ST13SDSA		ST72SA	Surface Area of RightBankssts	Right	Surface Area 	Bankssts	Surface Area of _Bankssts	Surface Area of _Bankssts_Right
+220		absdiff	ST73SA	ST14SA	|A^(1/2)-B^(1/2)|	ST14SDSA		ST73SA	Surface Area of RightCaudalAnteriorCingulate	Right	Surface Area 	CaudalAnteriorCingulate	Surface Area of _CaudalAnteriorCingulate	Surface Area of _CaudalAnteriorCingulate_Right
+221		absdiff	ST74SA	ST15SA	|A^(1/2)-B^(1/2)|	ST15SDSA		ST74SA	Surface Area of RightCaudalMiddleFrontal	Right	Surface Area 	CaudalMiddleFrontal	Surface Area of _CaudalMiddleFrontal	Surface Area of _CaudalMiddleFrontal_Right
+222		absdiff	ST82SA	ST23SA	|A^(1/2)-B^(1/2)|	ST23SDSA		ST82SA	Surface Area of RightCuneus	Right	Surface Area 	Cuneus	Surface Area of _Cuneus	Surface Area of _Cuneus_Right
+223		absdiff	ST83SA	ST24SA	|A^(1/2)-B^(1/2)|	ST24SDSA		ST83SA	Surface Area of RightEntorhinal	Right	Surface Area 	Entorhinal	Surface Area of _Entorhinal	Surface Area of _Entorhinal_Right
+224		absdiff	ST84SA	ST25SA	|A^(1/2)-B^(1/2)|	ST25SDSA		ST84SA	Surface Area of RightFrontalPole	Right	Surface Area 	FrontalPole	Surface Area of _FrontalPole	Surface Area of _FrontalPole_Right
+225		absdiff	ST85SA	ST26SA	|A^(1/2)-B^(1/2)|	ST26SDSA		ST85SA	Surface Area of RightFusiform	Right	Surface Area 	Fusiform	Surface Area of _Fusiform	Surface Area of _Fusiform_Right
+226		absdiff	ST90SA	ST31SA	|A^(1/2)-B^(1/2)|	ST31SDSA		ST90SA	Surface Area of RightInferiorParietal	Right	Surface Area 	InferiorParietal	Surface Area of _InferiorParietal	Surface Area of _InferiorParietal_Right
+227		absdiff	ST91SA	ST32SA	|A^(1/2)-B^(1/2)|	ST32SDSA		ST91SA	Surface Area of RightInferiorTemporal	Right	Surface Area 	InferiorTemporal	Surface Area of _InferiorTemporal	Surface Area of _InferiorTemporal_Right
+228		absdiff	ST130SA	ST129SA	|A^(1/2)-B^(1/2)|	ST129DSA		ST130SA	Surface Area of RightInsula	Right	Surface Area 	Insula	Surface Area of _Insula	Surface Area of _Insula_Right
+229		absdiff	ST93SA	ST34SA	|A^(1/2)-B^(1/2)|	ST34SDSA		ST93SA	Surface Area of RightIsthmusCingulate	Right	Surface Area 	IsthmusCingulate	Surface Area of _IsthmusCingulate	Surface Area of _IsthmusCingulate_Right
+230		absdiff	ST94SA	ST35SA	|A^(1/2)-B^(1/2)|	ST35SDSA		ST94SA	Surface Area of RightLateralOccipital	Right	Surface Area 	LateralOccipital	Surface Area of _LateralOccipital	Surface Area of _LateralOccipital_Right
+231		absdiff	ST95SA	ST36SA	|A^(1/2)-B^(1/2)|	ST36SDSA		ST95SA	Surface Area of RightLateralOrbitofrontal	Right	Surface Area 	LateralOrbitofrontal	Surface Area of _LateralOrbitofrontal	Surface Area of _LateralOrbitofrontal_Right
+232		absdiff	ST97SA	ST38SA	|A^(1/2)-B^(1/2)|	ST38SDSA		ST97SA	Surface Area of RightLingual	Right	Surface Area 	Lingual	Surface Area of _Lingual	Surface Area of _Lingual_Right
+233		absdiff	ST98SA	ST39SA	|A^(1/2)-B^(1/2)|	ST39SDSA		ST98SA	Surface Area of RightMedialOrbitofrontal	Right	Surface Area 	MedialOrbitofrontal	Surface Area of _MedialOrbitofrontal	Surface Area of _MedialOrbitofrontal_Right
+234		absdiff	ST99SA	ST40SA	|A^(1/2)-B^(1/2)|	ST40SDSA		ST99SA	Surface Area of RightMiddleTemporal	Right	Surface Area 	MiddleTemporal	Surface Area of _MiddleTemporal	Surface Area of _MiddleTemporal_Right
+235		absdiff	ST102SA	ST43SA	|A^(1/2)-B^(1/2)|	ST43SDSA		ST102SA	Surface Area of RightParacentral	Right	Surface Area 	Paracentral	Surface Area of _Paracentral	Surface Area of _Paracentral_Right
+236		absdiff	ST103SA	ST44SA	|A^(1/2)-B^(1/2)|	ST44SDSA		ST103SA	Surface Area of RightParahippocampal	Right	Surface Area 	Parahippocampal	Surface Area of _Parahippocampal	Surface Area of _Parahippocampal_Right
+237		absdiff	ST104SA	ST45SA	|A^(1/2)-B^(1/2)|	ST45SDSA		ST104SA	Surface Area of RightParsOpercularis	Right	Surface Area 	ParsOpercularis	Surface Area of _ParsOpercularis	Surface Area of _ParsOpercularis_Right
+238		absdiff	ST105SA	ST46SA	|A^(1/2)-B^(1/2)|	ST46SDSA		ST105SA	Surface Area of RightParsOrbitalis	Right	Surface Area 	ParsOrbitalis	Surface Area of _ParsOrbitalis	Surface Area of _ParsOrbitalis_Right
+239		absdiff	ST106SA	ST47SA	|A^(1/2)-B^(1/2)|	ST47SDSA		ST106SA	Surface Area of RightParsTriangularis	Right	Surface Area 	ParsTriangularis	Surface Area of _ParsTriangularis	Surface Area of _ParsTriangularis_Right
+240		absdiff	ST107SA	ST48SA	|A^(1/2)-B^(1/2)|	ST48SDSA		ST107SA	Surface Area of RightPericalcarine	Right	Surface Area 	Pericalcarine	Surface Area of _Pericalcarine	Surface Area of _Pericalcarine_Right
+241		absdiff	ST108SA	ST49SA	|A^(1/2)-B^(1/2)|	ST49SDSA		ST108SA	Surface Area of RightPostcentral	Right	Surface Area 	Postcentral	Surface Area of _Postcentral	Surface Area of _Postcentral_Right
+242		absdiff	ST109SA	ST50SA	|A^(1/2)-B^(1/2)|	ST50SDSA		ST109SA	Surface Area of RightPosteriorCingulate	Right	Surface Area 	PosteriorCingulate	Surface Area of _PosteriorCingulate	Surface Area of _PosteriorCingulate_Right
+243		absdiff	ST110SA	ST51SA	|A^(1/2)-B^(1/2)|	ST51SDSA		ST110SA	Surface Area of RightPrecentral	Right	Surface Area 	Precentral	Surface Area of _Precentral	Surface Area of _Precentral_Right
+244		absdiff	ST111SA	ST52SA	|A^(1/2)-B^(1/2)|	ST52SDSA		ST111SA	Surface Area of RightPrecuneus	Right	Surface Area 	Precuneus	Surface Area of _Precuneus	Surface Area of _Precuneus_Right
+245		absdiff	ST113SA	ST54SA	|A^(1/2)-B^(1/2)|	ST54SDSA		ST113SA	Surface Area of RightRostralAnteriorCingulate	Right	Surface Area 	RostralAnteriorCingulate	Surface Area of _RostralAnteriorCingulate	Surface Area of _RostralAnteriorCingulate_Right
+246		absdiff	ST114SA	ST55SA	|A^(1/2)-B^(1/2)|	ST55SDSA		ST114SA	Surface Area of RightRostralMiddleFrontal	Right	Surface Area 	RostralMiddleFrontal	Surface Area of _RostralMiddleFrontal	Surface Area of _RostralMiddleFrontal_Right
+247		absdiff	ST115SA	ST56SA	|A^(1/2)-B^(1/2)|	ST56SDSA		ST115SA	Surface Area of RightSuperiorFrontal	Right	Surface Area 	SuperiorFrontal	Surface Area of _SuperiorFrontal	Surface Area of _SuperiorFrontal_Right
+248		absdiff	ST116SA	ST57SA	|A^(1/2)-B^(1/2)|	ST57SDSA		ST116SA	Surface Area of RightSuperiorParietal	Right	Surface Area 	SuperiorParietal	Surface Area of _SuperiorParietal	Surface Area of _SuperiorParietal_Right
+249		absdiff	ST117SA	ST58SA	|A^(1/2)-B^(1/2)|	ST58SDSA		ST117SA	Surface Area of RightSuperiorTemporal	Right	Surface Area 	SuperiorTemporal	Surface Area of _SuperiorTemporal	Surface Area of _SuperiorTemporal_Right
+250		absdiff	ST118SA	ST59SA	|A^(1/2)-B^(1/2)|	ST59SDSA		ST118SA	Surface Area of RightSupramarginal	Right	Surface Area 	Supramarginal	Surface Area of _Supramarginal	Surface Area of _Supramarginal_Right
+251		absdiff	ST119SA	ST60SA	|A^(1/2)-B^(1/2)|	ST60SDSA		ST119SA	Surface Area of RightTemporalPole	Right	Surface Area 	TemporalPole	Surface Area of _TemporalPole	Surface Area of _TemporalPole_Right
+252		absdiff	ST121SA	ST62SA	|A^(1/2)-B^(1/2)|	ST62SDSA		ST121SA	Surface Area of RightTransverseTemporal	Right	Surface Area 	TransverseTemporal	Surface Area of _TransverseTemporal	Surface Area of _TransverseTemporal_Right
+253		absdiff	ST72CV	ST13CV	|A^(1/3)-B^(1/3)|	ST13CDVO		ST72CV	Volume (Cortical Parcellation) of RightBankssts	Right	Volume (Cortical Parcellation) 	Bankssts	Volume (Cortical Parcellation) of _Bankssts	Volume (Cortical Parcellation) of _Bankssts_Right
+254		absdiff	ST73CV	ST14CV	|A^(1/3)-B^(1/3)|	ST14CDVO		ST73CV	Volume (Cortical Parcellation) of RightCaudalAnteriorCingulate	Right	Volume (Cortical Parcellation) 	CaudalAnteriorCingulate	Volume (Cortical Parcellation) of _CaudalAnteriorCingulate	Volume (Cortical Parcellation) of _CaudalAnteriorCingulate_Right
+255		absdiff	ST74CV	ST15CV	|A^(1/3)-B^(1/3)|	ST15CDVO		ST74CV	Volume (Cortical Parcellation) of RightCaudalMiddleFrontal	Right	Volume (Cortical Parcellation) 	CaudalMiddleFrontal	Volume (Cortical Parcellation) of _CaudalMiddleFrontal	Volume (Cortical Parcellation) of _CaudalMiddleFrontal_Right
+256		absdiff	ST82CV	ST23CV	|A^(1/3)-B^(1/3)|	ST23CDVO		ST82CV	Volume (Cortical Parcellation) of RightCuneus	Right	Volume (Cortical Parcellation) 	Cuneus	Volume (Cortical Parcellation) of _Cuneus	Volume (Cortical Parcellation) of _Cuneus_Right
+257		absdiff	ST83CV	ST24CV	|A^(1/3)-B^(1/3)|	ST24CDVO		ST83CV	Volume (Cortical Parcellation) of RightEntorhinal	Right	Volume (Cortical Parcellation) 	Entorhinal	Volume (Cortical Parcellation) of _Entorhinal	Volume (Cortical Parcellation) of _Entorhinal_Right
+258		absdiff	ST84CV	ST25CV	|A^(1/3)-B^(1/3)|	ST25CDVO		ST84CV	Volume (Cortical Parcellation) of RightFrontalPole	Right	Volume (Cortical Parcellation) 	FrontalPole	Volume (Cortical Parcellation) of _FrontalPole	Volume (Cortical Parcellation) of _FrontalPole_Right
+259		absdiff	ST85CV	ST26CV	|A^(1/3)-B^(1/3)|	ST26CDVO		ST85CV	Volume (Cortical Parcellation) of RightFusiform	Right	Volume (Cortical Parcellation) 	Fusiform	Volume (Cortical Parcellation) of _Fusiform	Volume (Cortical Parcellation) of _Fusiform_Right
+260		absdiff	ST90CV	ST31CV	|A^(1/3)-B^(1/3)|	ST31CDVO		ST90CV	Volume (Cortical Parcellation) of RightInferiorParietal	Right	Volume (Cortical Parcellation) 	InferiorParietal	Volume (Cortical Parcellation) of _InferiorParietal	Volume (Cortical Parcellation) of _InferiorParietal_Right
+261		absdiff	ST91CV	ST32CV	|A^(1/3)-B^(1/3)|	ST32CDVO		ST91CV	Volume (Cortical Parcellation) of RightInferiorTemporal	Right	Volume (Cortical Parcellation) 	InferiorTemporal	Volume (Cortical Parcellation) of _InferiorTemporal	Volume (Cortical Parcellation) of _InferiorTemporal_Right
+262		absdiff	ST130CV	ST129CV	|A^(1/3)-B^(1/3)|	ST129DVO		ST130CV	Volume (Cortical Parcellation) of RightInsula	Right	Volume (Cortical Parcellation) 	Insula	Volume (Cortical Parcellation) of _Insula	Volume (Cortical Parcellation) of _Insula_Right
+263		absdiff	ST93CV	ST34CV	|A^(1/3)-B^(1/3)|	ST34CDVO		ST93CV	Volume (Cortical Parcellation) of RightIsthmusCingulate	Right	Volume (Cortical Parcellation) 	IsthmusCingulate	Volume (Cortical Parcellation) of _IsthmusCingulate	Volume (Cortical Parcellation) of _IsthmusCingulate_Right
+264		absdiff	ST94CV	ST35CV	|A^(1/3)-B^(1/3)|	ST35CDVO		ST94CV	Volume (Cortical Parcellation) of RightLateralOccipital	Right	Volume (Cortical Parcellation) 	LateralOccipital	Volume (Cortical Parcellation) of _LateralOccipital	Volume (Cortical Parcellation) of _LateralOccipital_Right
+265		absdiff	ST95CV	ST36CV	|A^(1/3)-B^(1/3)|	ST36CDVO		ST95CV	Volume (Cortical Parcellation) of RightLateralOrbitofrontal	Right	Volume (Cortical Parcellation) 	LateralOrbitofrontal	Volume (Cortical Parcellation) of _LateralOrbitofrontal	Volume (Cortical Parcellation) of _LateralOrbitofrontal_Right
+266		absdiff	ST97CV	ST38CV	|A^(1/3)-B^(1/3)|	ST38CDVO		ST97CV	Volume (Cortical Parcellation) of RightLingual	Right	Volume (Cortical Parcellation) 	Lingual	Volume (Cortical Parcellation) of _Lingual	Volume (Cortical Parcellation) of _Lingual_Right
+267		absdiff	ST98CV	ST39CV	|A^(1/3)-B^(1/3)|	ST39CDVO		ST98CV	Volume (Cortical Parcellation) of RightMedialOrbitofrontal	Right	Volume (Cortical Parcellation) 	MedialOrbitofrontal	Volume (Cortical Parcellation) of _MedialOrbitofrontal	Volume (Cortical Parcellation) of _MedialOrbitofrontal_Right
+268		absdiff	ST99CV	ST40CV	|A^(1/3)-B^(1/3)|	ST40CDVO		ST99CV	Volume (Cortical Parcellation) of RightMiddleTemporal	Right	Volume (Cortical Parcellation) 	MiddleTemporal	Volume (Cortical Parcellation) of _MiddleTemporal	Volume (Cortical Parcellation) of _MiddleTemporal_Right
+269		absdiff	ST102CV	ST43CV	|A^(1/3)-B^(1/3)|	ST43CDVO		ST102CV	Volume (Cortical Parcellation) of RightParacentral	Right	Volume (Cortical Parcellation) 	Paracentral	Volume (Cortical Parcellation) of _Paracentral	Volume (Cortical Parcellation) of _Paracentral_Right
+270		absdiff	ST103CV	ST44CV	|A^(1/3)-B^(1/3)|	ST44CDVO		ST103CV	Volume (Cortical Parcellation) of RightParahippocampal	Right	Volume (Cortical Parcellation) 	Parahippocampal	Volume (Cortical Parcellation) of _Parahippocampal	Volume (Cortical Parcellation) of _Parahippocampal_Right
+271		absdiff	ST104CV	ST45CV	|A^(1/3)-B^(1/3)|	ST45CDVO		ST104CV	Volume (Cortical Parcellation) of RightParsOpercularis	Right	Volume (Cortical Parcellation) 	ParsOpercularis	Volume (Cortical Parcellation) of _ParsOpercularis	Volume (Cortical Parcellation) of _ParsOpercularis_Right
+272		absdiff	ST105CV	ST46CV	|A^(1/3)-B^(1/3)|	ST46CDVO		ST105CV	Volume (Cortical Parcellation) of RightParsOrbitalis	Right	Volume (Cortical Parcellation) 	ParsOrbitalis	Volume (Cortical Parcellation) of _ParsOrbitalis	Volume (Cortical Parcellation) of _ParsOrbitalis_Right
+273		absdiff	ST106CV	ST47CV	|A^(1/3)-B^(1/3)|	ST47CDVO		ST106CV	Volume (Cortical Parcellation) of RightParsTriangularis	Right	Volume (Cortical Parcellation) 	ParsTriangularis	Volume (Cortical Parcellation) of _ParsTriangularis	Volume (Cortical Parcellation) of _ParsTriangularis_Right
+274		absdiff	ST107CV	ST48CV	|A^(1/3)-B^(1/3)|	ST48CDVO		ST107CV	Volume (Cortical Parcellation) of RightPericalcarine	Right	Volume (Cortical Parcellation) 	Pericalcarine	Volume (Cortical Parcellation) of _Pericalcarine	Volume (Cortical Parcellation) of _Pericalcarine_Right
+275		absdiff	ST108CV	ST49CV	|A^(1/3)-B^(1/3)|	ST49CDVO		ST108CV	Volume (Cortical Parcellation) of RightPostcentral	Right	Volume (Cortical Parcellation) 	Postcentral	Volume (Cortical Parcellation) of _Postcentral	Volume (Cortical Parcellation) of _Postcentral_Right
+276		absdiff	ST109CV	ST50CV	|A^(1/3)-B^(1/3)|	ST50CDVO		ST109CV	Volume (Cortical Parcellation) of RightPosteriorCingulate	Right	Volume (Cortical Parcellation) 	PosteriorCingulate	Volume (Cortical Parcellation) of _PosteriorCingulate	Volume (Cortical Parcellation) of _PosteriorCingulate_Right
+277		absdiff	ST110CV	ST51CV	|A^(1/3)-B^(1/3)|	ST51CDVO		ST110CV	Volume (Cortical Parcellation) of RightPrecentral	Right	Volume (Cortical Parcellation) 	Precentral	Volume (Cortical Parcellation) of _Precentral	Volume (Cortical Parcellation) of _Precentral_Right
+278		absdiff	ST111CV	ST52CV	|A^(1/3)-B^(1/3)|	ST52CDVO		ST111CV	Volume (Cortical Parcellation) of RightPrecuneus	Right	Volume (Cortical Parcellation) 	Precuneus	Volume (Cortical Parcellation) of _Precuneus	Volume (Cortical Parcellation) of _Precuneus_Right
+279		absdiff	ST113CV	ST54CV	|A^(1/3)-B^(1/3)|	ST54CDVO		ST113CV	Volume (Cortical Parcellation) of RightRostralAnteriorCingulate	Right	Volume (Cortical Parcellation) 	RostralAnteriorCingulate	Volume (Cortical Parcellation) of _RostralAnteriorCingulate	Volume (Cortical Parcellation) of _RostralAnteriorCingulate_Right
+280		absdiff	ST114CV	ST55CV	|A^(1/3)-B^(1/3)|	ST55CDVO		ST114CV	Volume (Cortical Parcellation) of RightRostralMiddleFrontal	Right	Volume (Cortical Parcellation) 	RostralMiddleFrontal	Volume (Cortical Parcellation) of _RostralMiddleFrontal	Volume (Cortical Parcellation) of _RostralMiddleFrontal_Right
+281		absdiff	ST115CV	ST56CV	|A^(1/3)-B^(1/3)|	ST56CDVO		ST115CV	Volume (Cortical Parcellation) of RightSuperiorFrontal	Right	Volume (Cortical Parcellation) 	SuperiorFrontal	Volume (Cortical Parcellation) of _SuperiorFrontal	Volume (Cortical Parcellation) of _SuperiorFrontal_Right
+282		absdiff	ST116CV	ST57CV	|A^(1/3)-B^(1/3)|	ST57CDVO		ST116CV	Volume (Cortical Parcellation) of RightSuperiorParietal	Right	Volume (Cortical Parcellation) 	SuperiorParietal	Volume (Cortical Parcellation) of _SuperiorParietal	Volume (Cortical Parcellation) of _SuperiorParietal_Right
+283		absdiff	ST117CV	ST58CV	|A^(1/3)-B^(1/3)|	ST58CDVO		ST117CV	Volume (Cortical Parcellation) of RightSuperiorTemporal	Right	Volume (Cortical Parcellation) 	SuperiorTemporal	Volume (Cortical Parcellation) of _SuperiorTemporal	Volume (Cortical Parcellation) of _SuperiorTemporal_Right
+284		absdiff	ST118CV	ST59CV	|A^(1/3)-B^(1/3)|	ST59CDVO		ST118CV	Volume (Cortical Parcellation) of RightSupramarginal	Right	Volume (Cortical Parcellation) 	Supramarginal	Volume (Cortical Parcellation) of _Supramarginal	Volume (Cortical Parcellation) of _Supramarginal_Right
+285		absdiff	ST119CV	ST60CV	|A^(1/3)-B^(1/3)|	ST60CDVO		ST119CV	Volume (Cortical Parcellation) of RightTemporalPole	Right	Volume (Cortical Parcellation) 	TemporalPole	Volume (Cortical Parcellation) of _TemporalPole	Volume (Cortical Parcellation) of _TemporalPole_Right
+286		absdiff	ST121CV	ST62CV	|A^(1/3)-B^(1/3)|	ST62CDVO		ST121CV	Volume (Cortical Parcellation) of RightTransverseTemporal	Right	Volume (Cortical Parcellation) 	TransverseTemporal	Volume (Cortical Parcellation) of _TransverseTemporal	Volume (Cortical Parcellation) of _TransverseTemporal_Right
+287		absdiff	ST70SV	ST11SV	|A^(1/3)-B^(1/3)|	ST11SDVO		ST70SV	Volume (WM Parcellation) of RightAccumbensArea	Right	Volume (WM Parcellation) 	AccumbensArea	Volume (WM Parcellation) of _AccumbensArea	Volume (WM Parcellation) of _AccumbensArea_Right
+288		absdiff	ST71SV	ST12SV	|A^(1/3)-B^(1/3)|	ST12SDVO		ST71SV	Volume (WM Parcellation) of RightAmygdala	Right	Volume (WM Parcellation) 	Amygdala	Volume (WM Parcellation) of _Amygdala	Volume (WM Parcellation) of _Amygdala_Right
+289		absdiff	ST75SV	ST16SV	|A^(1/3)-B^(1/3)|	ST16SDVO		ST75SV	Volume (WM Parcellation) of RightCaudate	Right	Volume (WM Parcellation) 	Caudate	Volume (WM Parcellation) of _Caudate	Volume (WM Parcellation) of _Caudate_Right
+290		absdiff	ST76SV	ST17SV	|A^(1/3)-B^(1/3)|	ST17SDVO		ST76SV	Volume (WM Parcellation) of RightCerebellumCortex	Right	Volume (WM Parcellation) 	CerebellumCortex	Volume (WM Parcellation) of _CerebellumCortex	Volume (WM Parcellation) of _CerebellumCortex_Right
+291		absdiff	ST77SV	ST18SV	|A^(1/3)-B^(1/3)|	ST18SDVO		ST77SV	Volume (WM Parcellation) of RightCerebellumWM	Right	Volume (WM Parcellation) 	CerebellumWM	Volume (WM Parcellation) of _CerebellumWM	Volume (WM Parcellation) of _CerebellumWM_Right
+292		absdiff	ST80SV	ST21SV	|A^(1/3)-B^(1/3)|	ST21SDVO		ST80SV	Volume (WM Parcellation) of RightChoroidPlexus	Right	Volume (WM Parcellation) 	ChoroidPlexus	Volume (WM Parcellation) of _ChoroidPlexus	Volume (WM Parcellation) of _ChoroidPlexus_Right
+293		absdiff	ST88SV	ST29SV	|A^(1/3)-B^(1/3)|	ST29SDVO		ST88SV	Volume (WM Parcellation) of RightHippocampus	Right	Volume (WM Parcellation) 	Hippocampus	Volume (WM Parcellation) of _Hippocampus	Volume (WM Parcellation) of _Hippocampus_Right
+294		absdiff	ST89SV	ST30SV	|A^(1/3)-B^(1/3)|	ST30SDVO		ST89SV	Volume (WM Parcellation) of RightInferiorLateralVentricle	Right	Volume (WM Parcellation) 	InferiorLateralVentricle	Volume (WM Parcellation) of _InferiorLateralVentricle	Volume (WM Parcellation) of _InferiorLateralVentricle_Right
+295		absdiff	ST96SV	ST37SV	|A^(1/3)-B^(1/3)|	ST37SDVO		ST96SV	Volume (WM Parcellation) of RightLateralVentricle	Right	Volume (WM Parcellation) 	LateralVentricle	Volume (WM Parcellation) of _LateralVentricle	Volume (WM Parcellation) of _LateralVentricle_Right
+296		absdiff	ST101SV	ST42SV	|A^(1/3)-B^(1/3)|	ST42SDVO		ST101SV	Volume (WM Parcellation) of RightPallidum	Right	Volume (WM Parcellation) 	Pallidum	Volume (WM Parcellation) of _Pallidum	Volume (WM Parcellation) of _Pallidum_Right
+297		absdiff	ST112SV	ST53SV	|A^(1/3)-B^(1/3)|	ST53SDVO		ST112SV	Volume (WM Parcellation) of RightPutamen	Right	Volume (WM Parcellation) 	Putamen	Volume (WM Parcellation) of _Putamen	Volume (WM Parcellation) of _Putamen_Right
+298		absdiff	ST120SV	ST61SV	|A^(1/3)-B^(1/3)|	ST61SDVO		ST120SV	Volume (WM Parcellation) of RightThalamus	Right	Volume (WM Parcellation) 	Thalamus	Volume (WM Parcellation) of _Thalamus	Volume (WM Parcellation) of _Thalamus_Right
+299		absdiff	ST124SV	ST65SV	|A^(1/3)-B^(1/3)|	ST65SDVO		ST124SV	Volume (WM Parcellation) of RightVentralDC	Right	Volume (WM Parcellation) 	VentralDC	Volume (WM Parcellation) of _VentralDC	Volume (WM Parcellation) of _VentralDC_Right
+300		absdiff	ST125SV	ST66SV	|A^(1/3)-B^(1/3)|	ST66SDVO		ST125SV	Volume (WM Parcellation) of RightVessel	Right	Volume (WM Parcellation) 	Vessel	Volume (WM Parcellation) of _Vessel	Volume (WM Parcellation) of _Vessel_Right
+301	Left	thicknessCV	ST13TA	ST13TS	B/A	ST13TTCV								
+302	Left	thicknessCV	ST14TA	ST14TS	B/A	ST14TTCV								
+303	Left	thicknessCV	ST15TA	ST15TS	B/A	ST15TTCV								
+304	Left	thicknessCV	ST23TA	ST23TS	B/A	ST23TTCV								
+305	Left	thicknessCV	ST24TA	ST24TS	B/A	ST24TTCV								
+306	Left	thicknessCV	ST25TA	ST25TS	B/A	ST25TTCV								
+307	Left	thicknessCV	ST26TA	ST26TS	B/A	ST26TTCV								
+308	Left	thicknessCV	ST31TA	ST31TS	B/A	ST31TTCV								
+309	Left	thicknessCV	ST32TA	ST32TS	B/A	ST32TTCV								
+310	Left	thicknessCV	ST129TA	ST129TS	B/A	ST129TCV								
+311	Left	thicknessCV	ST34TA	ST34TS	B/A	ST34TTCV								
+312	Left	thicknessCV	ST35TA	ST35TS	B/A	ST35TTCV								
+313	Left	thicknessCV	ST36TA	ST36TS	B/A	ST36TTCV								
+314	Left	thicknessCV	ST38TA	ST38TS	B/A	ST38TTCV								
+315	Left	thicknessCV	ST39TA	ST39TS	B/A	ST39TTCV								
+316	Left	thicknessCV	ST40TA	ST40TS	B/A	ST40TTCV								
+317	Left	thicknessCV	ST43TA	ST43TS	B/A	ST43TTCV								
+318	Left	thicknessCV	ST44TA	ST44TS	B/A	ST44TTCV								
+319	Left	thicknessCV	ST45TA	ST45TS	B/A	ST45TTCV								
+320	Left	thicknessCV	ST46TA	ST46TS	B/A	ST46TTCV								
+321	Left	thicknessCV	ST47TA	ST47TS	B/A	ST47TTCV								
+322	Left	thicknessCV	ST48TA	ST48TS	B/A	ST48TTCV								
+323	Left	thicknessCV	ST49TA	ST49TS	B/A	ST49TTCV								
+324	Left	thicknessCV	ST50TA	ST50TS	B/A	ST50TTCV								
+325	Left	thicknessCV	ST51TA	ST51TS	B/A	ST51TTCV								
+326	Left	thicknessCV	ST52TA	ST52TS	B/A	ST52TTCV								
+327	Left	thicknessCV	ST54TA	ST54TS	B/A	ST54TTCV								
+328	Left	thicknessCV	ST55TA	ST55TS	B/A	ST55TTCV								
+329	Left	thicknessCV	ST56TA	ST56TS	B/A	ST56TTCV								
+330	Left	thicknessCV	ST57TA	ST57TS	B/A	ST57TTCV								
+331	Left	thicknessCV	ST58TA	ST58TS	B/A	ST58TTCV								
+332	Left	thicknessCV	ST59TA	ST59TS	B/A	ST59TTCV								
+333	Left	thicknessCV	ST60TA	ST60TS	B/A	ST60TTCV								
+334	Left	thicknessCV	ST62TA	ST62TS	B/A	ST62TTCV								
+335	Right	thicknessCV	ST72TA	ST72TS	B/A	ST72TTCV								
+336	Right	thicknessCV	ST73TA	ST73TS	B/A	ST73TTCV								
+337	Right	thicknessCV	ST74TA	ST74TS	B/A	ST74TTCV								
+338	Right	thicknessCV	ST82TA	ST82TS	B/A	ST82TTCV								
+339	Right	thicknessCV	ST83TA	ST83TS	B/A	ST83TTCV								
+340	Right	thicknessCV	ST84TA	ST84TS	B/A	ST84TTCV								
+341	Right	thicknessCV	ST85TA	ST85TS	B/A	ST85TTCV								
+342	Right	thicknessCV	ST90TA	ST90TS	B/A	ST90TTCV								
+343	Right	thicknessCV	ST91TA	ST91TS	B/A	ST91TTCV								
+344	Right	thicknessCV	ST130TA	ST130TS	B/A	ST130TCV								
+345	Right	thicknessCV	ST93TA	ST93TS	B/A	ST93TTCV								
+346	Right	thicknessCV	ST94TA	ST94TS	B/A	ST94TTCV								
+347	Right	thicknessCV	ST95TA	ST95TS	B/A	ST95TTCV								
+348	Right	thicknessCV	ST97TA	ST97TS	B/A	ST97TTCV								
+349	Right	thicknessCV	ST98TA	ST98TS	B/A	ST98TTCV								
+350	Right	thicknessCV	ST99TA	ST99TS	B/A	ST99TTCV								
+351	Right	thicknessCV	ST102TA	ST102TS	B/A	ST102TCV								
+352	Right	thicknessCV	ST103TA	ST103TS	B/A	ST103TCV								
+353	Right	thicknessCV	ST104TA	ST104TS	B/A	ST104TCV								
+354	Right	thicknessCV	ST105TA	ST105TS	B/A	ST105TCV								
+355	Right	thicknessCV	ST106TA	ST106TS	B/A	ST106TCV								
+356	Right	thicknessCV	ST107TA	ST107TS	B/A	ST107TCV								
+357	Right	thicknessCV	ST108TA	ST108TS	B/A	ST108TCV								
+358	Right	thicknessCV	ST109TA	ST109TS	B/A	ST109TCV								
+359	Right	thicknessCV	ST110TA	ST110TS	B/A	ST110TCV								
+360	Right	thicknessCV	ST111TA	ST111TS	B/A	ST111TCV								
+361	Right	thicknessCV	ST113TA	ST113TS	B/A	ST113TCV								
+362	Right	thicknessCV	ST114TA	ST114TS	B/A	ST114TCV								
+363	Right	thicknessCV	ST115TA	ST115TS	B/A	ST115TCV								
+364	Right	thicknessCV	ST116TA	ST116TS	B/A	ST116TCV								
+365	Right	thicknessCV	ST117TA	ST117TS	B/A	ST117TCV								
+366	Right	thicknessCV	ST118TA	ST118TS	B/A	ST118TCV								
+367	Right	thicknessCV	ST119TA	ST119TS	B/A	ST119TCV								
+368	Right	thicknessCV	ST121TA	ST121TS	B/A	ST121TCV								
+369	Left	Compactness	ST13SA	ST13CV	[A^(1/2)]/[B^(1/3)]	ST13CCMP								
+370	Left	Compactness	ST14SA	ST14CV	[A^(1/2)]/[B^(1/3)]	ST14CCMP								
+371	Left	Compactness	ST15SA	ST15CV	[A^(1/2)]/[B^(1/3)]	ST15CCMP								
+372	Left	Compactness	ST23SA	ST23CV	[A^(1/2)]/[B^(1/3)]	ST23CCMP								
+373	Left	Compactness	ST24SA	ST24CV	[A^(1/2)]/[B^(1/3)]	ST24CCMP								
+374	Left	Compactness	ST25SA	ST25CV	[A^(1/2)]/[B^(1/3)]	ST25CCMP								
+375	Left	Compactness	ST26SA	ST26CV	[A^(1/2)]/[B^(1/3)]	ST26CCMP								
+376	Left	Compactness	ST31SA	ST31CV	[A^(1/2)]/[B^(1/3)]	ST31CCMP								
+377	Left	Compactness	ST32SA	ST32CV	[A^(1/2)]/[B^(1/3)]	ST32CCMP								
+378	Left	Compactness	ST129SA	ST129CV	[A^(1/2)]/[B^(1/3)]	ST129CMP								
+379	Left	Compactness	ST34SA	ST34CV	[A^(1/2)]/[B^(1/3)]	ST34CCMP								
+380	Left	Compactness	ST35SA	ST35CV	[A^(1/2)]/[B^(1/3)]	ST35CCMP								
+381	Left	Compactness	ST36SA	ST36CV	[A^(1/2)]/[B^(1/3)]	ST36CCMP								
+382	Left	Compactness	ST38SA	ST38CV	[A^(1/2)]/[B^(1/3)]	ST38CCMP								
+383	Left	Compactness	ST39SA	ST39CV	[A^(1/2)]/[B^(1/3)]	ST39CCMP								
+384	Left	Compactness	ST40SA	ST40CV	[A^(1/2)]/[B^(1/3)]	ST40CCMP								
+385	Left	Compactness	ST43SA	ST43CV	[A^(1/2)]/[B^(1/3)]	ST43CCMP								
+386	Left	Compactness	ST44SA	ST44CV	[A^(1/2)]/[B^(1/3)]	ST44CCMP								
+387	Left	Compactness	ST45SA	ST45CV	[A^(1/2)]/[B^(1/3)]	ST45CCMP								
+388	Left	Compactness	ST46SA	ST46CV	[A^(1/2)]/[B^(1/3)]	ST46CCMP								
+389	Left	Compactness	ST47SA	ST47CV	[A^(1/2)]/[B^(1/3)]	ST47CCMP								
+390	Left	Compactness	ST48SA	ST48CV	[A^(1/2)]/[B^(1/3)]	ST48CCMP								
+391	Left	Compactness	ST49SA	ST49CV	[A^(1/2)]/[B^(1/3)]	ST49CCMP								
+392	Left	Compactness	ST50SA	ST50CV	[A^(1/2)]/[B^(1/3)]	ST50CCMP								
+393	Left	Compactness	ST51SA	ST51CV	[A^(1/2)]/[B^(1/3)]	ST51CCMP								
+394	Left	Compactness	ST52SA	ST52CV	[A^(1/2)]/[B^(1/3)]	ST52CCMP								
+395	Left	Compactness	ST54SA	ST54CV	[A^(1/2)]/[B^(1/3)]	ST54CCMP								
+396	Left	Compactness	ST55SA	ST55CV	[A^(1/2)]/[B^(1/3)]	ST55CCMP								
+397	Left	Compactness	ST56SA	ST56CV	[A^(1/2)]/[B^(1/3)]	ST56CCMP								
+398	Left	Compactness	ST57SA	ST57CV	[A^(1/2)]/[B^(1/3)]	ST57CCMP								
+399	Left	Compactness	ST58SA	ST58CV	[A^(1/2)]/[B^(1/3)]	ST58CCMP								
+400	Left	Compactness	ST59SA	ST59CV	[A^(1/2)]/[B^(1/3)]	ST59CCMP								
+401	Left	Compactness	ST60SA	ST60CV	[A^(1/2)]/[B^(1/3)]	ST60CCMP								
+402	Left	Compactness	ST62SA	ST62CV	[A^(1/2)]/[B^(1/3)]	ST62CCMP								
+403	Right	Compactness	ST72SA	ST72CV	[A^(1/2)]/[B^(1/3)]	ST72CCMP								
+404	Right	Compactness	ST73SA	ST73CV	[A^(1/2)]/[B^(1/3)]	ST73CCMP								
+405	Right	Compactness	ST74SA	ST74CV	[A^(1/2)]/[B^(1/3)]	ST74CCMP								
+406	Right	Compactness	ST82SA	ST82CV	[A^(1/2)]/[B^(1/3)]	ST82CCMP								
+407	Right	Compactness	ST83SA	ST83CV	[A^(1/2)]/[B^(1/3)]	ST83CCMP								
+408	Right	Compactness	ST84SA	ST84CV	[A^(1/2)]/[B^(1/3)]	ST84CCMP								
+409	Right	Compactness	ST85SA	ST85CV	[A^(1/2)]/[B^(1/3)]	ST85CCMP								
+410	Right	Compactness	ST90SA	ST90CV	[A^(1/2)]/[B^(1/3)]	ST90CCMP								
+411	Right	Compactness	ST91SA	ST91CV	[A^(1/2)]/[B^(1/3)]	ST91CCMP								
+412	Right	Compactness	ST130SA	ST130CV	[A^(1/2)]/[B^(1/3)]	ST130CMP								
+413	Right	Compactness	ST93SA	ST93CV	[A^(1/2)]/[B^(1/3)]	ST93CCMP								
+414	Right	Compactness	ST94SA	ST94CV	[A^(1/2)]/[B^(1/3)]	ST94CCMP								
+415	Right	Compactness	ST95SA	ST95CV	[A^(1/2)]/[B^(1/3)]	ST95CCMP								
+416	Right	Compactness	ST97SA	ST97CV	[A^(1/2)]/[B^(1/3)]	ST97CCMP								
+417	Right	Compactness	ST98SA	ST98CV	[A^(1/2)]/[B^(1/3)]	ST98CCMP								
+418	Right	Compactness	ST99SA	ST99CV	[A^(1/2)]/[B^(1/3)]	ST99CCMP								
+419	Right	Compactness	ST102SA	ST102CV	[A^(1/2)]/[B^(1/3)]	ST102CMP								
+420	Right	Compactness	ST103SA	ST103CV	[A^(1/2)]/[B^(1/3)]	ST103CMP								
+421	Right	Compactness	ST104SA	ST104CV	[A^(1/2)]/[B^(1/3)]	ST104CMP								
+422	Right	Compactness	ST105SA	ST105CV	[A^(1/2)]/[B^(1/3)]	ST105CMP								
+423	Right	Compactness	ST106SA	ST106CV	[A^(1/2)]/[B^(1/3)]	ST106CMP								
+424	Right	Compactness	ST107SA	ST107CV	[A^(1/2)]/[B^(1/3)]	ST107CMP								
+425	Right	Compactness	ST108SA	ST108CV	[A^(1/2)]/[B^(1/3)]	ST108CMP								
+426	Right	Compactness	ST109SA	ST109CV	[A^(1/2)]/[B^(1/3)]	ST109CMP								
+427	Right	Compactness	ST110SA	ST110CV	[A^(1/2)]/[B^(1/3)]	ST110CMP								
+428	Right	Compactness	ST111SA	ST111CV	[A^(1/2)]/[B^(1/3)]	ST111CMP								
+429	Right	Compactness	ST113SA	ST113CV	[A^(1/2)]/[B^(1/3)]	ST113CMP								
+430	Right	Compactness	ST114SA	ST114CV	[A^(1/2)]/[B^(1/3)]	ST114CMP								
+431	Right	Compactness	ST115SA	ST115CV	[A^(1/2)]/[B^(1/3)]	ST115CMP								
+432	Right	Compactness	ST116SA	ST116CV	[A^(1/2)]/[B^(1/3)]	ST116CMP								
+433	Right	Compactness	ST117SA	ST117CV	[A^(1/2)]/[B^(1/3)]	ST117CMP								
+434	Right	Compactness	ST118SA	ST118CV	[A^(1/2)]/[B^(1/3)]	ST118CMP								
+435	Right	Compactness	ST119SA	ST119CV	[A^(1/2)]/[B^(1/3)]	ST119CMP								
+436	Right	Compactness	ST121SA	ST121CV	[A^(1/2)]/[B^(1/3)]	ST121CMP								
+437		MeanThicknessCV	ST13TTCV	ST72TTCV	(A+B)/2	ST72TMTCV								
+438		MeanThicknessCV	ST14TTCV	ST73TTCV	(A+B)/2	ST73TMTCV								
+439		MeanThicknessCV	ST15TTCV	ST74TTCV	(A+B)/2	ST74TMTCV								
+440		MeanThicknessCV	ST23TTCV	ST82TTCV	(A+B)/2	ST82TMTCV								
+441		MeanThicknessCV	ST24TTCV	ST83TTCV	(A+B)/2	ST83TMTCV								
+442		MeanThicknessCV	ST25TTCV	ST84TTCV	(A+B)/2	ST84TMTCV								
+443		MeanThicknessCV	ST26TTCV	ST85TTCV	(A+B)/2	ST85TMTCV								
+444		MeanThicknessCV	ST31TTCV	ST90TTCV	(A+B)/2	ST90TMTCV								
+445		MeanThicknessCV	ST32TTCV	ST91TTCV	(A+B)/2	ST91TMTCV								
+446		MeanThicknessCV	ST129TCV	ST130TCV	(A+B)/2	ST130MTCV								
+447		MeanThicknessCV	ST34TTCV	ST93TTCV	(A+B)/2	ST93TMTCV								
+448		MeanThicknessCV	ST35TTCV	ST94TTCV	(A+B)/2	ST94TMTCV								
+449		MeanThicknessCV	ST36TTCV	ST95TTCV	(A+B)/2	ST95TMTCV								
+450		MeanThicknessCV	ST38TTCV	ST97TTCV	(A+B)/2	ST97TMTCV								
+451		MeanThicknessCV	ST39TTCV	ST98TTCV	(A+B)/2	ST98TMTCV								
+452		MeanThicknessCV	ST40TTCV	ST99TTCV	(A+B)/2	ST99TMTCV								
+453		MeanThicknessCV	ST43TTCV	ST102TCV	(A+B)/2	ST102MTCV								
+454		MeanThicknessCV	ST44TTCV	ST103TCV	(A+B)/2	ST103MTCV								
+455		MeanThicknessCV	ST45TTCV	ST104TCV	(A+B)/2	ST104MTCV								
+456		MeanThicknessCV	ST46TTCV	ST105TCV	(A+B)/2	ST105MTCV								
+457		MeanThicknessCV	ST47TTCV	ST106TCV	(A+B)/2	ST106MTCV								
+458		MeanThicknessCV	ST48TTCV	ST107TCV	(A+B)/2	ST107MTCV								
+459		MeanThicknessCV	ST49TTCV	ST108TCV	(A+B)/2	ST108MTCV								
+460		MeanThicknessCV	ST50TTCV	ST109TCV	(A+B)/2	ST109MTCV								
+461		MeanThicknessCV	ST51TTCV	ST110TCV	(A+B)/2	ST110MTCV								
+462		MeanThicknessCV	ST52TTCV	ST111TCV	(A+B)/2	ST111MTCV								
+463		MeanThicknessCV	ST54TTCV	ST113TCV	(A+B)/2	ST113MTCV								
+464		MeanThicknessCV	ST55TTCV	ST114TCV	(A+B)/2	ST114MTCV								
+465		MeanThicknessCV	ST56TTCV	ST115TCV	(A+B)/2	ST115MTCV								
+466		MeanThicknessCV	ST57TTCV	ST116TCV	(A+B)/2	ST116MTCV								
+467		MeanThicknessCV	ST58TTCV	ST117TCV	(A+B)/2	ST117MTCV								
+468		MeanThicknessCV	ST59TTCV	ST118TCV	(A+B)/2	ST118MTCV								
+469		MeanThicknessCV	ST60TTCV	ST119TCV	(A+B)/2	ST119MTCV								
+470		MeanThicknessCV	ST62TTCV	ST121TCV	(A+B)/2	ST121MTCV								
+471		MeanCompactness	ST13CCMP	ST72CCMP	(A+B)/2	ST72CMCMP								
+472		MeanCompactness	ST14CCMP	ST73CCMP	(A+B)/2	ST73CMCMP								
+473		MeanCompactness	ST15CCMP	ST74CCMP	(A+B)/2	ST74CMCMP								
+474		MeanCompactness	ST23CCMP	ST82CCMP	(A+B)/2	ST82CMCMP								
+475		MeanCompactness	ST24CCMP	ST83CCMP	(A+B)/2	ST83CMCMP								
+476		MeanCompactness	ST25CCMP	ST84CCMP	(A+B)/2	ST84CMCMP								
+477		MeanCompactness	ST26CCMP	ST85CCMP	(A+B)/2	ST85CMCMP								
+478		MeanCompactness	ST31CCMP	ST90CCMP	(A+B)/2	ST90CMCMP								
+479		MeanCompactness	ST32CCMP	ST91CCMP	(A+B)/2	ST91CMCMP								
+480		MeanCompactness	ST129CMP	ST130CMP	(A+B)/2	ST130MCMP								
+481		MeanCompactness	ST34CCMP	ST93CCMP	(A+B)/2	ST93CMCMP								
+482		MeanCompactness	ST35CCMP	ST94CCMP	(A+B)/2	ST94CMCMP								
+483		MeanCompactness	ST36CCMP	ST95CCMP	(A+B)/2	ST95CMCMP								
+484		MeanCompactness	ST38CCMP	ST97CCMP	(A+B)/2	ST97CMCMP								
+485		MeanCompactness	ST39CCMP	ST98CCMP	(A+B)/2	ST98CMCMP								
+486		MeanCompactness	ST40CCMP	ST99CCMP	(A+B)/2	ST99CMCMP								
+487		MeanCompactness	ST43CCMP	ST102CMP	(A+B)/2	ST102MCMP								
+488		MeanCompactness	ST44CCMP	ST103CMP	(A+B)/2	ST103MCMP								
+489		MeanCompactness	ST45CCMP	ST104CMP	(A+B)/2	ST104MCMP								
+490		MeanCompactness	ST46CCMP	ST105CMP	(A+B)/2	ST105MCMP								
+491		MeanCompactness	ST47CCMP	ST106CMP	(A+B)/2	ST106MCMP								
+492		MeanCompactness	ST48CCMP	ST107CMP	(A+B)/2	ST107MCMP								
+493		MeanCompactness	ST49CCMP	ST108CMP	(A+B)/2	ST108MCMP								
+494		MeanCompactness	ST50CCMP	ST109CMP	(A+B)/2	ST109MCMP								
+495		MeanCompactness	ST51CCMP	ST110CMP	(A+B)/2	ST110MCMP								
+496		MeanCompactness	ST52CCMP	ST111CMP	(A+B)/2	ST111MCMP								
+497		MeanCompactness	ST54CCMP	ST113CMP	(A+B)/2	ST113MCMP								
+498		MeanCompactness	ST55CCMP	ST114CMP	(A+B)/2	ST114MCMP								
+499		MeanCompactness	ST56CCMP	ST115CMP	(A+B)/2	ST115MCMP								
+500		MeanCompactness	ST57CCMP	ST116CMP	(A+B)/2	ST116MCMP								
+501		MeanCompactness	ST58CCMP	ST117CMP	(A+B)/2	ST117MCMP								
+502		MeanCompactness	ST59CCMP	ST118CMP	(A+B)/2	ST118MCMP								
+503		MeanCompactness	ST60CCMP	ST119CMP	(A+B)/2	ST119MCMP								
+504		MeanCompactness	ST62CCMP	ST121CMP	(A+B)/2	ST121MCMP								
+505		ABSThicknessCV	ST13TTCV	ST72TTCV	|A-B|	ST72TDTCV								
+506		ABSThicknessCV	ST14TTCV	ST73TTCV	|A-B|	ST73TDTCV								
+507		ABSThicknessCV	ST15TTCV	ST74TTCV	|A-B|	ST74TDTCV								
+508		ABSThicknessCV	ST23TTCV	ST82TTCV	|A-B|	ST82TDTCV								
+509		ABSThicknessCV	ST24TTCV	ST83TTCV	|A-B|	ST83TDTCV								
+510		ABSThicknessCV	ST25TTCV	ST84TTCV	|A-B|	ST84TDTCV								
+511		ABSThicknessCV	ST26TTCV	ST85TTCV	|A-B|	ST85TDTCV								
+512		ABSThicknessCV	ST31TTCV	ST90TTCV	|A-B|	ST90TDTCV								
+513		ABSThicknessCV	ST32TTCV	ST91TTCV	|A-B|	ST91TDTCV								
+514		ABSThicknessCV	ST129TCV	ST130TCV	|A-B|	ST130DTCV								
+515		ABSThicknessCV	ST34TTCV	ST93TTCV	|A-B|	ST93TDTCV								
+516		ABSThicknessCV	ST35TTCV	ST94TTCV	|A-B|	ST94TDTCV								
+517		ABSThicknessCV	ST36TTCV	ST95TTCV	|A-B|	ST95TDTCV								
+518		ABSThicknessCV	ST38TTCV	ST97TTCV	|A-B|	ST97TDTCV								
+519		ABSThicknessCV	ST39TTCV	ST98TTCV	|A-B|	ST98TDTCV								
+520		ABSThicknessCV	ST40TTCV	ST99TTCV	|A-B|	ST99TDTCV								
+521		ABSThicknessCV	ST43TTCV	ST102TCV	|A-B|	ST102DTCV								
+522		ABSThicknessCV	ST44TTCV	ST103TCV	|A-B|	ST103DTCV								
+523		ABSThicknessCV	ST45TTCV	ST104TCV	|A-B|	ST104DTCV								
+524		ABSThicknessCV	ST46TTCV	ST105TCV	|A-B|	ST105DTCV								
+525		ABSThicknessCV	ST47TTCV	ST106TCV	|A-B|	ST106DTCV								
+526		ABSThicknessCV	ST48TTCV	ST107TCV	|A-B|	ST107DTCV								
+527		ABSThicknessCV	ST49TTCV	ST108TCV	|A-B|	ST108DTCV								
+528		ABSThicknessCV	ST50TTCV	ST109TCV	|A-B|	ST109DTCV								
+529		ABSThicknessCV	ST51TTCV	ST110TCV	|A-B|	ST110DTCV								
+530		ABSThicknessCV	ST52TTCV	ST111TCV	|A-B|	ST111DTCV								
+531		ABSThicknessCV	ST54TTCV	ST113TCV	|A-B|	ST113DTCV								
+532		ABSThicknessCV	ST55TTCV	ST114TCV	|A-B|	ST114DTCV								
+533		ABSThicknessCV	ST56TTCV	ST115TCV	|A-B|	ST115DTCV								
+534		ABSThicknessCV	ST57TTCV	ST116TCV	|A-B|	ST116DTCV								
+535		ABSThicknessCV	ST58TTCV	ST117TCV	|A-B|	ST117DTCV								
+536		ABSThicknessCV	ST59TTCV	ST118TCV	|A-B|	ST118DTCV								
+537		ABSThicknessCV	ST60TTCV	ST119TCV	|A-B|	ST119DTCV								
+538		ABSThicknessCV	ST62TTCV	ST121TCV	|A-B|	ST121DTCV								
+539		ABSCompactness	ST13CCMP	ST72CCMP	|A-B|	ST72CDCMP								
+540		ABSCompactness	ST14CCMP	ST73CCMP	|A-B|	ST73CDCMP								
+541		ABSCompactness	ST15CCMP	ST74CCMP	|A-B|	ST74CDCMP								
+542		ABSCompactness	ST23CCMP	ST82CCMP	|A-B|	ST82CDCMP								
+543		ABSCompactness	ST24CCMP	ST83CCMP	|A-B|	ST83CDCMP								
+544		ABSCompactness	ST25CCMP	ST84CCMP	|A-B|	ST84CDCMP								
+545		ABSCompactness	ST26CCMP	ST85CCMP	|A-B|	ST85CDCMP								
+546		ABSCompactness	ST31CCMP	ST90CCMP	|A-B|	ST90CDCMP								
+547		ABSCompactness	ST32CCMP	ST91CCMP	|A-B|	ST91CDCMP								
+548		ABSCompactness	ST129CMP	ST130CMP	|A-B|	ST130DCMP								
+549		ABSCompactness	ST34CCMP	ST93CCMP	|A-B|	ST93CDCMP								
+550		ABSCompactness	ST35CCMP	ST94CCMP	|A-B|	ST94CDCMP								
+551		ABSCompactness	ST36CCMP	ST95CCMP	|A-B|	ST95CDCMP								
+552		ABSCompactness	ST38CCMP	ST97CCMP	|A-B|	ST97CDCMP								
+553		ABSCompactness	ST39CCMP	ST98CCMP	|A-B|	ST98CDCMP								
+554		ABSCompactness	ST40CCMP	ST99CCMP	|A-B|	ST99CDCMP								
+555		ABSCompactness	ST43CCMP	ST102CMP	|A-B|	ST102DCMP								
+556		ABSCompactness	ST44CCMP	ST103CMP	|A-B|	ST103DCMP								
+557		ABSCompactness	ST45CCMP	ST104CMP	|A-B|	ST104DCMP								
+558		ABSCompactness	ST46CCMP	ST105CMP	|A-B|	ST105DCMP								
+559		ABSCompactness	ST47CCMP	ST106CMP	|A-B|	ST106DCMP								
+560		ABSCompactness	ST48CCMP	ST107CMP	|A-B|	ST107DCMP								
+561		ABSCompactness	ST49CCMP	ST108CMP	|A-B|	ST108DCMP								
+562		ABSCompactness	ST50CCMP	ST109CMP	|A-B|	ST109DCMP								
+563		ABSCompactness	ST51CCMP	ST110CMP	|A-B|	ST110DCMP								
+564		ABSCompactness	ST52CCMP	ST111CMP	|A-B|	ST111DCMP								
+565		ABSCompactness	ST54CCMP	ST113CMP	|A-B|	ST113DCMP								
+566		ABSCompactness	ST55CCMP	ST114CMP	|A-B|	ST114DCMP								
+567		ABSCompactness	ST56CCMP	ST115CMP	|A-B|	ST115DCMP								
+568		ABSCompactness	ST57CCMP	ST116CMP	|A-B|	ST116DCMP								
+569		ABSCompactness	ST58CCMP	ST117CMP	|A-B|	ST117DCMP								
+570		ABSCompactness	ST59CCMP	ST118CMP	|A-B|	ST118DCMP								
+571		ABSCompactness	ST60CCMP	ST119CMP	|A-B|	ST119DCMP								
+572		ABSCompactness	ST62CCMP	ST121CMP	|A-B|	ST121DCMP								
