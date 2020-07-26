@@ -1,0 +1,209 @@
+---
+title: "TADPOLE MCI to AD Conversion"
+output: html_notebook
+---
+
+```{r}
+library("FRESA.CAD")
+
+```
+
+# Predict MCI to AD progresion
+
+```{r}
+load(file="allAdusted.RDATA")
+load(file="allAdustedZrank.RDATA")
+allAdusted <- allAdustedZrank
+predictors <- c("AGE","PTGENDER","Years_bl",colnames(allAdusted)[-c(1:22)])
+                
+```
+
+
+## Get All the MCI subjects that progressed
+
+```{r}
+table(allAdusted$DX)
+MCISubset <- subset(allAdusted,(DX_bl == "LMCI" | DX_bl == "EMCI") & DX == "MCI")
+MCISubset <- MCISubset[order(MCISubset$Years_bl),]
+MCISubset <- MCISubset[order(MCISubset$PTID),]
+
+pdis <- MCISubset$PTID
+lastTimepointSet <- MCISubset[c(pdis[1:(length(pdis)-1)] != pdis[-1],TRUE),]
+rownames(lastTimepointSet) <- lastTimepointSet$PTID
+hist(lastTimepointSet$Years_bl)
+
+subsetMCIADConversion <-  as.data.frame(subset(allAdusted,DX == "MCI to Dementia"))
+pidss <- subsetMCIADConversion$PTID
+tpids <- table(pidss)
+removeTp <- tpids[pidss] == 1
+sum(removeTp == FALSE)
+
+subsetMCIADConversion <- subsetMCIADConversion[removeTp,]
+
+rownames(subsetMCIADConversion) <- subsetMCIADConversion$PTID
+
+```
+
+### Subset by time points
+
+```{r}
+months <- c(0,3,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120)
+
+MCItoADorderbytimepoint <- NULL
+for (m in months)
+{
+  TimePointsMCISubset <- subset(MCISubset,M == m)
+  rownames(TimePointsMCISubset) <-  TimePointsMCISubset$PTID
+  TimePointsMCISubset$TimeToEvent <- subsetMCIADConversion[TimePointsMCISubset$PTID,"Years_bl"] - TimePointsMCISubset$Years_bl
+  TimePointsMCISubset$TimeToLastVisit <- lastTimepointSet[TimePointsMCISubset$PTID,"Years_bl"] - TimePointsMCISubset$Years_bl
+  MCItoADorderbytimepoint <- rbind(MCItoADorderbytimepoint,TimePointsMCISubset)
+  
+}
+
+controlMCIToADset <- MCItoADorderbytimepoint[is.na(MCItoADorderbytimepoint$TimeToEvent),]
+controlMCIToADset <- subset(controlMCIToADset,TimeToLastVisit > 3)
+hist(controlMCIToADset$TimeToLastVisit)
+controlMCIToADset$TimeToEvent <- controlMCIToADset$TimeToLastVisit
+caseMCIToADset <- MCItoADorderbytimepoint[!is.na(MCItoADorderbytimepoint$TimeToEvent),]
+caseMCIToADset <- subset(caseMCIToADset,TimeToEvent>0)
+hist(caseMCIToADset$TimeToEvent)
+
+
+```
+## Modeling Set
+```{r}
+
+controlMCIToADset$class <- 0
+caseMCIToADset$class <- 1
+MCI_to_AD_set <- rbind(controlMCIToADset,caseMCIToADset)
+
+MCI_to_AD_TrainSet <- MCI_to_AD_set[MCI_to_AD_set$D1==1,]
+
+table(MCI_to_AD_TrainSet$class)
+
+```
+## Modeling
+
+Obteniendo Particiones basados en Visit
+
+```{r}
+table(MCI_to_AD_set$VISCODE)
+
+MCI_to_ADSets <- list();
+MCI_TO_AD_Model <- list();
+n=1
+
+for (n in 1:5)
+{
+  randomnumber <- sample(1:nrow(NotbaselineObs),nrow(NotbaselineObs))
+  MCI_to_AD_RandomSet <- NotbaselineObs[randomnumber,]
+  MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$PTID),]
+  ptID <- MCI_to_AD_RandomSet$PTID
+  set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  set1 <- set1[rownames(baselineObs),]
+  deltaBio <- set1[,predictors]
+  deltaBio <- deltaBio - baselineObs[,predictors]
+  colnames(deltaBio) <- paste("Delta",colnames(deltaBio),sep="")
+  MCI_to_ADSets[[n]] <- cbind(set1[rownames(baselineObs),c("class",predictors)],deltaBio)
+  MCI_to_ADSets[[n]] <- MCI_to_ADSets[[n]][complete.cases(MCI_to_ADSets[[n]]),]
+  MCI_TO_AD_Model[[n]] <- BSWiMS.model(class ~ 1,MCI_to_ADSets[[n]],NumberofRepeats = 5)
+}
+
+pred <- numeric(nrow(MCI_to_ADSets[[1]]))
+for (n in 1:5)
+{
+  sm <- summary(MCI_TO_AD_Model[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(MCI_TO_AD_Model[[n]],MCI_to_ADSets[[1]])/5
+}
+
+
+pb <- predictionStats_binary(cbind(MCI_to_ADSets[[1]]$class,pred),plotname = "BSWiMS MCI to AD")
+
+```
+
+
+```{r}
+
+
+table(MCI_to_ADSets[[1]]$class)
+
+#MCIADSVMcv <- randomCV(MCI_to_ADSets[[1]],
+#                        "class",
+#                        fittingFunction=e1071::svm,
+#                        trainFraction = 0.7,
+#                        repetitions = 30,
+#                       featureSelectionFunction = mRMR.classic_FRESA,
+#                       asFactor=TRUE,
+#                       probability = TRUE)
+
+#MCIADSVM_ADAS <- randomCV(MCI_to_AD_TrainSetm12,
+#                        "ADAS13",
+#                        fittingFunction=e1071::svm,
+#                        trainFraction = 0.7,
+#                        repetitions = 30,
+#                       featureSelectionFunction = mRMR.classic_FRESA)
+
+#MCIADBSWIMScv <- randomCV(MCI_to_ADSets[[1]],
+#                        "class",
+#                        fittingFunction=BSWiMS.model,
+#                        trainFraction = 0.7,
+#                        repetitions = 30,
+#                        NumberofRepeats = 1)
+
+#MCIADSVMcv <- randomCV(fittingFunction=e1071::svm,
+#                        ,trainSampleSets = MCIADBSWIMScv$trainSamplesSets,
+#                       featureSelectionFunction = mRMR.classic_FRESA,
+#                       asFactor=TRUE,
+#                       probability = TRUE)
+
+
+
+```
+```{r}
+#cStats <- predictionStats_binary(MCIADBSWIMScv$medianTest,plotname = "BSWiMS Baseline MCI to AD")
+#cStats <- predictionStats_binary(MCIADSVMcv$medianTest,plotname = "SVM Baseline MCI to AD")
+
+```
+
+### Tiempo a Evento
+```{r}
+MCI_to_ADSets <- list();
+MCI_TO_AD_TimeModel <- list();
+n=1
+
+caseTrainnoBL <- subset(NotbaselineObs,class==1)
+for (n in 1:5)
+{
+  randomnumber <- sample(1:nrow(caseTrainnoBL),nrow(caseTrainnoBL))
+  MCI_to_AD_RandomSet <- caseTrainnoBL[randomnumber,]
+  MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$PTID),]
+  ptID <- MCI_to_AD_RandomSet$PTID
+  set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  set1 <- set1[rownames(baselineObs),]
+  deltaBio <- set1[,predictors]
+  deltaBio <- deltaBio - baselineObs[,predictors]
+  colnames(deltaBio) <- paste("Delta",colnames(deltaBio),sep="")
+  MCI_to_ADSets[[n]] <- cbind(set1[rownames(baselineObs),c("TimeToEvent",predictors)],deltaBio)
+  MCI_to_ADSets[[n]] <- MCI_to_ADSets[[n]][complete.cases(MCI_to_ADSets[[n]]),]
+  MCI_to_ADSets[[n]]$TimeToEvent <- log(MCI_to_ADSets[[n]]$TimeToEvent)
+  MCI_TO_AD_TimeModel[[n]] <- BSWiMS.model(TimeToEvent ~ 1,MCI_to_ADSets[[n]],NumberofRepeats = 5)
+}
+
+pred <- numeric(nrow(MCI_to_ADSets[[1]]))
+for (n in 1:5)
+{
+  sm <- summary(MCI_TO_AD_TimeModel[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(MCI_TO_AD_TimeModel[[n]],MCI_to_ADSets[[1]])/5
+}
+
+hist(exp(pred))
+ps <- predictionStats_regression(cbind(MCI_to_ADSets[[1]]$TimeToEvent,pred),plotname = "BSWiMS MCI to AD")
+ps$spearmanci
+
+```
+
+

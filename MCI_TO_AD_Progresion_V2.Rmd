@@ -1,0 +1,601 @@
+---
+title: "TADPOLE MCI to AD Conversion"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library("FRESA.CAD")
+
+```
+
+# Predict MCI to AD progresion
+
+```{r}
+resamplingNumber = 5
+months <- c(0,3,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120)
+basechage <- c(1,3:length(months))
+months[basechage]
+oneyearchage <- c(6:length(months))
+months[oneyearchage]
+Twoyearchage <- c(8:length(months))
+months[Twoyearchage]
+Threeyearchage <- c(10:length(months))
+months[Threeyearchage]
+Fouryearchage <- c(12:length(months))
+months[Fouryearchage]
+Fiveyearchage <- c(14:length(months))
+months[Fiveyearchage]
+
+#load(file="allAdusted.RDATA")
+load(file="allAdustedZrank.RDATA")
+allAdusted <- allAdustedZrank
+predictors <- c("AGE","PTGENDER",colnames(allAdusted)[-c(1:22)])
+cpredictors <- predictors
+
+allAdusted <- allAdusted[order(allAdusted$Years_bl),]
+allAdusted <- allAdusted[order(allAdusted$PTID),]
+
+pdis <- allAdusted$PTID
+lastTimepointSet <- allAdusted[c(pdis[1:(length(pdis)-1)] != pdis[-1],TRUE),]
+rownames(lastTimepointSet) <- lastTimepointSet$PTID
+hist(lastTimepointSet$Years_bl)
+
+BaseTimepointSet <- allAdusted[c(TRUE,pdis[-1] != pdis[1:(length(pdis)-1)]),]
+rownames(BaseTimepointSet) <- BaseTimepointSet$PTID
+
+
+deltaFeaturepredictors <- predictors[regexpr('_bl', predictors) < 0][-(c(1:2))]
+
+TimePointsSubset <- list();
+Orderbytimepoint <- NULL
+m <- 0
+i <- 1;
+for (m in months)
+{
+  TimePointsSubset[[i]] <- subset(allAdusted,M == m)
+  rownames(TimePointsSubset[[i]]) <- TimePointsSubset[[i]]$PTID
+  TimePointsSubset[[i]]$Year_bl_LastVisit <- lastTimepointSet[TimePointsSubset[[i]]$PTID,"Years_bl"]
+  TimePointsSubset[[i]]$Last_DX <- lastTimepointSet[TimePointsSubset[[i]]$PTID,"DX"]
+  TimePointsSubset[[i]]$TimeToLastVisit <- TimePointsSubset[[i]]$Year_bl_LastVisit - TimePointsSubset[[i]]$Years_bl
+  deltaObservations <- TimePointsSubset[[i]][,deltaFeaturepredictors] - BaseTimepointSet[rownames(TimePointsSubset[[i]]),deltaFeaturepredictors]
+  colnames(deltaObservations) <- paste("Delta",colnames(deltaObservations),sep="_")
+  TimePointsSubset[[i]] <- cbind(TimePointsSubset[[i]],deltaObservations)
+  TimePointsSubset[[i]] <- TimePointsSubset[[i]][complete.cases(TimePointsSubset[[i]]),]
+  Orderbytimepoint <- rbind(Orderbytimepoint,TimePointsSubset[[i]])
+  i <- i + 1
+}
+
+allAdusted <- Orderbytimepoint
+Orderbytimepoint <- NULL
+predictors <- c(predictors,colnames(deltaObservations))
+
+ADNITRAIN <- allAdusted[allAdusted$D1==1,]
+ADNITEST <- allAdusted[allAdusted$D2==1,]
+
+
+#deltaPredictors <- allAdusted[,deltaFeaturepredictors]
+#totsub <- nrow(deltaPredictors)
+#deltaPredictors[2:totsub,] <- deltaPredictors[2:totsub,] - deltaPredictors[1:(totsub-1),]
+#settozero <- c(TRUE,pdis[2:totsub] != pdis[1:(totsub-1)])
+#deltaPredictors[settozero,] <- numeric(ncol(deltaPredictors))
+#rownames(deltaPredictors) <- rownames(allAdusted)
+#colnames(deltaPredictors) <- paste("Delta",colnames(deltaPredictors),sep="")
+#allAdusted <- cbind(allAdusted,deltaPredictors)
+
+
+```
+
+
+## Get All the MCI subjects that progressed
+
+```{r}
+table(allAdusted$DX)
+MCISubset <- subset(allAdusted,(DX_bl == "LMCI" | DX_bl == "EMCI") & DX == "MCI")
+
+
+subsetMCIADConversion <-  as.data.frame(subset(allAdusted,DX == "MCI to Dementia"))
+pidss <- subsetMCIADConversion$PTID
+tpids <- table(pidss)
+removeTp <- tpids[pidss] == 1
+sum(removeTp == FALSE)
+
+subsetMCIADConversion <- subsetMCIADConversion[removeTp,]
+
+rownames(subsetMCIADConversion) <- subsetMCIADConversion$PTID
+
+```
+
+### Subset by time points
+
+```{r}
+
+MCItoADorderbytimepoint <- NULL
+for (m in months)
+{
+  TimePointsMCISubset <- subset(MCISubset,M == m)
+  rownames(TimePointsMCISubset) <-  TimePointsMCISubset$PTID
+  TimePointsMCISubset$TimeToEvent <- subsetMCIADConversion[TimePointsMCISubset$PTID,"Years_bl"] - TimePointsMCISubset$Years_bl
+  MCItoADorderbytimepoint <- rbind(MCItoADorderbytimepoint,TimePointsMCISubset)
+}
+
+controlMCIToADset <- MCItoADorderbytimepoint[is.na(MCItoADorderbytimepoint$TimeToEvent),]
+controlMCIToADset <- subset(controlMCIToADset,Year_bl_LastVisit > 4)
+hist(controlMCIToADset$TimeToLastVisit)
+controlMCIToADset$TimeToEvent <- controlMCIToADset$TimeToLastVisit
+
+caseMCIToADset <- MCItoADorderbytimepoint[!is.na(MCItoADorderbytimepoint$TimeToEvent),]
+caseMCIToADset <- subset(caseMCIToADset,TimeToEvent > 0 & TimeToEvent <= 5)
+hist(caseMCIToADset$TimeToEvent)
+
+
+```
+## Modeling Set
+```{r}
+
+controlMCIToADset$class <- 0
+caseMCIToADset$class <- 1
+MCI_to_AD_set <- rbind(controlMCIToADset,caseMCIToADset)
+MCI_to_AD_set$TimeToLastVisit <- NULL
+
+MCI_to_AD_TrainSet <- MCI_to_AD_set[MCI_to_AD_set$D1==1,]
+
+table(MCI_to_AD_TrainSet$class)
+
+
+
+```
+## Modeling
+
+
+```{r}
+table(MCI_to_AD_TrainSet$VISCODE)
+
+MCI_to_ADSets <- list();
+MCI_TO_AD_Model <- list();
+n=1
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(MCI_to_AD_TrainSet),nrow(MCI_to_AD_TrainSet))
+  MCI_to_AD_RandomSet <- MCI_to_AD_TrainSet[randomnumber,]
+  MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$PTID),]
+  ptID <- MCI_to_AD_RandomSet$PTID
+  set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  MCI_to_ADSets[[n]] <- set1[,c("class",predictors)]
+  MCI_to_ADSets[[n]] <- MCI_to_ADSets[[n]][complete.cases(MCI_to_ADSets[[n]]),]
+  MCI_TO_AD_Model[[n]] <- BSWiMS.model(class ~ 1,MCI_to_ADSets[[n]],NumberofRepeats = 5)
+}
+save(MCI_TO_AD_Model,file="MCIMOdels.RDATA")
+
+
+pred <- numeric(nrow(MCI_to_AD_TrainSet))
+for (n in 1:resamplingNumber)
+{
+  sm <- summary(MCI_TO_AD_Model[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(MCI_TO_AD_Model[[n]],MCI_to_AD_TrainSet)/resamplingNumber
+}
+
+
+pb <- predictionStats_binary(cbind(MCI_to_AD_TrainSet$class,pred),plotname = "BSWiMS MCI to AD")
+
+```
+
+### Time to Event
+
+```{r}
+
+MCI_to_ADSets <- list();
+MCI_TO_AD_TimeModel <- list();
+n=1
+
+#caseTrainnoBL <- subset(MCI_to_AD_TrainSet,class==1 & VISCODE != "bl")
+caseTrain <- subset(MCI_to_AD_TrainSet,class==1 )
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(caseTrain),nrow(caseTrain))
+  MCI_to_AD_RandomSet <- caseTrain[randomnumber,]
+  MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$PTID),]
+  ptID <- MCI_to_AD_RandomSet$PTID
+  set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  MCI_to_ADSets[[n]] <- set1[,c("TimeToEvent",predictors)]
+  MCI_to_ADSets[[n]]$TimeToEvent <- log(MCI_to_ADSets[[n]]$TimeToEvent)
+  MCI_TO_AD_TimeModel[[n]] <- BSWiMS.model(TimeToEvent ~ 1,MCI_to_ADSets[[n]],NumberofRepeats = 5)
+}
+
+save(MCI_TO_AD_TimeModel,file="MCI_TO_AD_TimeModel.RDATA")
+
+MCI_to_AD_TestCaseSet <- MCI_to_AD_set[MCI_to_AD_set$D2==1 & MCI_to_AD_set$class==1,]
+
+pred <- numeric(nrow(MCI_to_AD_TestCaseSet))
+for (n in 1:resamplingNumber)
+{
+  sm <- summary(MCI_TO_AD_TimeModel[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(MCI_TO_AD_TimeModel[[n]],MCI_to_AD_TestCaseSet)
+}
+
+pred <- pred/resamplingNumber
+
+ps <- predictionStats_regression(cbind(MCI_to_AD_TestCaseSet$TimeToEvent,exp(pred)),plotname = "BSWiMS MCI to AD Time")
+ps$spearmanci
+
+```
+
+
+
+## Get All the NC subjects that progressed
+
+```{r}
+table(allAdusted$DX,allAdusted$DX_bl)
+NCSubset <- subset(allAdusted,(DX_bl == "CN" | DX_bl == "SMC") & DX == "NL")
+
+
+subsetNCADConversion <-  as.data.frame(subset(allAdusted,DX == "NL to Dementia" | DX == "NL to MCI"))
+pidss <- subsetNCADConversion$PTID
+tpids <- table(pidss)
+removeTp <- tpids[pidss] == 1
+sum(removeTp == FALSE)
+
+subsetNCConvConversion <- subsetNCADConversion[removeTp,]
+
+rownames(subsetNCConvConversion) <- subsetNCConvConversion$PTID
+
+```
+
+### Subset by time points
+
+```{r}
+
+NCConvorderbytimepoint <- NULL
+for (m in months)
+{
+  TimePointsNCSubset <- subset(NCSubset,M == m)
+  rownames(TimePointsNCSubset) <-  TimePointsNCSubset$PTID
+  TimePointsNCSubset$TimeToEvent <- subsetNCConvConversion[TimePointsNCSubset$PTID,"Years_bl"] - TimePointsNCSubset$Years_bl
+  NCConvorderbytimepoint <- rbind(NCConvorderbytimepoint,TimePointsNCSubset)
+}
+
+controlNCConvset <- NCConvorderbytimepoint[is.na(NCConvorderbytimepoint$TimeToEvent),]
+controlNCConvset <- subset(controlNCConvset, Year_bl_LastVisit >= 4)
+hist(controlNCConvset$TimeToLastVisit)
+controlNCConvset$TimeToEvent <- 5*controlNCConvset$TimeToLastVisit
+caseNCConvset <- NCConvorderbytimepoint[!is.na(NCConvorderbytimepoint$TimeToEvent),]
+caseNCConvset <- subset(caseNCConvset,TimeToEvent > 0 & TimeToEvent <= 5)
+hist(caseNCConvset$TimeToEvent)
+
+
+```
+## Modeling Set
+```{r}
+
+controlNCConvset$class <- 0
+caseNCConvset$class <- 1
+NCConv_set <- rbind(controlNCConvset,caseNCConvset)
+
+NCConv_TrainSet <- NCConv_set[NCConv_set$D1==1,]
+
+table(NCConv_TrainSet$class)
+
+```
+## Modeling
+
+
+```{r}
+table(NCConv_TrainSet$VISCODE)
+
+NCConvSets <- list();
+NCConv_Model <- list();
+n=1
+
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(NCConv_TrainSet),nrow(NCConv_TrainSet))
+  NCConv_RandomSet <- NCConv_TrainSet[randomnumber,]
+  NCConv_RandomSet <- NCConv_RandomSet[order(NCConv_RandomSet$PTID),]
+  ptID <- NCConv_RandomSet$PTID
+  set1 <- NCConv_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  NCConvSets[[n]] <- set1[,c("class",predictors)]
+  NCConvSets[[n]] <- NCConvSets[[n]][complete.cases(NCConvSets[[n]]),]
+  NCConv_Model[[n]] <- BSWiMS.model(class ~ 1,NCConvSets[[n]],NumberofRepeats = 5)
+}
+save(NCConv_Model,file="NCConv_Model.RDATA")
+
+pred <- numeric(nrow(NCConv_TrainSet))
+for (n in 1:resamplingNumber)
+{
+  sm <- summary(NCConv_Model[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(NCConv_Model[[n]],NCConv_TrainSet)/resamplingNumber
+}
+
+pb <- predictionStats_binary(cbind(NCConv_TrainSet$class,pred),plotname = "BSWiMS MCI to AD")
+
+```
+
+### Time to Event
+
+```{r}
+
+NL_TO_OTHER_Sets <- list();
+NL_TO_OTHER_TimeModel <- list();
+n=1
+
+#caseTrainnoBL <- subset(NL_TO_OTHER_TrainSet,class==1 & VISCODE != "bl")
+caseTrain <- subset(NCConv_TrainSet,class==1 )
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(caseTrain),nrow(caseTrain))
+  NL_TO_OTHER_RandomSet <- caseTrain[randomnumber,]
+  NL_TO_OTHER_RandomSet <- NL_TO_OTHER_RandomSet[order(NL_TO_OTHER_RandomSet$PTID),]
+  ptID <- NL_TO_OTHER_RandomSet$PTID
+  set1 <- NL_TO_OTHER_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  NL_TO_OTHER_Sets[[n]] <- set1[,c("TimeToEvent",predictors)]
+  NL_TO_OTHER_Sets[[n]]$TimeToEvent <- log(NL_TO_OTHER_Sets[[n]]$TimeToEvent)
+  NL_TO_OTHER_TimeModel[[n]] <- BSWiMS.model(TimeToEvent ~ 1,NL_TO_OTHER_Sets[[n]],NumberofRepeats = 5)
+}
+save(NL_TO_OTHER_TimeModel,file="NL_TO_OTHER_TimeModel.RDATA")
+
+NL_TO_OTHER_TestCaseSet <- NCConv_TrainSet[NCConv_TrainSet$D2==1 & NCConv_TrainSet$class==1,]
+
+pred <- numeric(nrow(NL_TO_OTHER_TestCaseSet))
+for (n in 1:resamplingNumber)
+{
+  sm <- summary(NL_TO_OTHER_TimeModel[[n]])
+  print(sm$coefficients)
+  pred <- pred+predict(NL_TO_OTHER_TimeModel[[n]],NL_TO_OTHER_TestCaseSet)
+}
+
+pred <- pred/resamplingNumber
+
+ps <- predictionStats_regression(cbind(NL_TO_OTHER_TestCaseSet$TimeToEvent,exp(pred)),plotname = "BSWiMS MCI to AD Time")
+ps$spearmanci
+
+```
+
+
+
+## CrossSectional Modeling
+
+## Modeling Set
+```{r}
+table(ADNITRAIN$DX,ADNITRAIN$DX_bl)
+
+class <- 
+  2*(ADNITRAIN$DX == "Dementia" | ADNITRAIN$DX == "MCI to Dementia" | ADNITRAIN$DX == "NL to Dementia") +
+  1*(ADNITRAIN$DX == "Dementia to MCI" | ADNITRAIN$DX == "MCI" | ADNITRAIN$DX == "NL to MCI")
+
+ADNITRAIN$class <- class
+
+class <- 
+  2*(ADNITEST$DX == "Dementia" | ADNITEST$DX == "MCI to Dementia" | ADNITEST$DX == "NL to Dementia") +
+  1*(ADNITEST$DX == "Dementia to MCI" | ADNITEST$DX == "MCI" | ADNITEST$DX == "NL to MCI")
+
+
+ADNITEST$class <- class
+
+```
+## Baseline Modeling
+
+
+```{r}
+
+AllADNISets <- list();
+AllADNI_Model <- list();
+n=1
+
+resamplingNumber = 5
+
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(ADNITRAIN),nrow(ADNITRAIN))
+  AllADNI_RandomSet <- ADNITRAIN[randomnumber,]
+  AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$PTID),]
+  ptID <- AllADNI_RandomSet$PTID
+  set1 <- AllADNI_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  AllADNISets[[n]] <- set1[,c("class",cpredictors)]
+  AllADNISets[[n]] <- AllADNISets[[n]][complete.cases(AllADNISets[[n]]),]
+  AllADNISets[[n]]$class <- as.factor(AllADNISets[[n]]$class)
+  AllADNI_Model[[n]] <- filteredFit(class ~ .,
+                                    AllADNISets[[n]],
+                                    fitmethod=e1071::svm,
+                                    filtermethod.control=list(pvalue=0.05,limit=150))
+#  AllADNI_Model[[n]] <- filteredFit(class ~ .,
+#                                    AllADNISets[[n]],
+#                                    fitmethod=NAIVE_BAYES,
+#                                    filtermethod.control=list(pvalue=0.01,limit=25),usekernel = TRUE)
+#  AllADNI_Model[[n]] <- BSWiMS.model(class ~ 1,AllADNISets[[n]],NumberofRepeats = 5)
+#  AllADNI_Model[[n]] <- e1071::svm(as.formula(class ~ .),AllADNISets[[n]][,c(1:20)])
+}
+
+#summary(set1[,c("class",cpredictors[1:20])])
+
+#save(AllADNI_Model,file="OrdinalMOdels.RDATA")
+#load(file="OrdinalMOdels.RDATA")
+
+pred <- predict(AllADNI_Model[[1]],ADNITEST)
+table(pred,ADNITEST$class)
+
+#pred <- predict(AllADNI_Model[[1]]$oridinalModels,ADNITEST)
+
+for (n in 2:resamplingNumber)
+{
+#  pred <- pred+predict(AllADNI_Model[[n]]$oridinalModels,ADNITEST)
+  pred <- pred+predict(AllADNI_Model[[n]],ADNITEST)
+}
+pred <- pred/resamplingNumber
+
+#pred <- as.data.frame(pred)
+#table(pred[,1])
+
+#pb <- predictionStats_ordinal(cbind(ADNITEST$class,as.integer(pred[,1]+0.5)),plotname = "ADNI Classificaiton")
+pb <- predictionStats_ordinal(cbind(ADNITEST$class,as.integer(pred+0.5)),plotname = "ADNI Classificaiton")
+
+pb$Kendall
+pb$Kapp
+pb$class95ci
+  
+table(ADNITEST$class,as.integer(pred+0.5))
+
+```
+
+
+## One Year Modeling
+
+```{r}
+
+resamplingNumber = 5
+
+AdniFive <- NULL
+idx = 1;
+for (idx in 1:length(Fiveyearchage))
+{
+  baseFive <- TimePointsSubset[[basechage[idx]]]
+  baseFive$DX <- rep(NA,nrow(baseFive))
+  baseFive[rownames(TimePointsSubset[[Fiveyearchage[idx]]]),"DX"] <- TimePointsSubset[[Fiveyearchage[idx]]]$DX
+  baseFive <- baseFive[!is.na(baseFive$DX),]
+  AdniFive <- rbind(AdniFive,baseFive)
+}
+table(ADNITRAIN$DX,ADNITRAIN$DX_bl)
+
+ADNITRAIN <- subset(AdniFive,D1 == 1)
+ADNITEST <- subset(AdniFive,D2 == 1)
+class <- 
+  2*(ADNITRAIN$DX == "Dementia" | ADNITRAIN$DX == "MCI to Dementia" | ADNITRAIN$DX == "NL to Dementia") +
+  1*(ADNITRAIN$DX == "Dementia to MCI" | ADNITRAIN$DX == "MCI" | ADNITRAIN$DX == "NL to MCI")
+
+ADNITRAIN$class <- class
+
+class <- 
+  2*(ADNITEST$DX == "Dementia" | ADNITEST$DX == "MCI to Dementia" | ADNITEST$DX == "NL to Dementia") +
+  1*(ADNITEST$DX == "Dementia to MCI" | ADNITEST$DX == "MCI" | ADNITEST$DX == "NL to MCI")
+
+ADNITEST$class <- class
+
+```
+
+## The Five Year prediction Models
+
+```{r}
+
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(ADNITRAIN),nrow(ADNITRAIN))
+  AllADNI_RandomSet <- ADNITRAIN[randomnumber,]
+  AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$PTID),]
+  ptID <- AllADNI_RandomSet$PTID
+  set1 <- AllADNI_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  AllADNISets[[n]] <- set1[,c("class",cpredictors)]
+  AllADNISets[[n]] <- AllADNISets[[n]][complete.cases(AllADNISets[[n]]),]
+  AllADNISets[[n]]$class <- as.factor(AllADNISets[[n]]$class)
+  AllADNI_Model[[n]] <- filteredFit(class ~ .,
+                                    AllADNISets[[n]],
+                                    fitmethod=e1071::svm,
+                                    filtermethod.control=list(pvalue=0.05,limit=150))
+}
+
+pred <- predict(AllADNI_Model[[1]],ADNITEST)
+
+for (n in 2:resamplingNumber)
+{
+  pred <- pred+predict(AllADNI_Model[[n]],ADNITEST)
+}
+pred <- pred/resamplingNumber
+
+pb <- predictionStats_ordinal(cbind(ADNITEST$class,as.integer(pred+0.5)),plotname = "ADNI Classificaiton")
+
+pb$class95ci
+  
+table(ADNITEST$class,as.integer(pred+0.5))
+
+```
+
+
+
+## Five Year Modeling
+
+```{r}
+
+resamplingNumber = 5
+
+AdniFive <- NULL
+idx = 1;
+for (idx in 1:length(Fiveyearchage))
+{
+  baseFive <- TimePointsSubset[[basechage[idx]]]
+  baseFive$DX <- rep(NA,nrow(baseFive))
+  baseFive[rownames(TimePointsSubset[[Fiveyearchage[idx]]]),"DX"] <- TimePointsSubset[[Fiveyearchage[idx]]]$DX
+  baseFive <- baseFive[!is.na(baseFive$DX),]
+  AdniFive <- rbind(AdniFive,baseFive)
+}
+table(ADNITRAIN$DX,ADNITRAIN$DX_bl)
+
+ADNITRAIN <- subset(AdniFive,D1 == 1)
+ADNITEST <- subset(AdniFive,D2 == 1)
+class <- 
+  2*(ADNITRAIN$DX == "Dementia" | ADNITRAIN$DX == "MCI to Dementia" | ADNITRAIN$DX == "NL to Dementia") +
+  1*(ADNITRAIN$DX == "Dementia to MCI" | ADNITRAIN$DX == "MCI" | ADNITRAIN$DX == "NL to MCI")
+
+ADNITRAIN$class <- class
+
+class <- 
+  2*(ADNITEST$DX == "Dementia" | ADNITEST$DX == "MCI to Dementia" | ADNITEST$DX == "NL to Dementia") +
+  1*(ADNITEST$DX == "Dementia to MCI" | ADNITEST$DX == "MCI" | ADNITEST$DX == "NL to MCI")
+
+ADNITEST$class <- class
+
+```
+
+
+```{r}
+AllADNISets <- list();
+AllADNI_Model <- list();
+n=1
+for (n in 1:resamplingNumber)
+{
+  randomnumber <- sample(1:nrow(ADNITRAIN),nrow(ADNITRAIN))
+  AllADNI_RandomSet <- ADNITRAIN[randomnumber,]
+  AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$PTID),]
+  ptID <- AllADNI_RandomSet$PTID
+  set1 <- AllADNI_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
+  rownames(set1) <- set1$PTID
+  AllADNISets[[n]] <- set1[,c("class",cpredictors)]
+  AllADNISets[[n]] <- AllADNISets[[n]][complete.cases(AllADNISets[[n]]),]
+  AllADNISets[[n]]$class <- as.factor(AllADNISets[[n]]$class)
+  print(nrow(AllADNISets[[n]]))
+  print(table(set1$DX_bl,set1$class))
+  AllADNI_Model[[n]] <- filteredFit(class ~ .,
+                                    AllADNISets[[n]],
+                                    fitmethod=e1071::svm,
+                                    filtermethod.control=list(pvalue=0.1,limit=150))
+  print(length(AllADNI_Model[[n]]$selectedfeatures))
+}
+
+pred <- predict(AllADNI_Model[[1]],ADNITEST)
+
+for (n in 2:resamplingNumber)
+{
+  pred <- pred+predict(AllADNI_Model[[n]],ADNITEST)
+}
+pred <- pred/resamplingNumber
+
+pb <- predictionStats_ordinal(cbind(ADNITEST$class,as.integer(pred+0.5)),plotname = "ADNI Classificaiton")
+
+pb$class95ci
+  
+table(ADNITEST$class,as.integer(pred+0.5))
+
+```
+
