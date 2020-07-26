@@ -69,7 +69,7 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   
   rownames(subsetMCIADConversion) <- subsetMCIADConversion$PTID
   
-  ### Subset by time points
+  ### MCI Subset by time points
   
   MCItoADorderbytimepoint <- NULL
   for (m in months)
@@ -86,10 +86,10 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   controlMCIToADset$TimeToEvent <- controlMCIToADset$TimeToLastVisit
   
   caseMCIToADset <- MCItoADorderbytimepoint[!is.na(MCItoADorderbytimepoint$TimeToEvent),]
-  caseMCIToADset <- subset(caseMCIToADset,TimeToEvent > 0 & TimeToEvent <= 5)
+  caseMCIToADset <- subset(caseMCIToADset,TimeToEvent > 0 )
   hist(caseMCIToADset$TimeToEvent)
   
-  ## Modeling Set
+  ## MCI Modeling Set
 
     controlMCIToADset$class <- 0
   caseMCIToADset$class <- 1
@@ -101,7 +101,7 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   table(MCI_to_AD_TrainSet$class)
   
   
-  ## Modeling
+  ## Modeling MCI conversion
   
   table(MCI_to_AD_TrainSet$VISCODE)
   
@@ -119,12 +119,14 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
     set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
     rownames(set1) <- set1$PTID
     set1 <- set1[complete.cases(set1),]
+    print(nrow(set1))
     MCI_to_ADSets[[n]] <- set1[,c("class",predictors)]
     MCI_TO_AD_Model[[n]] <- MLMethod(class ~ 1,MCI_to_ADSets[[n]],...)
     set1 <- subset(set1,class==1)
-
+    print(nrow(set1))
+    
     MCI_to_ADSets[[n]] <- set1[,c("TimeToEvent",predictors)]
-    MCI_to_ADSets[[n]]$TimeToEvent <- log(MCI_to_ADSets[[n]]$TimeToEvent)
+    MCI_to_ADSets[[n]]$TimeToEvent <- log(set1$TimeToEvent)
     MCI_TO_AD_TimeModel[[n]] <- MLMethod(TimeToEvent ~ 1,MCI_to_ADSets[[n]],...)
     
   }
@@ -145,7 +147,7 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   
   rownames(subsetNCConvConversion) <- subsetNCConvConversion$PTID
   
-  ### Subset by time points
+  ### NC Subset by time points
   
   NCConvorderbytimepoint <- NULL
   for (m in months)
@@ -161,10 +163,10 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   hist(controlNCConvset$TimeToLastVisit)
   controlNCConvset$TimeToEvent <- 5*controlNCConvset$TimeToLastVisit
   caseNCConvset <- NCConvorderbytimepoint[!is.na(NCConvorderbytimepoint$TimeToEvent),]
-  caseNCConvset <- subset(caseNCConvset,TimeToEvent > 0 & TimeToEvent <= 5)
+  caseNCConvset <- subset(caseNCConvset,TimeToEvent > 0 )
   hist(caseNCConvset$TimeToEvent)
   
-  ## Modeling Set
+  ## Modeling Nomal congitive Set
   controlNCConvset$class <- 0
   caseNCConvset$class <- 1
   NCConv_set <- rbind(controlNCConvset,caseNCConvset)
@@ -190,13 +192,16 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
     set1 <- NCConv_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
     rownames(set1) <- set1$PTID
     set1 <- set1[complete.cases(set1),]
+    print(nrow(set1))
+    
     NCConvSets[[n]] <- set1[,c("class",predictors)]
     NCConv_Model[[n]] <- MLMethod(class ~ 1,NCConvSets[[n]],...)
 
     set1 <- subset(set1,class==1)
+    print(nrow(set1))
     NCConvSets[[n]] <- set1[,c("TimeToEvent",predictors)]
-    NCConvSets[[n]]$TimeToEvent <- log(NL_TO_OTHER_Sets[[n]]$TimeToEvent)
-    NL_TO_OTHER_TimeModel[[n]] <- MLMethod(TimeToEvent ~ 1,NCConvSets[[n]],..)
+    NCConvSets[[n]]$TimeToEvent <- log(set1$TimeToEvent)
+    NL_TO_OTHER_TimeModel[[n]] <- MLMethod(TimeToEvent ~ 1,NCConvSets[[n]],...)
   }
 
 
@@ -218,8 +223,8 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   
   for (n in 1:resamplingNumber)
   {
-    randomnumber <- sample(1:nrow(ADNITRAIN),nrow(ADNITRAIN))
-    AllADNI_RandomSet <- ADNITRAIN[randomnumber,]
+    randomnumber <- sample(1:nrow(AdjustedFrame),nrow(AdjustedFrame))
+    AllADNI_RandomSet <- AdjustedFrame[randomnumber,]
     AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$PTID),]
     ptID <- AllADNI_RandomSet$PTID
     set1 <- AllADNI_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
@@ -233,7 +238,6 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
       AllADNISets[[n]]$class <- as.factor(AllADNISets[[n]]$class)
     }
     AllADNI_Model[[n]] <- MLMethod(class ~ .,AllADNISets[[n]],...)
-    print(length(AllADNI_Model[[n]]$selectedfeatures))
   }
   
   predicitionModels <- list(CrossModels = AllADNI_Model,
