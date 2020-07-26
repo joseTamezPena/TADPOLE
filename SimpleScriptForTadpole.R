@@ -8,5 +8,13 @@ TADPOLE_D1_D2 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/
 TADPOLE_D3 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D3.csv", na.strings=c("NA",-4,"-4.0",""," "))
 
 
-#AdjusttheDatasets
+#DataSplit
 
+TrainingSet <- subset(TADPOLE_D1_D2,D1==1)
+D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
+
+#DataProcessing
+
+
+
+dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=24,colImputeThreshold=0.10,rowImputeThreshold=0.10)
