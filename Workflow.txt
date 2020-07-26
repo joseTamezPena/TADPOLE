@@ -1,4 +1,4 @@
-Procesing Workflow:
+Processing Workflow:
 
 Data:
 
