@@ -11,6 +11,7 @@
 
 dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.10)
 {
+  library("FRESA.CAD")
   
   SetIDSColumns <- c("RID","D1","D2","SITE","COLPROT","ORIGPROT")
   DatesColumns <- c("VISCODE","EXAMDATE_bl","EXAMDATE","Years_bl","Month_bl","Month","M")
@@ -82,9 +83,10 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   train_frame_Transformed[,VolumeLeft] <- (train_frame_Transformed[,VolumeLeft])^(1/3)
   train_frame_Transformed[,AreaRight] <- (train_frame_Transformed[,AreaRight])^1/2
   train_frame_Transformed[,AreaLeft] <- (train_frame_Transformed[,AreaLeft])^1/2
+  train_frame_Transformed$nICV <- train_frame_Transformed$ICV^(1/3)
   
   
-  ICV <- train_frame$ICV^(1/3)
+  ICV <- train_frame_Transformed$nICV
   
   train_frame_Transformed[,otherVolumes] <- (train_frame_Transformed[,otherVolumes])/ICV
   train_frame_Transformed[,VolumeRight] <- (train_frame_Transformed[,VolumeRight])/ICV
@@ -129,7 +131,6 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   train_frame_Transformed$MeanThickness <- apply(MeanThickness,1,mean,na.rm=TRUE)
   train_frame_Transformed$StdThickness <- apply(MeanThickness,1,sd,na.rm=TRUE)
   train_frame_Transformed$COMeanThickness <- train_frame_Transformed$StdThickness/train_frame_Transformed$MeanThickness
-  train_frame_Transformed_red$nICV <- train_frame_Transformed_red$ICV^(1/3)
   
 ## Testing
   
@@ -141,9 +142,10 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   test_Frame_Transformed[,VolumeLeft] <- (test_Frame_Transformed[,VolumeLeft])^(1/3)
   test_Frame_Transformed[,AreaRight] <- (test_Frame_Transformed[,AreaRight])^1/2
   test_Frame_Transformed[,AreaLeft] <- (test_Frame_Transformed[,AreaLeft])^1/2
+  test_Frame_Transformed$nICV <- test_Frame_Transformed$ICV^(1/3)
   
   
-  ICV <- train_frame$ICV^(1/3)
+  ICV <- test_Frame_Transformed$nICV
   
   test_Frame_Transformed[,otherVolumes] <- (test_Frame_Transformed[,otherVolumes])/ICV
   test_Frame_Transformed[,VolumeRight] <- (test_Frame_Transformed[,VolumeRight])/ICV
@@ -197,14 +199,23 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   table(train_frame_Transformed$VISCODE)
   sum(is.na(train_frame_Transformed$DX))
   
-  missingData <- apply(is.na(subset(train_frame_Transformed,M <= MinVisit)),2,sum) > checkmissing
-  sum(!missingData)
+  shortvisits <- subset(train_frame_Transformed,M <= MinVisit)
+  
+  tokeep = !(colnames(shortvisits) %in% c("DX","nICV"))
+  
+  missingData <- c(rep(FALSE,length(notQuantitative)),
+                   apply(is.na(shortvisits[,-notQuantitative]),2,sum) > checkmissing)
+
+  missingData <- missingData & tokeep
+
+  print(sum(!missingData))
   
   train_frame_Transformed_red <- train_frame_Transformed[,!missingData]
+  print(colnames(train_frame_Transformed_red))
 
   checkColmissing <- rowImputeThreshold*ncol(train_frame_Transformed_red)
   mssingRowData <- apply(is.na(train_frame_Transformed_red),1,sum) > checkColmissing
-  sum(!mssingRowData)
+  print(sum(!mssingRowData))
   
   train_frame_Transformed_red <- train_frame_Transformed_red[!mssingRowData,]
   
@@ -214,36 +225,36 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   TadpoleOnlyFeatures <- train_frame_Transformed_red[,-notQuantitative]
   
   
-  Tadpole_Imputed <- train_frame_Transformed_red
-  allAdustedZrank <- Tadpole_Imputed
-#  Tadpole_Imputed <- cbind(train_frame_Transformed_red[,notQuantitative],nearestNeighborImpute(TadpoleOnlyFeatures))
+  TadpoleTrain_Imputed <- train_frame_Transformed_red
+  allAdustedZrank <- TadpoleTrain_Imputed
+  TadpoleTrain_Imputed <- cbind(train_frame_Transformed_red[,notQuantitative],nearestNeighborImpute(TadpoleOnlyFeatures))
   
-  # fnames <- colnames(Tadpole_Imputed)
-  # fnames <- str_replace_all(fnames," ","_")
-  # fnames <- str_replace_all(fnames,"/","_")
-  # fnames <- str_replace_all(fnames,":","_")
-  # fnames <- str_replace_all(fnames,"//.","_")
-  # colnames(Tadpole_Imputed) <- fnames
-  # 
-  # table(Tadpole_Imputed$DX)
-  # table(Tadpole_Imputed$PTGENDER)
-  # Tadpole_Imputed$PTGENDER <- 1*(Tadpole_Imputed$PTGENDER=="Male")
-  # table(Tadpole_Imputed$PTGENDER)
-  # 
-  # Tadpole_Imputed$AGE <- Tadpole_Imputed$AGE + Tadpole_Imputed$Years_bl
-  # 
-  # cognitiveNormal <- subset(Tadpole_Imputed,DX=="NL" & VISCODE=="bl")
-  # 
-  # predictors <- colnames(cognitiveNormal)[-notQuantitative]
-  # predictors <- cbind(predictors,predictors)
-  # 
-  # allAdusted <- featureAdjustment(predictors, baseModel="1+AGE+nICV",data=Tadpole_Imputed,referenceframe=cognitiveNormal,strata="PTGENDER", type = "LM", pvalue = 0.001)
-  # 
-  # 
-  # allAdustedZrank <- rankInverseNormalDataFrame(predictors, 
-  #                                               allAdusted, 
-  #                                               subset(allAdusted,DX=="NL" & VISCODE=="bl"),
-  #                                               strata="PTGENDER")
+  fnames <- colnames(TadpoleTrain_Imputed)
+  fnames <- str_replace_all(fnames," ","_")
+  fnames <- str_replace_all(fnames,"/","_")
+  fnames <- str_replace_all(fnames,":","_")
+  fnames <- str_replace_all(fnames,"//.","_")
+  colnames(TadpoleTrain_Imputed) <- fnames
+
+  table(TadpoleTrain_Imputed$PTGENDER)
+  TadpoleTrain_Imputed$PTGENDER <- 1*(TadpoleTrain_Imputed$PTGENDER=="Male")
+  table(TadpoleTrain_Imputed$PTGENDER)
+
+  TadpoleTrain_Imputed$AGE <- TadpoleTrain_Imputed$AGE + TadpoleTrain_Imputed$Years_bl
+
+  cognitiveNormal <- subset(TadpoleTrain_Imputed,DX=="NL" & VISCODE=="bl")
+
+  predictors <- colnames(cognitiveNormal)[-notQuantitative]
+  predictors <- cbind(predictors,predictors)
+
+  allAdusted <- featureAdjustment(predictors, baseModel="1+AGE+nICV",data=TadpoleTrain_Imputed,referenceframe=cognitiveNormal,strata="PTGENDER", type = "LM", pvalue = 0.001)
+  adjustedContol <- subset(allAdusted,DX=="NL" & VISCODE=="bl")
+
+
+  trainAdustedZrank <- rankInverseNormalDataFrame(predictors,
+                                                allAdusted,
+                                                adjustedContol,
+                                                strata="PTGENDER")
   
 ## Testing imputation
 
@@ -251,47 +262,58 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     test_Frame_Transformed_red <- test_Frame_Transformed[,!missingData]
     print(nrow(test_Frame_Transformed_red))
     newrawnames <- paste(test_Frame_Transformed_red$RID,test_Frame_Transformed_red$VISCODE,sep="_")
+    testIDS <- unique(test_Frame_Transformed_red$RID)
+    
     print(c(length(newrawnames),length(unique(newrawnames))))
     rownames(test_Frame_Transformed_red) <- newrawnames
     
-    rownames(train_frame_Transformed_red) <- paste(train_frame_Transformed_red$RID,train_frame_Transformed_red$VISCODE,sep="_")
-    trainObsnotinTest <- !(rownames(train_frame_Transformed_red) %in% rownames(test_Frame_Transformed_red))
-    test_Frame_Transformed_red <- rbind(test_Frame_Transformed_red,train_frame_Transformed_red[trainObsnotinTest,])
+    trainIDInTest <- train_frame_Transformed_red[train_frame_Transformed_red$RID %in% testIDS,]
+    
+    rownames(trainIDInTest) <- paste(trainIDInTest$RID,trainIDInTest$VISCODE,sep="_")
+    trainObsnotinTest <- !(rownames(trainIDInTest) %in% rownames(test_Frame_Transformed_red))
+    traininnotest <- trainIDInTest[trainObsnotinTest,]
+    
+    
+    test_Frame_Transformed_red <- rbind(test_Frame_Transformed_red,traininnotest)
     print(nrow(test_Frame_Transformed_red))
-    # TadpoleOnlyFeatures <- train_frame_Transformed_red[,-notQuantitative]
-  # 
-  # Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,notQuantitative],nearestNeighborImpute(TadpoleOnlyFeatures))
-  # 
-  # fnames <- colnames(Tadpole_Imputed)
-  # fnames <- str_replace_all(fnames," ","_")
-  # fnames <- str_replace_all(fnames,"/","_")
-  # fnames <- str_replace_all(fnames,":","_")
-  # fnames <- str_replace_all(fnames,"//.","_")
-  # colnames(Tadpole_Imputed) <- fnames
-  # 
-  # table(Tadpole_Imputed$DX)
-  # table(Tadpole_Imputed$PTGENDER)
-  # Tadpole_Imputed$PTGENDER <- 1*(Tadpole_Imputed$PTGENDER=="Male")
-  # table(Tadpole_Imputed$PTGENDER)
-  # 
-  # Tadpole_Imputed$AGE <- Tadpole_Imputed$AGE + Tadpole_Imputed$Years_bl
-  # 
-  # cognitiveNormal <- subset(Tadpole_Imputed,DX=="NL" & VISCODE=="bl")
-  # 
-  # predictors <- colnames(cognitiveNormal)[-notQuantitative]
-  # predictors <- cbind(predictors,predictors)
-  # 
-  # allAdusted <- featureAdjustment(predictors, baseModel="1+AGE+nICV",data=Tadpole_Imputed,referenceframe=cognitiveNormal,strata="PTGENDER", type = "LM", pvalue = 0.001)
-  # 
-  # 
-  # allAdustedZrank <- rankInverseNormalDataFrame(predictors, 
-  #                                               allAdusted, 
-  #                                               subset(allAdusted,DX=="NL" & VISCODE=="bl"),
-  #                                               strata="PTGENDER")
+    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$VISCODE),]
+    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$RID),]
+    
+    
+    checkColmissing <- 8 #at least 8 features
+    mssingRowData <- apply(is.na(test_Frame_Transformed_red),1,sum) >= checkColmissing
+    print(sum(!mssingRowData))
+    
+    test_Frame_Transformed_red <- test_Frame_Transformed_red[!mssingRowData,]
+    
+    
+    
+    TadpoleOnlyFeatures <- test_Frame_Transformed_red[,-notQuantitative]
+   
+    Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,notQuantitative],nearestNeighborImpute(TadpoleOnlyFeatures))
+   
+    fnames <- colnames(Tadpole_Imputed)
+    fnames <- str_replace_all(fnames," ","_")
+    fnames <- str_replace_all(fnames,"/","_")
+    fnames <- str_replace_all(fnames,":","_")
+    fnames <- str_replace_all(fnames,"//.","_")
+    colnames(Tadpole_Imputed) <- fnames
+   
+    table(Tadpole_Imputed$PTGENDER)
+    Tadpole_Imputed$PTGENDER <- 1*(Tadpole_Imputed$PTGENDER=="Male")
+    table(Tadpole_Imputed$PTGENDER)
+   
+    testAdusted <- featureAdjustment(predictors, baseModel="1+AGE+nICV",data=Tadpole_Imputed,referenceframe=cognitiveNormal,strata="PTGENDER", type = "LM", pvalue = 0.001)
+   
+   
+    testAdustedZrank <- rankInverseNormalDataFrame(predictors, 
+                                                   testAdusted, 
+                                                   adjustedContol,
+                                                   strata="PTGENDER")
   
   
   
-  DataFrames <- list(AdjustedTrainFrame=allAdustedZrank,testingFrame = test_Frame_Transformed_red)
+  DataFrames <- list(AdjustedTrainFrame=trainAdustedZrank,testingFrame = testAdustedZrank)
   
   return (DataFrames)
 }
