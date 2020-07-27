@@ -15,13 +15,17 @@ D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
 
 #DataProcessing
 
+source('~/GitHub/TADPOLE/dataPreprocessing.R')
+source('~/GitHub/TADPOLE/TADPOLE_Train.R')
 
 
-dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.10)
+dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)
+
 
 save(dataTadpole,file="D3DataFrames.RDATA")
 
-dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.10)
+dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)
+
 
 save(dataTadpole,file="D2DataFrames.RDATA")
 

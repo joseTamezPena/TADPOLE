@@ -68,6 +68,10 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     colnames(missingTestColumns) <- traincolnames[trainNotInTest]
     test_Frame_Transformed <- cbind(test_Frame,missingTestColumns)
   }
+  else
+  {
+    test_Frame_Transformed <- test_Frame
+  }
   Used_Train_columns <- colnames(train_frame_Transformed)
   test_Frame_Transformed <- test_Frame_Transformed[,Used_Train_columns]
   
@@ -258,11 +262,14 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   
 ## Testing imputation
 
-  
+    newrawnames <- paste(train_frame_Transformed_red$RID,train_frame_Transformed_red$VISCODE,sep="_")
+    rownames(train_frame_Transformed_red) <- newrawnames
+    
     test_Frame_Transformed_red <- test_Frame_Transformed[,!missingData]
     print(nrow(test_Frame_Transformed_red))
     newrawnames <- paste(test_Frame_Transformed_red$RID,test_Frame_Transformed_red$VISCODE,sep="_")
     testIDS <- unique(test_Frame_Transformed_red$RID)
+    
     
     print(c(length(newrawnames),length(unique(newrawnames))))
     rownames(test_Frame_Transformed_red) <- newrawnames
@@ -280,23 +287,37 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$RID),]
     
     
-    checkRowmissing <- 3 #at least 3 features
-    mssingRowData <- apply(is.na(test_Frame_Transformed_red),1,sum) > checkRowmissing
-    print(sum(!mssingRowData))
-    
-    test_Frame_Transformed_red <- test_Frame_Transformed_red[!mssingRowData,]
+#    checkRowmissing <- 3 #at least 3 features
+#    mssingRowData <- apply(is.na(test_Frame_Transformed_red),1,sum) > checkRowmissing
+#    print(sum(!mssingRowData))
+#    test_Frame_Transformed_red <- test_Frame_Transformed_red[!mssingRowData,]
     
     test_Frame_Transformed_red$RID <- as.numeric(test_Frame_Transformed_red$RID)
     test_Frame_Transformed_red$AGE <- as.numeric(test_Frame_Transformed_red$AGE)
+    test_Frame_Transformed_red$PTGENDER <- 1*(test_Frame_Transformed_red$PTGENDER=="Male")
     
-    theincluded <- unique(c("RID","AGE","PTGENDER",colnames(test_Frame_Transformed_red[,!notQuantitative])))
+    train_frame_Transformed_red$RID <- as.numeric(train_frame_Transformed_red$RID)
+    train_frame_Transformed_red$AGE <- as.numeric(train_frame_Transformed_red$AGE)
+    train_frame_Transformed_red$PTGENDER <- 1*(train_frame_Transformed_red$PTGENDER=="Male")
+    
+#    print(colnames(test_Frame_Transformed_red))
+    
+    theincluded <- unique(c("RID","AGE","PTGENDER",colnames(test_Frame_Transformed_red)[-notQuantitative]))
     TadpoleOnlyFeatures <- test_Frame_Transformed_red[,theincluded]
-    print(ncol(TadpoleOnlyFeatures))
-    colnotincluded <- !(colnames(test_Frame_Transformed_red) %in% rownames(theincluded))
-    print(length(colnotincluded))
+    TadpoleRefOnlyFeatures <- train_frame_Transformed_red[,theincluded]
     
-    Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,colnotincluded],nearestNeighborImpute(TadpoleOnlyFeatures))
-   
+    print(ncol(TadpoleOnlyFeatures))
+#    print(colnames(TadpoleOnlyFeatures))
+    colnotincluded <- !(colnames(test_Frame_Transformed_red) %in% theincluded)
+    print(colnames(test_Frame_Transformed_red)[colnotincluded])
+#    print(summary(TadpoleOnlyFeatures))
+#    print(summary(TadpoleRefOnlyFeatures))
+    
+    Tadpole_Imputed <- nearestNeighborImpute(TadpoleOnlyFeatures,TadpoleRefOnlyFeatures)
+    print(c(nrow(Tadpole_Imputed),ncol(Tadpole_Imputed)))
+    Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,colnotincluded],Tadpole_Imputed)
+    print(c(nrow(Tadpole_Imputed),ncol(Tadpole_Imputed)))
+    
     fnames <- colnames(Tadpole_Imputed)
     fnames <- str_replace_all(fnames," ","_")
     fnames <- str_replace_all(fnames,"/","_")
@@ -305,17 +326,17 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     colnames(Tadpole_Imputed) <- fnames
    
     table(Tadpole_Imputed$PTGENDER)
-    Tadpole_Imputed$PTGENDER <- 1*(Tadpole_Imputed$PTGENDER=="Male")
-    table(Tadpole_Imputed$PTGENDER)
-   
+
     testAdusted <- featureAdjustment(predictors, baseModel="1+AGE+nICV",data=Tadpole_Imputed,referenceframe=cognitiveNormal,strata="PTGENDER", type = "LM", pvalue = 0.001)
    
-   
+    print(c(nrow(testAdusted),ncol(testAdusted)))
+    
     testAdustedZrank <- rankInverseNormalDataFrame(predictors, 
                                                    testAdusted, 
                                                    adjustedContol,
                                                    strata="PTGENDER")
-  
+    print(c(nrow(testAdustedZrank),ncol(testAdustedZrank)))
+    
   
   
   DataFrames <- list(AdjustedTrainFrame=trainAdustedZrank,testingFrame = testAdustedZrank)
