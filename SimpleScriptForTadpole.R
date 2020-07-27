@@ -19,4 +19,9 @@ D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
 
 dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.10)
 
-testD3 <-dataTadpole$testingFrame
+save(dataTadpole,file="D3DataFrames.RDATA")
+
+dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.10)
+
+save(dataTadpole,file="D2DataFrames.RDATA")
+

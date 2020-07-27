@@ -20,14 +20,14 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   cpredictors <- predictors
   
   AdjustedFrame <- AdjustedFrame[order(AdjustedFrame$Years_bl),]
-  AdjustedFrame <- AdjustedFrame[order(AdjustedFrame$PTID),]
+  AdjustedFrame <- AdjustedFrame[order(AdjustedFrame$RID),]
   
-  pdis <- AdjustedFrame$PTID
+  pdis <- AdjustedFrame$RID
   lastTimepointSet <- AdjustedFrame[c(pdis[1:(length(pdis)-1)] != pdis[-1],TRUE),]
-  rownames(lastTimepointSet) <- lastTimepointSet$PTID
+  rownames(lastTimepointSet) <- lastTimepointSet$RID
 
   BaseTimepointSet <- AdjustedFrame[c(TRUE,pdis[-1] != pdis[1:(length(pdis)-1)]),]
-  rownames(BaseTimepointSet) <- BaseTimepointSet$PTID
+  rownames(BaseTimepointSet) <- BaseTimepointSet$RID
   deltaFeaturepredictors <- predictors[regexpr('_bl', predictors) < 0][-(c(1:2))]
   
   TimePointsSubset <- list();
@@ -37,9 +37,9 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   for (m in months)
   {
     TimePointsSubset[[i]] <- subset(AdjustedFrame,M == m)
-    rownames(TimePointsSubset[[i]]) <- TimePointsSubset[[i]]$PTID
-    TimePointsSubset[[i]]$Year_bl_LastVisit <- lastTimepointSet[TimePointsSubset[[i]]$PTID,"Years_bl"]
-    TimePointsSubset[[i]]$Last_DX <- lastTimepointSet[TimePointsSubset[[i]]$PTID,"DX"]
+    rownames(TimePointsSubset[[i]]) <- TimePointsSubset[[i]]$RID
+    TimePointsSubset[[i]]$Year_bl_LastVisit <- lastTimepointSet[TimePointsSubset[[i]]$RID,"Years_bl"]
+    TimePointsSubset[[i]]$Last_DX <- lastTimepointSet[TimePointsSubset[[i]]$RID,"DX"]
     TimePointsSubset[[i]]$TimeToLastVisit <- TimePointsSubset[[i]]$Year_bl_LastVisit - TimePointsSubset[[i]]$Years_bl
     deltaObservations <- TimePointsSubset[[i]][,deltaFeaturepredictors] - BaseTimepointSet[rownames(TimePointsSubset[[i]]),deltaFeaturepredictors]
     colnames(deltaObservations) <- paste("Delta",colnames(deltaObservations),sep="_")
@@ -60,14 +60,14 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   MCISubset <- subset(AdjustedFrame,(DX_bl == "LMCI" | DX_bl == "EMCI") & DX == "MCI")
   
   subsetMCIADConversion <-  as.data.frame(subset(AdjustedFrame,DX == "MCI to Dementia"))
-  pidss <- subsetMCIADConversion$PTID
+  pidss <- subsetMCIADConversion$RID
   tpids <- table(pidss)
   removeTp <- tpids[pidss] == 1
   sum(removeTp == FALSE)
   
   subsetMCIADConversion <- subsetMCIADConversion[removeTp,]
   
-  rownames(subsetMCIADConversion) <- subsetMCIADConversion$PTID
+  rownames(subsetMCIADConversion) <- subsetMCIADConversion$RID
   
   ### MCI Subset by time points
   
@@ -75,8 +75,8 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   for (m in months)
   {
     TimePointsMCISubset <- subset(MCISubset,M == m)
-    rownames(TimePointsMCISubset) <-  TimePointsMCISubset$PTID
-    TimePointsMCISubset$TimeToEvent <- subsetMCIADConversion[TimePointsMCISubset$PTID,"Years_bl"] - TimePointsMCISubset$Years_bl
+    rownames(TimePointsMCISubset) <-  TimePointsMCISubset$RID
+    TimePointsMCISubset$TimeToEvent <- subsetMCIADConversion[TimePointsMCISubset$RID,"Years_bl"] - TimePointsMCISubset$Years_bl
     MCItoADorderbytimepoint <- rbind(MCItoADorderbytimepoint,TimePointsMCISubset)
   }
   
@@ -114,10 +114,10 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   {
     randomnumber <- sample(1:nrow(MCI_to_AD_TrainSet),nrow(MCI_to_AD_TrainSet))
     MCI_to_AD_RandomSet <- MCI_to_AD_TrainSet[randomnumber,]
-    MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$PTID),]
-    ptID <- MCI_to_AD_RandomSet$PTID
-    set1 <- MCI_to_AD_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
-    rownames(set1) <- set1$PTID
+    MCI_to_AD_RandomSet <- MCI_to_AD_RandomSet[order(MCI_to_AD_RandomSet$RID),]
+    RID <- MCI_to_AD_RandomSet$RID
+    set1 <- MCI_to_AD_RandomSet[c(RID[1:length(RID)-1] != RID[-1],TRUE),]
+    rownames(set1) <- set1$RID
     set1 <- set1[complete.cases(set1),]
     print(nrow(set1))
     MCI_to_ADSets[[n]] <- set1[,c("class",predictors)]
@@ -138,14 +138,14 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   
   
   subsetNCADConversion <-  as.data.frame(subset(AdjustedFrame,DX == "NL to Dementia" | DX == "NL to MCI"))
-  pidss <- subsetNCADConversion$PTID
+  pidss <- subsetNCADConversion$RID
   tpids <- table(pidss)
   removeTp <- tpids[pidss] == 1
   sum(removeTp == FALSE)
   
   subsetNCConvConversion <- subsetNCADConversion[removeTp,]
   
-  rownames(subsetNCConvConversion) <- subsetNCConvConversion$PTID
+  rownames(subsetNCConvConversion) <- subsetNCConvConversion$RID
   
   ### NC Subset by time points
   
@@ -153,8 +153,8 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   for (m in months)
   {
     TimePointsNCSubset <- subset(NCSubset,M == m)
-    rownames(TimePointsNCSubset) <-  TimePointsNCSubset$PTID
-    TimePointsNCSubset$TimeToEvent <- subsetNCConvConversion[TimePointsNCSubset$PTID,"Years_bl"] - TimePointsNCSubset$Years_bl
+    rownames(TimePointsNCSubset) <-  TimePointsNCSubset$RID
+    TimePointsNCSubset$TimeToEvent <- subsetNCConvConversion[TimePointsNCSubset$RID,"Years_bl"] - TimePointsNCSubset$Years_bl
     NCConvorderbytimepoint <- rbind(NCConvorderbytimepoint,TimePointsNCSubset)
   }
   
@@ -187,10 +187,10 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   {
     randomnumber <- sample(1:nrow(NCConv_TrainSet),nrow(NCConv_TrainSet))
     NCConv_RandomSet <- NCConv_TrainSet[randomnumber,]
-    NCConv_RandomSet <- NCConv_RandomSet[order(NCConv_RandomSet$PTID),]
-    ptID <- NCConv_RandomSet$PTID
-    set1 <- NCConv_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
-    rownames(set1) <- set1$PTID
+    NCConv_RandomSet <- NCConv_RandomSet[order(NCConv_RandomSet$RID),]
+    RID <- NCConv_RandomSet$RID
+    set1 <- NCConv_RandomSet[c(RID[1:length(RID)-1] != RID[-1],TRUE),]
+    rownames(set1) <- set1$RID
     set1 <- set1[complete.cases(set1),]
     print(nrow(set1))
     
@@ -225,10 +225,10 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
   {
     randomnumber <- sample(1:nrow(AdjustedFrame),nrow(AdjustedFrame))
     AllADNI_RandomSet <- AdjustedFrame[randomnumber,]
-    AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$PTID),]
-    ptID <- AllADNI_RandomSet$PTID
-    set1 <- AllADNI_RandomSet[c(ptID[1:length(ptID)-1] != ptID[-1],TRUE),]
-    rownames(set1) <- set1$PTID
+    AllADNI_RandomSet <- AllADNI_RandomSet[order(AllADNI_RandomSet$RID),]
+    RID <- AllADNI_RandomSet$RID
+    set1 <- AllADNI_RandomSet[c(RID[1:length(RID)-1] != RID[-1],TRUE),]
+    rownames(set1) <- set1$RID
     AllADNISets[[n]] <- set1[,c("class",cpredictors)]
     AllADNISets[[n]] <- AllADNISets[[n]][complete.cases(AllADNISets[[n]]),]
     print(nrow(AllADNISets[[n]]))

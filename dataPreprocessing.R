@@ -213,8 +213,8 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   train_frame_Transformed_red <- train_frame_Transformed[,!missingData]
   print(colnames(train_frame_Transformed_red))
 
-  checkColmissing <- rowImputeThreshold*ncol(train_frame_Transformed_red)
-  mssingRowData <- apply(is.na(train_frame_Transformed_red),1,sum) > checkColmissing
+  checkRowmissing <- rowImputeThreshold*ncol(train_frame_Transformed_red)
+  mssingRowData <- apply(is.na(train_frame_Transformed_red),1,sum) >= checkRowmissing
   print(sum(!mssingRowData))
   
   train_frame_Transformed_red <- train_frame_Transformed_red[!mssingRowData,]
@@ -280,17 +280,22 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$RID),]
     
     
-    checkColmissing <- 8 #at least 8 features
-    mssingRowData <- apply(is.na(test_Frame_Transformed_red),1,sum) >= checkColmissing
+    checkRowmissing <- 3 #at least 3 features
+    mssingRowData <- apply(is.na(test_Frame_Transformed_red),1,sum) > checkRowmissing
     print(sum(!mssingRowData))
     
     test_Frame_Transformed_red <- test_Frame_Transformed_red[!mssingRowData,]
     
+    test_Frame_Transformed_red$RID <- as.numeric(test_Frame_Transformed_red$RID)
+    test_Frame_Transformed_red$AGE <- as.numeric(test_Frame_Transformed_red$AGE)
     
+    theincluded <- unique(c("RID","AGE","PTGENDER",colnames(test_Frame_Transformed_red[,!notQuantitative])))
+    TadpoleOnlyFeatures <- test_Frame_Transformed_red[,theincluded]
+    print(ncol(TadpoleOnlyFeatures))
+    colnotincluded <- !(colnames(test_Frame_Transformed_red) %in% rownames(theincluded))
+    print(length(colnotincluded))
     
-    TadpoleOnlyFeatures <- test_Frame_Transformed_red[,-notQuantitative]
-   
-    Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,notQuantitative],nearestNeighborImpute(TadpoleOnlyFeatures))
+    Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,colnotincluded],nearestNeighborImpute(TadpoleOnlyFeatures))
    
     fnames <- colnames(Tadpole_Imputed)
     fnames <- str_replace_all(fnames," ","_")
