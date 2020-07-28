@@ -1,6 +1,8 @@
 ---
 title: "TADPOLE Data Preprocessing"
 output: html_notebook
+editor_options: 
+  chunk_output_type: console
 ---
 
 # Tadpole Data Processing
@@ -23,12 +25,12 @@ TADPOLE_D1_D2_Dict <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRES
 
 TADPOLE_D1_D2 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D1_D2.csv", na.strings=c("NA",-4,"-4.0",""," "))
 
-
-
 TADPOLE_D3 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D3.csv", na.strings=c("NA",-4,"-4.0",""," "))
 
 
+
 ```
+
 
 ## Basic Patient Data 
 
@@ -89,6 +91,8 @@ print(TADPOLE_D1_D2_Dict[TADPOLE_D1_D2_Dict$FLDNAME %in% ThicknessLeft[1:5],"TEX
 ```{r}
 
 TADPOLE_D1_D2_Transformed <- TADPOLE_D1_D2[,c(SetIDSColumns,DatesColumns,Diagnosis,BasicColumns,QuestionsColumnsSet1,QuestionsColumnsSet2,BaseFeaturesColumnsData,otherVolumes,VolumeRight,VolumeLeft,AreaRight,AreaLeft,ThicknessRight,ThicknessLeft)]
+
+Used_D1_D2_columns <- colnames(TADPOLE_D1_D2_Transformed)
 
 TADPOLE_D1_D2_Transformed[,23:ncol(TADPOLE_D1_D2_Transformed)] <- sapply(TADPOLE_D1_D2_Transformed[,23:ncol(TADPOLE_D1_D2_Transformed)],as.numeric)
 
@@ -191,12 +195,9 @@ fnames <- str_replace_all(fnames,"/","_")
 fnames <- str_replace_all(fnames,":","_")
 fnames <- str_replace_all(fnames,"//.","_")
 colnames(Tadpole_Imputed) <- fnames
-
-
-```
-
-```{r}
 save(Tadpole_Imputed,file="Tadpole_Imputed.RDATA")
+
+
 ```
 
 
@@ -231,6 +232,7 @@ allAdustedZrank <- rankInverseNormalDataFrame(predictors,
                                               strata="PTGENDER")
 
 save(allAdustedZrank,file="allAdustedZrank.RDATA")
+load(file="allAdustedZrank.RDATA")
 
 
 models <- TrainTadpoleClassModels(allAdustedZrank,predictors=c("AGE","PTGENDER",colnames(allAdustedZrank)[-c(1:22)]))
@@ -238,5 +240,11 @@ models <- TrainTadpoleClassModels(allAdustedZrank,predictors=c("AGE","PTGENDER",
 
 ```
 
+Creating the Full D3 Set
+
+```{r}
+
+
+```
 
 
