@@ -123,14 +123,19 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
     print(nrow(set1))
     print(table(set1$class))
     MCI_to_ADSets[[n]] <- set1[,c("class",predictors)]
-    MCI_TO_AD_Model[[n]] <- MLMethod(class ~ 1,MCI_to_ADSets[[n]],...)
+    if (asFactor)
+    {
+      MCI_to_ADSets[[n]]$class <- as.factor(MCI_to_ADSets[[n]]$class)
+    }
+    
+    MCI_TO_AD_Model[[n]] <- MLMethod(class ~ .,MCI_to_ADSets[[n]],...)
 
     set1 <- subset(set1,class==1)
     print(nrow(set1))
     
     MCI_to_ADSets[[n]] <- set1[,c("TimeToEvent",predictors)]
     MCI_to_ADSets[[n]]$TimeToEvent <- log(set1$TimeToEvent)
-    MCI_TO_AD_TimeModel[[n]] <- MLMethod(TimeToEvent ~ 1,MCI_to_ADSets[[n]],...)
+    MCI_TO_AD_TimeModel[[n]] <- MLMethod(TimeToEvent ~ .,MCI_to_ADSets[[n]],...)
     
   }
   
@@ -199,13 +204,17 @@ TrainTadpoleClassModels <- function(AdjustedFrame,predictors,months=NULL,numberO
     print(table(set1$class))
     
     NCConvSets[[n]] <- set1[,c("class",predictors)]
-    NCConv_Model[[n]] <- MLMethod(class ~ 1,NCConvSets[[n]],...)
+    if (asFactor)
+    {
+      NCConvSets[[n]]$class <- as.factor(NCConvSets[[n]]$class)
+    }
+    NCConv_Model[[n]] <- MLMethod(class ~ .,NCConvSets[[n]],...)
 
     set1 <- subset(set1,class==1)
     print(nrow(set1))
     NCConvSets[[n]] <- set1[,c("TimeToEvent",predictors)]
     NCConvSets[[n]]$TimeToEvent <- log(set1$TimeToEvent)
-    NL_TO_OTHER_TimeModel[[n]] <- MLMethod(TimeToEvent ~ 1,NCConvSets[[n]],...)
+    NL_TO_OTHER_TimeModel[[n]] <- MLMethod(TimeToEvent ~ .,NCConvSets[[n]],...)
   }
 
 
