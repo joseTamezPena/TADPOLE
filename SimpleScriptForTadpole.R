@@ -6,6 +6,7 @@ library(readxl)
 TADPOLE_D1_D2_Dict <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D1_D2_Dict.csv", na.strings=c("NA",-4,"-4.0",""," "))
 TADPOLE_D1_D2 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D1_D2.csv", na.strings=c("NA",-4,"-4.0",""," "))
 TADPOLE_D3 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D3.csv", na.strings=c("NA",-4,"-4.0",""," ","NaN"))
+TADPOLE_D4_corr <- read.csv("~/GitHub/R_Python_interoperability/data/TADPOLE_D4_corr.csv")
 
 submissionTemplate <- read_excel("TADPOLE_Simple_Submission_TeamName.xlsx")
 
@@ -71,4 +72,15 @@ table(predictADNI$crossprediction$pDX,statusLO)
 
 
 forecast <- FiveYearForeCast(predictADNI,Subject_datestoPredict=submissionTemplate)
-  
+
+take2018 <- forecast[forecast$`Forecast Month`==6,]
+class2018 <- apply(take2018[,c(4,5,6)],1,which.max)
+names(class2018) <- take2018$RID
+D4Dx <- TADPOLE_D4_corr$DX_LastVisitADNI2
+names(D4Dx) <- TADPOLE_D4_corr$RID
+class2018D4 <- class2018[names(D4Dx)]
+table(class2018D4,D4Dx)
+lastDX <- predictADNI$lastKownDX
+lastDX <- lastDX[names(D4Dx)]
+table(lastDX,D4Dx)
+

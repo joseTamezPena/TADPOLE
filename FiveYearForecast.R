@@ -27,9 +27,9 @@ FiveYearForeCast <- function(Classpredictions=NULL,ADAS_Predictions=NULL,Ventric
       TimeToAD <-  exp(Classpredictions$MCITOADTimeprediction[id])
       TimeToMCI <-  exp(Classpredictions$NCToMCITimeprediction[id])
       timeInterval <- as.numeric(fdate-Classpredictions$predictedTimePointData[id,"EXAMDATE"])/365.25
-      NCMCITimeLine <- exp(-(timeInterval-0.5*TimeToMCI)/TimeToMCI)
+      NCMCITimeLine <- exp(-(timeInterval-TimeToMCI)/(TimeToMCI))
       NCMCITimeLine <- 1.0/(1.0+NCMCITimeLine)
-      MCIADTimeLine <- exp(-(timeInterval-0.5*TimeToAD)/TimeToAD)
+      MCIADTimeLine <- exp(-(timeInterval-TimeToAD)/(TimeToAD))
       MCIADTimeLine <- 1.0/(1.0+MCIADTimeLine)
       
       NCTOMCIprob <- Classpredictions$NCToMCIprediction[id]*NCMCITimeLine
