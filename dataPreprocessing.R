@@ -302,7 +302,7 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     
 #    print(colnames(test_Frame_Transformed_red))
     
-    theincluded <- unique(c("RID","AGE","PTGENDER",colnames(test_Frame_Transformed_red)[-notQuantitative]))
+    theincluded <- unique(c("AGE","PTGENDER",colnames(test_Frame_Transformed_red)[-notQuantitative]))
     TadpoleOnlyFeatures <- test_Frame_Transformed_red[,theincluded]
     TadpoleRefOnlyFeatures <- train_frame_Transformed_red[,theincluded]
     
