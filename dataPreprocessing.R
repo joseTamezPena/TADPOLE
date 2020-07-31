@@ -339,7 +339,11 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     
   
   
-  DataFrames <- list(AdjustedTrainFrame=trainAdustedZrank,testingFrame = testAdustedZrank)
+  DataFrames <- list(AdjustedTrainFrame=trainAdustedZrank,
+                     testingFrame = testAdustedZrank,
+                     Train_Imputed = TadpoleTrain_Imputed,
+                     Test_Imputed = Tadpole_Imputed
+                     )
   
   return (DataFrames)
 }

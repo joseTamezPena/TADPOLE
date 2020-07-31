@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-FiveYearForeCast <- function(Classpredictions=NULL,ADAS_Predictions=NULL,Ventricle_Predictions=NULL,Subject_datestoPredict=NULL)
+FiveYearForeCast <- function(Classpredictions=NULL,ADAS_Models=NULL,Ventricle_Models=NULL,Subject_datestoPredict=NULL)
 {
   predictedFrame <-NULL
   classPredictions <- NULL
@@ -107,6 +107,7 @@ FiveYearForeCast <- function(Classpredictions=NULL,ADAS_Predictions=NULL,Ventric
       Subject_datestoPredict[n,4] <- as.numeric(finalNCProb)
       Subject_datestoPredict[n,5] <- as.numeric(finalMCIProb)
       Subject_datestoPredict[n,6] <- as.numeric(finalADProb)
+      
   }
     
   return (Subject_datestoPredict)

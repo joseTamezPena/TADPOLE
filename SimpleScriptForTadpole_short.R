@@ -25,6 +25,8 @@ TrainingSet <- subset(TADPOLE_D1_D2,D1==1)
 D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
 
 rownames(TrainingSet) <- paste(TrainingSet$RID,TrainingSet$VISCODE,sep="_")
+rownames(D2TesingSet) <- paste(D2TesingSet$RID,D2TesingSet$VISCODE,sep="_")
+rownames(TADPOLE_D3) <- paste(TADPOLE_D3$RID,TADPOLE_D3$VISCODE,sep="_")
 
 #DataProcessing
 
@@ -33,6 +35,7 @@ source('~/GitHub/TADPOLE/TADPOLE_Train.R')
 source('~/GitHub/TADPOLE/predictCognitiveStatus.R')
 source('~/GitHub/TADPOLE/FiveYearForecast.R')
 source('~/GitHub/TADPOLE/TADPOLE_Train_ADAS_ICV.R')
+source('~/GitHub/TADPOLE/predictTADPOLERegresions.R')
 
 
 
@@ -41,6 +44,10 @@ dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dic
 
 save(dataTadpole,file="D2DataFrames.RDATA")
 load(file="D2DataFrames.RDATA")
+
+rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
+rownames(dataTadpole$testingFrame) <- paste(dataTadpole$testingFrame$RID,dataTadpole$testingFrame$VISCODE,sep="_")
+
 
 CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
                         predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
@@ -52,18 +59,30 @@ CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
 save(CognitiveClassModels,file="CognitiveClassModels_25.RDATA")
 load(file="CognitiveClassModels_10b.RDATA")
 
-rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
 
-dataTadpole$AdjustedTrainFrame$Ventricle <- TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),]$Ventricles/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),]$ICV
+dataTadpole$AdjustedTrainFrame$Ventricle <- log(TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"])
+dataTadpole$AdjustedTrainFrame$ADAS13 <- log(1+TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"])
 
 CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFrame,
                                                 predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
-                                                numberOfRandomSamples=1,
+                                                numberOfRandomSamples=50,
                                                 MLMethod=BSWiMS.model,
                                                 NumberofRepeats = 1)
 
 save(CognitiveRegresModels,file="CognitiveRegresModels_50.RDATA")
 
+
+dataTadpole$testingFrame$Ventricle <- log(D2TesingSet[rownames(dataTadpole$testingFrame),"Ventricles"]/D2TesingSet[rownames(dataTadpole$testingFrame),"ICV"])
+dataTadpole$testingFrame$ADAS13 <- log(1+D2TesingSet[rownames(dataTadpole$testingFrame),"ADAS13"])
+
+
+rids <- as.character(dataTadpole$testingFrame$RID)
+
+lastVisit <- dataTadpole$testingFrame[c(rids[1:length(rids)-1] != rids[-1],TRUE),]
+lastVisit$ADAS13
+lastVisit$Ventricle
+
+VentricleAdas <- forecastRegressions(CognitiveRegresModels,lastVisit[1,],futuredate=as.Date("2018/1/1"))
 
 
 predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)

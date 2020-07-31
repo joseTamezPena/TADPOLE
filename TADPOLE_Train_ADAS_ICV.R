@@ -27,7 +27,6 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   lastTimepointSet <- AdjustedFrame[c(pdis[1:(length(pdis)-1)] != pdis[-1],TRUE),]
   rownames(lastTimepointSet) <- lastTimepointSet$RID
 
-  deltaFeaturepredictors <- predictors[regexpr('_bl', predictors) < 0][-(c(1:2))]
   Orderbytimepoint <- NULL
   m <- 0
   for (m in months)
@@ -48,12 +47,14 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   AdjustedFrame <- AdjustedFrame[order(as.numeric(AdjustedFrame$RID)),]
   
   AdjustedFrame$SQRTimeToLastVisit <- AdjustedFrame$TimeToLastVisit*AdjustedFrame$TimeToLastVisit
+  AdjustedFrame$SQRTTimeToLastVisit <- sqrt(AdjustedFrame$TimeToLastVisit)
+  AdjustedFrame$CUBTimeToLastVisit <- AdjustedFrame$TimeToLastVisit*AdjustedFrame$SQRTimeToLastVisit
   AdjustedFrame$LOGTimeToLastVisit <- log(AdjustedFrame$TimeToLastVisit)
-  
+
   print(c(nrow(AdjustedFrame),ncol(AdjustedFrame)))
   
-  predictorsAdas13 <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","DeltaAdas13"))
-  predictorsVentricle <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","DeltaVentricle"))
+  predictorsAdas13 <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","DeltaAdas13"))
+  predictorsVentricle <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","DeltaVentricle"))
   Orderbytimepoint <- NULL
 
   ## MCI Subset
@@ -81,8 +82,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     MCI_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
 
     sm <- summary(MCI_ADAS_MODEL[[n]])
-#    print(sm$coefficients)
+    print(rownames(sm$coefficients))
     print(sm$R2)
+    plot(set1$DeltaAdas13~predict(MCI_ADAS_MODEL[[n]],setA))
     
     MCI_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     MCI_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
@@ -90,14 +92,15 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
 
     setA <- set1[,predictorsVentricle]
     MCI_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
-
+    sm <- summary(MCI_Ventricle_ICV_MODEL[[n]])
+    print(rownames(sm$coefficients))
+    print(sm$R2)
+    plot(set1$DeltaVentricle~predict(MCI_Ventricle_ICV_MODEL[[n]],setA))
+    
     MCI_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     MCI_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
     MCI_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
 
-    sm <- summary(MCI_Ventricle_ICV_MODEL[[n]])
-#    print(sm$coefficients)
-    print(sm$R2)
   }
  
   predicitionModels <- list(MCI_Ventricle_ICV_MODEL = MCI_Ventricle_ICV_MODEL,
@@ -122,6 +125,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     RID <- NC_Set$RID
     set1 <- NC_Set[c(TRUE,RID[-1] != RID[1:length(RID)-1]),]
     rownames(set1) <- set1$RID
+    print(rownames(sm$coefficients))
     print(nrow(set1))
     hist(set1$LOGTimeToLastVisit)
     
@@ -129,8 +133,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     NC_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
     
     sm <- summary(NC_ADAS_MODEL[[n]])
-    #    print(sm$coefficients)
+    print(rownames(sm$coefficients))
     print(sm$R2)
+    plot(set1$DeltaAdas13~predict(NC_ADAS_MODEL[[n]],setA))
     
     NC_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     NC_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
@@ -138,20 +143,21 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     
     setA <- set1[,predictorsVentricle]
     NC_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
+    sm <- summary(NC_Ventricle_ICV_MODEL[[n]])
+    print(rownames(sm$coefficients))
+    print(sm$R2)
+    plot(set1$DeltaVentricle~predict(NC_Ventricle_ICV_MODEL[[n]],setA))
     
     NC_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     NC_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
     NC_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
     
-    sm <- summary(NC_Ventricle_ICV_MODEL[[n]])
-    #    print(sm$coefficients)
-    print(sm$R2)
   }
   
   ## AD Subset
   
   ADSubset <- subset(AdjustedFrame,DX == "Dementia" | DX == "MCI to Dementia")
-  ADSubset <- NVSubset[complete.cases(ADSubset),]
+  ADSubset <- ADSubset[complete.cases(ADSubset),]
   print(nrow(ADSubset))
   print(sum(is.na(ADSubset)))
   
@@ -173,8 +179,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     AD_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
     
     sm <- summary(AD_ADAS_MODEL[[n]])
-    #    print(sm$coefficients)
+    print(rownames(sm$coefficients))
     print(sm$R2)
+    plot(set1$DeltaAdas13~predict(AD_ADAS_MODEL[[n]],setA))
     
     AD_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     AD_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
@@ -182,20 +189,21 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     
     setA <- set1[,predictorsVentricle]
     AD_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
+    sm <- summary(AD_Ventricle_ICV_MODEL[[n]])
+    print(rownames(sm$coefficients))
+    print(sm$R2)
+    plot(set1$DeltaVentricle~predict(AD_Ventricle_ICV_MODEL[[n]],setA))
     
     AD_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$data <- NULL
     AD_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testOutcome <- NULL
     AD_Ventricle_ICV_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
     
-    sm <- summary(AD_Ventricle_ICV_MODEL[[n]])
-    #    print(sm$coefficients)
-    print(sm$R2)
   }
 
   predicitionModels <- list(MCI_Ventricle_ICV_MODEL = MCI_Ventricle_ICV_MODEL,
                             MCI_ADAS_MODEL=MCI_ADAS_MODEL,
-                            MC_Ventricle_ICV_MODEL = MC_Ventricle_ICV_MODEL,
-                            MC_ADAS_MODEL=MC_ADAS_MODEL,
+                            NC_Ventricle_ICV_MODEL = NC_Ventricle_ICV_MODEL,
+                            NC_ADAS_MODEL = NC_ADAS_MODEL,
                             AD_Ventricle_ICV_MODEL = AD_Ventricle_ICV_MODEL,
                             AD_ADAS_MODEL = AD_ADAS_MODEL
   )
