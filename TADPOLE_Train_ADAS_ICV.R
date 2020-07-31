@@ -25,7 +25,10 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   
   pdis <- AdjustedFrame$RID
   lastTimepointSet <- AdjustedFrame[c(pdis[1:(length(pdis)-1)] != pdis[-1],TRUE),]
+  print(table(lastTimepointSet$VISCODE))
   rownames(lastTimepointSet) <- lastTimepointSet$RID
+  print(nrow(lastTimepointSet))
+  print(table(lastTimepointSet$DX))
 
   Orderbytimepoint <- NULL
   m <- 0
@@ -33,7 +36,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   {
     TimePointsSubset <- subset(AdjustedFrame,M == m)
     TimePointsSubset$TimeToLastVisit <- as.numeric(lastTimepointSet[TimePointsSubset$RID,"EXAMDATE"] - TimePointsSubset$EXAMDATE)/365.25
-    TimePointsSubset$DeltaVentricle <- as.numeric(lastTimepointSet[TimePointsSubset$RID,"Ventricle"] - TimePointsSubset$Ventricle)
+    TimePointsSubset$DeltaVentricle <- as.numeric(lastTimepointSet[TimePointsSubset$RID,"Ventricles"] - TimePointsSubset$Ventricles)
     TimePointsSubset$DeltaAdas13 <- as.numeric(lastTimepointSet[TimePointsSubset$RID,"ADAS13"] - TimePointsSubset$ADAS13)
     TimePointsSubset <- TimePointsSubset[complete.cases(TimePointsSubset[,predictors]),]
     Orderbytimepoint <- rbind(Orderbytimepoint,TimePointsSubset)
@@ -42,7 +45,10 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   hist(Orderbytimepoint$DeltaVentricle)
   hist(Orderbytimepoint$DeltaAdas13)
   
-  AdjustedFrame <- subset(Orderbytimepoint,TimeToLastVisit > 0)
+  print(sum(Orderbytimepoint$TimeToLastVisit < 0))
+  
+#  AdjustedFrame <- subset(Orderbytimepoint,TimeToLastVisit >= 0)
+  AdjustedFrame <- Orderbytimepoint
   AdjustedFrame <- AdjustedFrame[order(AdjustedFrame$EXAMDATE),]
   AdjustedFrame <- AdjustedFrame[order(as.numeric(AdjustedFrame$RID)),]
   
@@ -59,7 +65,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
 
   ## MCI Subset
   
+
   MCISubset <- subset(AdjustedFrame,DX == "NL to MCI" | DX == "MCI" | DX == "Dementia to MCI")
+  
   MCISubset <- MCISubset[complete.cases(MCISubset),]
   print(nrow(MCISubset))
   print(sum(is.na(MCISubset)))
@@ -75,6 +83,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     RID <- MCI_Set$RID
     set1 <- MCI_Set[c(TRUE,RID[-1] != RID[1:length(RID)-1]),]
     rownames(set1) <- set1$RID
+    print(table(set1$DX))
     print(nrow(set1))
     hist(set1$LOGTimeToLastVisit)
     

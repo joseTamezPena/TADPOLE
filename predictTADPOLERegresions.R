@@ -10,7 +10,7 @@
 forecastRegressions <- function(Models,TestDataFrame,futuredate)
 {
 
-  deltaTime <- as.numeric(futuredate - TestDataFrame$EXAMDATE)
+  deltaTime <- as.numeric(futuredate - TestDataFrame$EXAMDATE)/365.25
   TestDataFrame$TimeToLastVisit <- deltaTime
   TestDataFrame$SQRTimeToLastVisit <- deltaTime*deltaTime
   TestDataFrame$LOGTimeToLastVisit <- log(deltaTime)
@@ -27,7 +27,7 @@ forecastRegressions <- function(Models,TestDataFrame,futuredate)
   Ventricles_MCI <- NULL
   Ventricles_AD <- NULL
   
-  for (n in length(Models$MCI_Ventricle_ICV_MODEL))
+  for (n in c(1:length(Models$MCI_Ventricle_ICV_MODEL)))
   {
     ADAS13_NC <- cbind(ADAS13_NC,predict(Models$NC_ADAS_MODEL[[n]],TestDataFrame) + TestDataFrame$ADAS13)
     ADAS13_MCI <- cbind(ADAS13_MCI,predict(Models$MCI_ADAS_MODEL[[n]],TestDataFrame) + TestDataFrame$ADAS13)
@@ -38,13 +38,19 @@ forecastRegressions <- function(Models,TestDataFrame,futuredate)
     Ventricles_AD <- cbind(Ventricles_AD,predict(Models$AD_Ventricle_ICV_MODEL[[n]],TestDataFrame) + TestDataFrame$Ventricles)
   
   }
-
-  predictions <- list(ADAS13_NC = ADAS13_NC,
-                      ADAS13_MCI = ADAS13_MCI,
-                      ADAS13AD = ADAS13_AD,
-                      Ventricles_NC = Ventricles_NC,
-                      Ventricles_MCI = Ventricles_MCI,
-                      Ventricles_AD = Ventricles_AD
+  rownames(ADAS13_NC) <- rownames(TestDataFrame)
+  rownames(ADAS13_MCI) <- rownames(TestDataFrame)
+  rownames(ADAS13_AD) <- rownames(TestDataFrame)
+  rownames(Ventricles_NC) <- rownames(TestDataFrame)
+  rownames(Ventricles_MCI) <- rownames(TestDataFrame)
+  rownames(Ventricles_AD) <- rownames(TestDataFrame)
+  
+  predictions <- list(ADAS13_NC = as.data.frame(ADAS13_NC),
+                      ADAS13_MCI = as.data.frame(ADAS13_MCI),
+                      ADAS13_AD = as.data.frame(ADAS13_AD),
+                      Ventricles_NC = as.data.frame(Ventricles_NC),
+                      Ventricles_MCI = as.data.frame(Ventricles_MCI),
+                      Ventricles_AD = as.data.frame(Ventricles_AD)
                       )
   return(predictions)
 }

@@ -47,6 +47,8 @@ load(file="D2DataFrames.RDATA")
 
 rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
 rownames(dataTadpole$testingFrame) <- paste(dataTadpole$testingFrame$RID,dataTadpole$testingFrame$VISCODE,sep="_")
+rownames(dataTadpole$Test_Imputed) <- paste(dataTadpole$Test_Imputed$RID,dataTadpole$Test_Imputed$VISCODE,sep="_")
+rownames(dataTadpole$Train_Imputed) <- paste(dataTadpole$Train_Imputed$RID,dataTadpole$Train_Imputed$VISCODE,sep="_")
 
 
 CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
@@ -60,8 +62,11 @@ save(CognitiveClassModels,file="CognitiveClassModels_25.RDATA")
 load(file="CognitiveClassModels_10b.RDATA")
 
 
-dataTadpole$AdjustedTrainFrame$Ventricle <- log(TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"])
+dataTadpole$AdjustedTrainFrame$Ventricles <- log(TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"])
 dataTadpole$AdjustedTrainFrame$ADAS13 <- log(1+TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"])
+
+#dataTadpole$AdjustedTrainFrame$Ventricles <- dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"ICV"]
+#dataTadpole$AdjustedTrainFrame$ADAS13 <- dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"]
 
 CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFrame,
                                                 predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
@@ -69,20 +74,37 @@ CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFr
                                                 MLMethod=BSWiMS.model,
                                                 NumberofRepeats = 1)
 
-save(CognitiveRegresModels,file="CognitiveRegresModels_50.RDATA")
+save(CognitiveRegresModels,file="CognitiveRegresModels_50_log.RDATA")
 
 
-dataTadpole$testingFrame$Ventricle <- log(D2TesingSet[rownames(dataTadpole$testingFrame),"Ventricles"]/D2TesingSet[rownames(dataTadpole$testingFrame),"ICV"])
-dataTadpole$testingFrame$ADAS13 <- log(1+D2TesingSet[rownames(dataTadpole$testingFrame),"ADAS13"])
+dataTadpole$testingFrame$Ventricles <- log(dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"Ventricles"]/dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ICV"])
+dataTadpole$testingFrame$ADAS13 <- log(1+dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ADAS13"])
 
 
-rids <- as.character(dataTadpole$testingFrame$RID)
 
-lastVisit <- dataTadpole$testingFrame[c(rids[1:length(rids)-1] != rids[-1],TRUE),]
-lastVisit$ADAS13
-lastVisit$Ventricle
+tf <- dataTadpole$testingFrame
+tf <- tf[order(tf$EXAMDATE),]
+tf <- tf[order(as.numeric(tf$RID)),]
+rids <- as.character(tf$RID)
+
+lastVisit <- tf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
+lastVisit[1,]$VISCODE
 
 VentricleAdas <- forecastRegressions(CognitiveRegresModels,lastVisit[1,],futuredate=as.Date("2018/1/1"))
+
+exp(VentricleAdas$ADAS13_NC)-1
+exp(VentricleAdas$ADAS13_MCI)-1
+exp(VentricleAdas$ADAS13_AD)-1
+exp(VentricleAdas$Ventricles_NC)
+exp(VentricleAdas$Ventricles_MCI)
+exp(VentricleAdas$Ventricles_AD)
+
+exp(VentricleAdas$ADAS13_NC)-1
+exp(VentricleAdas$ADAS13_MCI)-1
+exp(VentricleAdas$ADAS13_AD)-1
+exp(VentricleAdas$Ventricles_NC)
+exp(VentricleAdas$Ventricles_MCI)
+exp(VentricleAdas$Ventricles_AD)
 
 
 predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
