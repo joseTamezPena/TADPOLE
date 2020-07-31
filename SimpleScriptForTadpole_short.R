@@ -24,12 +24,16 @@ TADPOLE_D3$EXAMDATE <- as.Date(TADPOLE_D3$EXAMDATE)
 TrainingSet <- subset(TADPOLE_D1_D2,D1==1)
 D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
 
+rownames(TrainingSet) <- paste(TrainingSet$RID,TrainingSet$VISCODE,sep="_")
+
 #DataProcessing
 
 source('~/GitHub/TADPOLE/dataPreprocessing.R')
 source('~/GitHub/TADPOLE/TADPOLE_Train.R')
 source('~/GitHub/TADPOLE/predictCognitiveStatus.R')
 source('~/GitHub/TADPOLE/FiveYearForecast.R')
+source('~/GitHub/TADPOLE/TADPOLE_Train_ADAS_ICV.R')
+
 
 
 
@@ -48,11 +52,28 @@ CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
 save(CognitiveClassModels,file="CognitiveClassModels_25.RDATA")
 load(file="CognitiveClassModels_10b.RDATA")
 
+rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
+
+dataTadpole$AdjustedTrainFrame$Ventricle <- TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),]$Ventricles/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),]$ICV
+
+CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFrame,
+                                                predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
+                                                numberOfRandomSamples=1,
+                                                MLMethod=BSWiMS.model,
+                                                NumberofRepeats = 1)
+
+save(CognitiveRegresModels,file="CognitiveRegresModels_50.RDATA")
+
+
 
 predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
 
+
 forecast <- FiveYearForeCast(predictADNI,Subject_datestoPredict=submissionTemplate)
 write.csv(forecast,file="forecastJTP.csv")
+
+
+
 
 #D3 Cross sectional
 
@@ -81,4 +102,7 @@ predictADNID3 <- forecastCognitiveStatus(D3CognitiveClassModels,dataTadpoleD3$te
 ## Forecast the testing set
 forecastD3 <- FiveYearForeCast(predictADNID3,Subject_datestoPredict=submissionTemplate)
 write.csv(forecastD3,file="forecastJTPD3.csv")
+
+
+
 
