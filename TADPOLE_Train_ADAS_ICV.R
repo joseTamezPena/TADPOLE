@@ -55,12 +55,14 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
   AdjustedFrame$SQRTimeToLastVisit <- AdjustedFrame$TimeToLastVisit*AdjustedFrame$TimeToLastVisit
   AdjustedFrame$SQRTTimeToLastVisit <- sqrt(AdjustedFrame$TimeToLastVisit)
   AdjustedFrame$CUBTimeToLastVisit <- AdjustedFrame$TimeToLastVisit*AdjustedFrame$SQRTimeToLastVisit
-  AdjustedFrame$LOGTimeToLastVisit <- log(AdjustedFrame$TimeToLastVisit)
-
+  AdjustedFrame$LOGTimeToLastVisit <- log(1+AdjustedFrame$TimeToLastVisit)
+  AdjustedFrame$MeanCVLOGTimeToLastVisit <- log(1+AdjustedFrame$TimeToLastVisit)*AdjustedFrame$COMeanThickness
+  AdjustedFrame$MMSELOGTimeToLastVisit <- log(1+AdjustedFrame$TimeToLastVisit)*AdjustedFrame$MMSE
+  
   print(c(nrow(AdjustedFrame),ncol(AdjustedFrame)))
   
-  predictorsAdas13 <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","DeltaAdas13"))
-  predictorsVentricle <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","DeltaVentricle"))
+  predictorsAdas13 <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","MeanCVLOGTimeToLastVisit","MMSELOGTimeToLastVisit","DeltaAdas13"))
+  predictorsVentricle <- c(predictors,c("TimeToLastVisit","SQRTimeToLastVisit","LOGTimeToLastVisit","CUBTimeToLastVisit","SQRTTimeToLastVisit","MeanCVLOGTimeToLastVisit","MMSELOGTimeToLastVisit","DeltaVentricle"))
   Orderbytimepoint <- NULL
 
   ## MCI Subset

@@ -13,9 +13,13 @@ forecastRegressions <- function(Models,TestDataFrame,futuredate)
   deltaTime <- as.numeric(futuredate - TestDataFrame$EXAMDATE)/365.25
   TestDataFrame$TimeToLastVisit <- deltaTime
   TestDataFrame$SQRTimeToLastVisit <- deltaTime*deltaTime
-  TestDataFrame$LOGTimeToLastVisit <- log(deltaTime)
+  TestDataFrame$LOGTimeToLastVisit <- log(1+deltaTime)
   TestDataFrame$CUBTimeToLastVisit <- deltaTime*deltaTime*deltaTime*deltaTime
   TestDataFrame$SQRTTimeToLastVisit <- sqrt(deltaTime)
+  TestDataFrame$MeanCVLOGTimeToLastVisit <- log(1+deltaTime)*TestDataFrame$COMeanThickness
+  TestDataFrame$MMSELOGTimeToLastVisit <- log(1+deltaTime)*TestDataFrame$MMSE
+  
+  
   TestDataFrame$DeltaAdas13 <- numeric(nrow(TestDataFrame))
   TestDataFrame$DeltaVentricle <- numeric(nrow(TestDataFrame))
   

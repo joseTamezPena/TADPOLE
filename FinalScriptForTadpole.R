@@ -46,21 +46,14 @@ source('~/GitHub/TADPOLE/predictTADPOLERegresions.R')
 
 
 
+### Data conditioning and preparation for D2
 
 dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)
 
 save(dataTadpole,file="D2DataFrames_v2.RDATA")
-load(file="D2DataFrames_v2.RDATA")
-
-d2f <- dataTadpole$Test_Imputed
 
 
-rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
-rownames(dataTadpole$testingFrame) <- paste(dataTadpole$testingFrame$RID,dataTadpole$testingFrame$VISCODE,sep="_")
-rownames(dataTadpole$Test_Imputed) <- paste(dataTadpole$Test_Imputed$RID,dataTadpole$Test_Imputed$VISCODE,sep="_")
-rownames(dataTadpole$Train_Imputed) <- paste(dataTadpole$Train_Imputed$RID,dataTadpole$Train_Imputed$VISCODE,sep="_")
-
-
+## Train 25 Models for the D2 subjects
 CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
                         predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
                         numberOfRandomSamples=25,
@@ -69,20 +62,18 @@ CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
                         NumberofRepeats = 1)
 
 save(CognitiveClassModels,file="CognitiveClassModels_25.RDATA")
-load(file="CognitiveClassModels_25.RDATA")
-predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
 
+## Predict the models on D2 subjects
+predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
 
 
 ### Training the ADAS13 and Ventricles
 
-## We will train using the log scaled values of actual observations
-#dataTadpole$AdjustedTrainFrame$Ventricles <- log(TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"])
-#dataTadpole$AdjustedTrainFrame$ADAS13 <- log(1+TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"])
-
+### Get the original Data D3 Train
 dataTadpole$AdjustedTrainFrame$Ventricles <- TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"]
 dataTadpole$AdjustedTrainFrame$ADAS13 <- TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"]
 
+## Train 50 models based on D1 data
 CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFrame,
                                                 predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
                                                 numberOfRandomSamples=50,
@@ -90,17 +81,15 @@ CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFr
                                                 NumberofRepeats = 1)
 
 save(CognitiveRegresModels,file="CognitiveRegresModels_50_Nolog.RDATA")
-#load(file="CognitiveRegresModels_50_log.RDATA")
 
 ### Ventricles and ADAS13 prediction preparation
 
 ## Transforming the test data set
-#dataTadpole$testingFrame$Ventricles <- log(D2TesingSet[rownames(dataTadpole$testingFrame),"Ventricles"]/D2TesingSet[rownames(dataTadpole$testingFrame),"ICV"])
-#dataTadpole$testingFrame$ADAS13 <- log(1+D2TesingSet[rownames(dataTadpole$testingFrame),"ADAS13"])
 
 dataTadpole$testingFrame$Ventricles <- dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"Ventricles"]/dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ICV"]
 dataTadpole$testingFrame$ADAS13 <- dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ADAS13"]
 
+## THe last time point required for forcasting ADAS13 and Ventricles
 ltptf <- dataTadpole$testingFrame
 rids <- ltptf$RID
 ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
@@ -109,9 +98,7 @@ rownames(ltptf) <- ltptf$RID
 ### Forecasting 5 years. The forcast transfomrs back to the actual space
 forecast <- FiveYearForeCast(predictADNI,testDataset=ltptf,ADAS_Ventricle_Models=CognitiveRegresModels,Subject_datestoPredict=submissionTemplate)
 
-write.csv(forecast,file="forecastJTP.csv")
-
-
+write.csv(forecast,file="ForecastD2_BORREGOS_TEC.csv")
 
 
 #D3 Cross sectional
@@ -120,26 +107,24 @@ write.csv(forecast,file="forecastJTP.csv")
 D3IDS <- TADPOLE_D3$RID
 D3TrainingSet <- TrainingSet[!(TrainingSet$RID %in% D3IDS),]
 
-## Conditioning the datasets
+## Conditioning the data sets
 dataTadpoleD3 <- dataTADPOLEPreprocesing(D3TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=18,colImputeThreshold=0.15,rowImputeThreshold=0.25)
 save(dataTadpoleD3,file="D3DataFrames.RDATA")
-load(file="D3DataFrames.RDATA")
 
-## Build the predictive models
+## Build the 35 predictive models of congnitive status
 D3CognitiveClassModels <- TrainTadpoleClassModels(dataTadpoleD3$AdjustedTrainFrame,
                                                 predictors=c("AGE","PTGENDER",colnames(dataTadpoleD3$AdjustedTrainFrame)[-c(1:22)]),
                                                 numberOfRandomSamples=25,
                                                 MLMethod=BSWiMS.model,
                                                 NumberofRepeats = 1)
 save(D3CognitiveClassModels,file="D3CognitiveClassModels_25.RDATA")
-#load(file="D3CognitiveClassModels_5.RDATA")
 
 
-## Predict all the testing set
+## Predict all D3 congnitive status
 predictADNID3 <- forecastCognitiveStatus(D3CognitiveClassModels,dataTadpoleD3$testingFrame)
 
 
-## D3 Correlations ADAS 13 and Ventricles
+## Train D3 Correlations ADAS 13 and Ventricles
 dataTadpoleD3$AdjustedTrainFrame$Ventricles <- D3TrainingSet[rownames(dataTadpoleD3$AdjustedTrainFrame),"Ventricles"]/D3TrainingSet[rownames(dataTadpoleD3$AdjustedTrainFrame),"ICV"]
 dataTadpoleD3$AdjustedTrainFrame$ADAS13 <- D3TrainingSet[rownames(dataTadpoleD3$AdjustedTrainFrame),"ADAS13"]
 
@@ -151,10 +136,12 @@ D3RegresModels <- TrainTadpoleRegresionModels(dataTadpoleD3$AdjustedTrainFrame,
 
 save(D3RegresModels,file="D3RegresModelss_50_Nolog.RDATA")
 
+## Predict the D3 ADAS13 and Ventricles
 
 dataTadpoleD3$testingFrame$Ventricles <- dataTadpoleD3$Test_Imputed[rownames(dataTadpoleD3$testingFrame),"Ventricles"]/dataTadpoleD3$Test_Imputed[rownames(dataTadpoleD3$testingFrame),"ICV"]
 dataTadpoleD3$testingFrame$ADAS13 <- dataTadpoleD3$Test_Imputed[rownames(dataTadpoleD3$testingFrame),"ADAS13"]
 
+### The last time D3 point
 ltptf <- dataTadpoleD3$testingFrame
 rids <- ltptf$RID
 ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
@@ -162,7 +149,7 @@ rownames(ltptf) <- ltptf$RID
 
 ## Forecast the testing set
 forecastD3 <- FiveYearForeCast(predictADNID3,testDataset=ltptf,ADAS_Ventricle_Models=D3RegresModels,Subject_datestoPredict=submissionTemplate)
-write.csv(forecastD3,file="forecastJTPD3.csv")
+write.csv(forecastD3,file="ForecastD3_BORREGOS_TEC.csv")
 
 
 

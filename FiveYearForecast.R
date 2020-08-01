@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-FiveYearForeCast <- function(Classpredictions=NULL,testDataset=NULL,ADAS_Ventricle_Models=NULL,Subject_datestoPredict=NULL)
+FiveYearForeCast <- function(Classpredictions=NULL,testDataset=NULL,ADAS_Ventricle_Models=NULL,logt=FALSE,Subject_datestoPredict=NULL)
 {
   predictedFrame <-NULL
   classPredictions <- NULL
@@ -86,13 +86,13 @@ FiveYearForeCast <- function(Classpredictions=NULL,testDataset=NULL,ADAS_Ventric
       
 
       timeInterval <- as.numeric(fdate-Classpredictions$predictedTimePointData[id,"EXAMDATE"])/365.25
-      NCMCITimeLine <- exp(-(timeInterval-TimeToMCI)/(0.25*TimeToMCI))
-      NCMCITimeLine <- 1.0/(1.0+NCMCITimeLine)
-      MCIADTimeLine <- exp(-(timeInterval-TimeToAD)/(0.25*TimeToAD))
-      MCIADTimeLine <- 1.0/(1.0+MCIADTimeLine)
-      MCINCTimeLine <- exp(-(timeInterval-TimeToNC)/(0.25*TimeToNC))
-      MCINCTimeLine <- 1.0/(1.0+MCINCTimeLine)
-      
+        NCMCITimeLine <- exp(-(timeInterval-TimeToMCI)/(0.25*TimeToMCI))
+        NCMCITimeLine <- 1.0/(1.0+NCMCITimeLine)
+        MCIADTimeLine <- exp(-(timeInterval-TimeToAD)/(0.25*TimeToAD))
+        MCIADTimeLine <- 1.0/(1.0+MCIADTimeLine)
+        MCINCTimeLine <- exp(-(timeInterval-TimeToNC)/(0.25*TimeToNC))
+        MCINCTimeLine <- 1.0/(1.0+MCINCTimeLine)
+
       NCTOMCIprob <- Classpredictions$NCToMCIprediction[id]*NCMCITimeLine
 
       MCITOADprob <- Classpredictions$MCITOADprediction[id]*MCIADTimeLine
@@ -125,7 +125,10 @@ FiveYearForeCast <- function(Classpredictions=NULL,testDataset=NULL,ADAS_Ventric
       
       
       Adas13 <- BaseCN_prob*VentricleAdas$ADAS13_NC[id,] + BaseMCI_prob*VentricleAdas$ADAS13_MCI[id,] + BaseAD_prob*VentricleAdas$ADAS13_AD[id,]
-      Adas13 <- exp(Adas13)-1
+      if (logt)
+      {
+        Adas13 <- exp(Adas13)-1
+      }
       ADSAS13pred <- as.vector(quantile(Adas13, probs = c(0.25, 0.5, 0.75), na.rm = TRUE,names = FALSE, type = 7));
 
       Subject_datestoPredict[n,7] <- ADSAS13pred[2]
@@ -133,7 +136,10 @@ FiveYearForeCast <- function(Classpredictions=NULL,testDataset=NULL,ADAS_Ventric
       Subject_datestoPredict[n,9] <- ADSAS13pred[3]
 
       Ventricle <- BaseCN_prob*VentricleAdas$Ventricles_NC[id,] + BaseMCI_prob*VentricleAdas$Ventricles_MCI[id,] + BaseAD_prob*VentricleAdas$Ventricles_AD[id,]
-      Ventricle <- exp(Ventricle)
+      if (logt)
+      {
+        Ventricle <- exp(Ventricle)
+      }
       Ventriclepred <- as.vector(quantile(Ventricle, probs = c(0.25, 0.5, 0.75), na.rm = TRUE,names = FALSE, type = 7));
       Subject_datestoPredict[n,10] <- Ventriclepred[2]
       Subject_datestoPredict[n,11] <- Ventriclepred[1]
