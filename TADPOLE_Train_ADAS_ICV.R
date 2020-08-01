@@ -88,7 +88,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     hist(set1$LOGTimeToLastVisit)
     
     setA <- set1[,predictorsAdas13]
-    MCI_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
+    randomnumber <- sample(1:nrow(setA),nrow(setA),replace = TRUE)
+    
+    MCI_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA[randomnumber,],...)
 
     sm <- summary(MCI_ADAS_MODEL[[n]])
     print(rownames(sm$coefficients))
@@ -100,7 +102,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     MCI_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
 
     setA <- set1[,predictorsVentricle]
-    MCI_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
+    MCI_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA[randomnumber,],...)
     sm <- summary(MCI_Ventricle_ICV_MODEL[[n]])
     print(rownames(sm$coefficients))
     print(sm$R2)
@@ -139,7 +141,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     hist(set1$LOGTimeToLastVisit)
     
     setA <- set1[,predictorsAdas13]
-    NC_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
+    randomnumber <- sample(1:nrow(setA),nrow(setA),replace = TRUE)
+    
+    NC_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA[randomnumber,],...)
     
     sm <- summary(NC_ADAS_MODEL[[n]])
     print(rownames(sm$coefficients))
@@ -151,7 +155,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     NC_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
     
     setA <- set1[,predictorsVentricle]
-    NC_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
+    NC_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA[randomnumber,],...)
     sm <- summary(NC_Ventricle_ICV_MODEL[[n]])
     print(rownames(sm$coefficients))
     print(sm$R2)
@@ -185,7 +189,9 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     hist(set1$LOGTimeToLastVisit)
     
     setA <- set1[,predictorsAdas13]
-    AD_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA,...)
+    randomnumber <- sample(1:nrow(setA),nrow(setA),replace = TRUE)
+    
+    AD_ADAS_MODEL[[n]] <- MLMethod(DeltaAdas13 ~ .,setA[randomnumber,],...)
     
     sm <- summary(AD_ADAS_MODEL[[n]])
     print(rownames(sm$coefficients))
@@ -197,7 +203,7 @@ TrainTadpoleRegresionModels <- function(AdjustedFrame,predictors,numberOfRandomS
     AD_ADAS_MODEL[[n]]$BSWiMS.model$bootCV$testPrediction <- NULL
     
     setA <- set1[,predictorsVentricle]
-    AD_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA,...)
+    AD_Ventricle_ICV_MODEL[[n]] <- MLMethod(DeltaVentricle ~ .,setA[randomnumber,],...)
     sm <- summary(AD_Ventricle_ICV_MODEL[[n]])
     print(rownames(sm$coefficients))
     print(sm$R2)

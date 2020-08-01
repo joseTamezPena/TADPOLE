@@ -1,4 +1,3 @@
-
 ##Load the Datasets
 library(readxl)
 
@@ -8,15 +7,23 @@ TADPOLE_D1_D2 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/
 TADPOLE_D3 <- read.csv("C:/Users/jtame/Dropbox (Personal)/Documents/FRESACAD/TADPOLE/TADPOLE/TADPOLE_D3.csv", na.strings=c("NA",-4,"-4.0",""," ","NaN"))
 TADPOLE_D4_corr <- read.csv("~/GitHub/R_Python_interoperability/data/TADPOLE_D4_corr.csv")
 
-submissionTemplate <- read_excel("TADPOLE_Simple_Submission_TeamName.xlsx")
+submissionTemplate <- as.data.frame(read_excel("TADPOLE_Simple_Submission_TeamName.xlsx"))
 
 submissionTemplate$`Forecast Date` <- as.Date(paste(submissionTemplate$`Forecast Date`,"-01",sep=""))
 submissionTemplate$`CN relative probability` <- as.numeric(nrow(submissionTemplate))
 submissionTemplate$`MCI relative probability` <-  as.numeric(nrow(submissionTemplate))
 submissionTemplate$`AD relative probability` <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$ADAS13 <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$`ADAS13 50% CI lower` <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$`ADAS13 50% CI upper` <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$Ventricles_ICV <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$`Ventricles_ICV 50% CI lower` <-  as.numeric(nrow(submissionTemplate))
+submissionTemplate$`Ventricles_ICV 50% CI upper` <-  as.numeric(nrow(submissionTemplate))
 
 TADPOLE_D1_D2$EXAMDATE <- as.Date(TADPOLE_D1_D2$EXAMDATE)
 TADPOLE_D3$EXAMDATE <- as.Date(TADPOLE_D3$EXAMDATE)
+
+submissionTemplate <- submissionTemplate[order(submissionTemplate$`Forecast Month`),]
 
 #DataSplit
 
@@ -42,8 +49,10 @@ source('~/GitHub/TADPOLE/predictTADPOLERegresions.R')
 
 dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)
 
-save(dataTadpole,file="D2DataFrames.RDATA")
+save(dataTadpole,file="D2DataFrames_v2.RDATA")
 load(file="D2DataFrames.RDATA")
+
+d2f <- dataTadpole$Test_Imputed
 
 rownames(dataTadpole$AdjustedTrainFrame) <- paste(dataTadpole$AdjustedTrainFrame$RID,dataTadpole$AdjustedTrainFrame$VISCODE,sep="_")
 rownames(dataTadpole$testingFrame) <- paste(dataTadpole$testingFrame$RID,dataTadpole$testingFrame$VISCODE,sep="_")
@@ -59,14 +68,17 @@ CognitiveClassModels <- TrainTadpoleClassModels(dataTadpole$AdjustedTrainFrame,
                         NumberofRepeats = 1)
 
 save(CognitiveClassModels,file="CognitiveClassModels_25.RDATA")
-load(file="CognitiveClassModels_10b.RDATA")
+load(file="CognitiveClassModels_25.RDATA")
+predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
 
 
+
+### Training the ADAS13 and Ventricles
+
+## We will train using the log scaled values of actual observations
 dataTadpole$AdjustedTrainFrame$Ventricles <- log(TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ICV"])
 dataTadpole$AdjustedTrainFrame$ADAS13 <- log(1+TrainingSet[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"])
 
-#dataTadpole$AdjustedTrainFrame$Ventricles <- dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"Ventricles"]/dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"ICV"]
-#dataTadpole$AdjustedTrainFrame$ADAS13 <- dataTadpole$Train_Imputed[rownames(dataTadpole$AdjustedTrainFrame),"ADAS13"]
 
 CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFrame,
                                                 predictors=c("AGE","PTGENDER",colnames(dataTadpole$AdjustedTrainFrame)[-c(1:22)]),
@@ -75,42 +87,25 @@ CognitiveRegresModels <- TrainTadpoleRegresionModels(dataTadpole$AdjustedTrainFr
                                                 NumberofRepeats = 1)
 
 save(CognitiveRegresModels,file="CognitiveRegresModels_50_log.RDATA")
+load(file="CognitiveRegresModels_50_log.RDATA")
+
+### Ventricles and ADAS13 prediction preparation
+
+## Transforming the test data set
+dataTadpole$testingFrame$Ventricles <- log(D2TesingSet[rownames(dataTadpole$testingFrame),"Ventricles"]/D2TesingSet[rownames(dataTadpole$testingFrame),"ICV"])
+dataTadpole$testingFrame$ADAS13 <- log(1+D2TesingSet[rownames(dataTadpole$testingFrame),"ADAS13"])
+ltptf <- dataTadpole$testingFrame
+rids <- ltptf$RID
+ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
+rownames(ltptf) <- ltptf$RID
+ltptf$ADAS13
+ltptf$Ventricles
+ltptf$ICV
 
 
-dataTadpole$testingFrame$Ventricles <- log(dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"Ventricles"]/dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ICV"])
-dataTadpole$testingFrame$ADAS13 <- log(1+dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ADAS13"])
+### Forecasting 5 years. The forcast transfomrs back to the actual space
+forecast <- FiveYearForeCast(predictADNI,testDataset=ltptf,ADAS_Ventricle_Models=CognitiveRegresModels,Subject_datestoPredict=submissionTemplate)
 
-
-
-tf <- dataTadpole$testingFrame
-tf <- tf[order(tf$EXAMDATE),]
-tf <- tf[order(as.numeric(tf$RID)),]
-rids <- as.character(tf$RID)
-
-lastVisit <- tf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
-lastVisit[1,]$VISCODE
-
-VentricleAdas <- forecastRegressions(CognitiveRegresModels,lastVisit[1,],futuredate=as.Date("2018/1/1"))
-
-exp(VentricleAdas$ADAS13_NC)-1
-exp(VentricleAdas$ADAS13_MCI)-1
-exp(VentricleAdas$ADAS13_AD)-1
-exp(VentricleAdas$Ventricles_NC)
-exp(VentricleAdas$Ventricles_MCI)
-exp(VentricleAdas$Ventricles_AD)
-
-exp(VentricleAdas$ADAS13_NC)-1
-exp(VentricleAdas$ADAS13_MCI)-1
-exp(VentricleAdas$ADAS13_AD)-1
-exp(VentricleAdas$Ventricles_NC)
-exp(VentricleAdas$Ventricles_MCI)
-exp(VentricleAdas$Ventricles_AD)
-
-
-predictADNI <- forecastCognitiveStatus(CognitiveClassModels,dataTadpole$testingFrame)
-
-
-forecast <- FiveYearForeCast(predictADNI,Subject_datestoPredict=submissionTemplate)
 write.csv(forecast,file="forecastJTP.csv")
 
 
