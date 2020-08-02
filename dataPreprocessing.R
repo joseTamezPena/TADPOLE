@@ -243,7 +243,7 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
   
   TadpoleTrain_Imputed <- train_frame_Transformed_red
   allAdustedZrank <- TadpoleTrain_Imputed
-  TadpoleTrain_Imputed <- cbind(train_frame_Transformed_red[,colnotincluded],nearestNeighborImpute(TadpoleOnlyFeatures,catgoricColums=c("RID","PTGENDER")))
+  TadpoleTrain_Imputed <- cbind(train_frame_Transformed_red[,colnotincluded],nearestNeighborImpute(TadpoleOnlyFeatures,catgoricCol=c("RID","PTGENDER")))
   
   fnames <- colnames(TadpoleTrain_Imputed)
   fnames <- str_replace_all(fnames," ","_")
@@ -331,7 +331,7 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
 #    print(summary(TadpoleOnlyFeatures))
 #    print(summary(TadpoleRefOnlyFeatures))
     
-    Tadpole_Imputed <- nearestNeighborImpute(TadpoleOnlyFeatures,TadpoleRefOnlyFeatures,catgoricColums=colcategorical)
+    Tadpole_Imputed <- nearestNeighborImpute(TadpoleOnlyFeatures,TadpoleRefOnlyFeatures,catgoricCol=colcategorical,includeID)
     print(c(nrow(Tadpole_Imputed),ncol(Tadpole_Imputed)))
     Tadpole_Imputed <- cbind(test_Frame_Transformed_red[,colnotincluded],Tadpole_Imputed)
     print(c(nrow(Tadpole_Imputed),ncol(Tadpole_Imputed)))

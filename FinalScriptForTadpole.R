@@ -31,6 +31,7 @@ submissionTemplate <- submissionTemplate[order(submissionTemplate$`Forecast Mont
 TrainingSet <- subset(TADPOLE_D1_D2,D1==1)
 D2TesingSet <- subset(TADPOLE_D1_D2,D2==1)
 
+
 rownames(TrainingSet) <- paste(TrainingSet$RID,TrainingSet$VISCODE,sep="_")
 rownames(D2TesingSet) <- paste(D2TesingSet$RID,D2TesingSet$VISCODE,sep="_")
 rownames(TADPOLE_D3) <- paste(TADPOLE_D3$RID,TADPOLE_D3$VISCODE,sep="_")
@@ -48,9 +49,40 @@ source('~/GitHub/TADPOLE/predictTADPOLERegresions.R')
 
 ### Data conditioning and preparation for D2
 
+TrainingSet <- TrainingSet[order(TrainingSet$EXAMDATE),]
+TrainingSet <- TrainingSet[order(as.numeric(TrainingSet$RID)),]
+
+D2TesingSet <- D2TesingSet[order(D2TesingSet$EXAMDATE),]
+D2TesingSet <- D2TesingSet[order(as.numeric(D2TesingSet$RID)),]
+
+TrainingSet <- TrainingSet[1:2000,]
+D2TesingSet <- D2TesingSet[1:1000,]
+
+
 dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)
 
-save(dataTadpole,file="D2DataFrames_v2.RDATA")
+
+tdf <- dataTadpole$Test_Imputed
+ltptf <- dataTadpole$Test_Imputed
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
+rids <- ltptf$RID
+ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
+rownames(ltptf) <- ltptf$RID
+plot(ltptf$Ventricles,ltptf$Ventricles_bl)
+plot(ltptf$ADAS13,ltptf$ADAS13_bl)
+
+ltptf <- dataTadpole$Train_Imputed
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
+rids <- ltptf$RID
+ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
+rownames(ltptf) <- ltptf$RID
+plot(ltptf$Ventricles,ltptf$Ventricles_bl)
+plot(ltptf$ADAS13,ltptf$ADAS13_bl)
+
+
+save(dataTadpole,file="D2DataFrames.RDATA")
 
 
 ## Train 25 Models for the D2 subjects
@@ -91,6 +123,8 @@ dataTadpole$testingFrame$ADAS13 <- dataTadpole$Test_Imputed[rownames(dataTadpole
 
 ## THe last time point required for forcasting ADAS13 and Ventricles
 ltptf <- dataTadpole$testingFrame
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
 rids <- ltptf$RID
 ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
 rownames(ltptf) <- ltptf$RID
@@ -108,8 +142,16 @@ D3IDS <- TADPOLE_D3$RID
 D3TrainingSet <- TrainingSet[!(TrainingSet$RID %in% D3IDS),]
 
 ## Conditioning the data sets
-dataTadpoleD3 <- dataTADPOLEPreprocesing(D3TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=18,colImputeThreshold=0.15,rowImputeThreshold=0.25)
+dataTadpoleD3 <- dataTADPOLEPreprocesing(D3TrainingSet,TADPOLE_D3,TADPOLE_D1_D2_Dict,MinVisit=18,colImputeThreshold=0.15,rowImputeThreshold=0.25,includeID=FALSE)
 save(dataTadpoleD3,file="D3DataFrames.RDATA")
+
+ltptf <- dataTadpoleD3$Test_Imputed
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
+rids <- ltptf$RID
+ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
+rownames(ltptf) <- ltptf$RID
+plot(ltptf$Ventricles,ltptf$Ventricles_bl)
 
 ## Build the 35 predictive models of congnitive status
 D3CognitiveClassModels <- TrainTadpoleClassModels(dataTadpoleD3$AdjustedTrainFrame,
@@ -143,6 +185,8 @@ dataTadpoleD3$testingFrame$ADAS13 <- dataTadpoleD3$Test_Imputed[rownames(dataTad
 
 ### The last time D3 point
 ltptf <- dataTadpoleD3$testingFrame
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
 rids <- ltptf$RID
 ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
 rownames(ltptf) <- ltptf$RID

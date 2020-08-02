@@ -11,6 +11,11 @@ forecastRegressions <- function(Models,TestDataFrame,futuredate)
 {
 
   deltaTime <- as.numeric(futuredate - TestDataFrame$EXAMDATE)/365.25
+  hist(deltaTime)
+  if (any(deltaTime > 10.0))
+  {
+    deltaTime[deltaTime > 10.0] <- 10.0
+  }
   TestDataFrame$TimeToLastVisit <- deltaTime
   TestDataFrame$SQRTimeToLastVisit <- deltaTime*deltaTime
   TestDataFrame$LOGTimeToLastVisit <- log(1+deltaTime)

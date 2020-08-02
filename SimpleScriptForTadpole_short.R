@@ -101,10 +101,15 @@ save(CognitiveRegresModels,file="CognitiveRegresModels_50_Nolog.RDATA")
 dataTadpole$testingFrame$Ventricles <- dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"Ventricles"]/dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ICV"]
 dataTadpole$testingFrame$ADAS13 <- dataTadpole$Test_Imputed[rownames(dataTadpole$testingFrame),"ADAS13"]
 
-ltptf <- dataTadpole$testingFrame
+
+
+ltptf <- dataTadpole$Test_Imputed
+ltptf <- ltptf[order(ltptf$EXAMDATE),]
+ltptf <- ltptf[order(as.numeric(ltptf$RID)),]
 rids <- ltptf$RID
 ltptf <- ltptf[c(rids[1:(length(rids)-1)] != rids[-1],TRUE),]
 rownames(ltptf) <- ltptf$RID
+plot(ltptf$Ventricles_bl,ltptf$Ventricles)
 
 ### Forecasting 5 years. The forcast transfomrs back to the actual space
 forecast <- FiveYearForeCast(predictADNI,testDataset=ltptf,ADAS_Ventricle_Models=CognitiveRegresModels,Subject_datestoPredict=submissionTemplate)
