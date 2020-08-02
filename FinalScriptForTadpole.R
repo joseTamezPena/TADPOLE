@@ -55,8 +55,6 @@ TrainingSet <- TrainingSet[order(as.numeric(TrainingSet$RID)),]
 D2TesingSet <- D2TesingSet[order(D2TesingSet$EXAMDATE),]
 D2TesingSet <- D2TesingSet[order(as.numeric(D2TesingSet$RID)),]
 
-TrainingSet <- TrainingSet[1:2000,]
-D2TesingSet <- D2TesingSet[1:1000,]
 
 
 dataTadpole <- dataTADPOLEPreprocesing(TrainingSet,D2TesingSet,TADPOLE_D1_D2_Dict,MinVisit=36,colImputeThreshold=0.25,rowImputeThreshold=0.25)

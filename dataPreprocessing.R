@@ -295,8 +295,8 @@ dataTADPOLEPreprocesing <- function(train_frame,test_Frame,dictionary,MinVisit=3
     
     test_Frame_Transformed_red <- rbind(test_Frame_Transformed_red,traininnotest)
     print(nrow(test_Frame_Transformed_red))
-    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$VISCODE),]
-    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$RID),]
+    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(test_Frame_Transformed_red$EXAMDATE),]
+    test_Frame_Transformed_red <- test_Frame_Transformed_red[order(as.integer(test_Frame_Transformed_red$RID)),]
     
     
 #    checkRowmissing <- 3 #at least 3 features
